@@ -1,0 +1,48 @@
+{
+  "name": "astro-bulma",
+  "type": "module",
+  "version": "0.0.1",
+  "packageManager": "pnpm@10.30.2",
+  "description": "Astro component library wrapping Bulma CSS",
+  "keywords": ["astro", "bulma", "component-library", "astro-component"],
+  "license": "(GPL-3.0-only OR MIT)",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro",
+    "check": "astro check",
+    "lint": "oxlint src --deny-warnings",
+    "fmt": "oxlint src --fix && prettier --write \"src/**/*.astro\"",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage"
+  },
+  "peerDependencies": {
+    "astro": ">=5.0.0"
+  },
+  "dependencies": {
+    "bulma": "1.0.4"
+  },
+  "devDependencies": {
+    "@astrojs/check": "0.9.7",
+    "astro": "6.0.2",
+    "oxlint": "1.50.0",
+    "prettier": "3.8.1",
+    "prettier-plugin-astro": "0.14.1",
+    "typescript": "5.9.3",
+    "vitest": "4.0.18",
+    "@vitest/coverage-istanbul": "4.0.18"
+  },
+  "engines": {
+    "node": ">=22.0.0",
+    "pnpm": "10.30.2"
+  },
+  "volta": {
+    "node": "24.13.1",
+    "pnpm": "10.30.2"
+  }
+}
