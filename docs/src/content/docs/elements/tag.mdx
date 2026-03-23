@@ -1,0 +1,119 @@
+---
+title: Tag
+description: Bulma tag/badge element for labels and status indicators.
+---
+
+import Preview from "../../../components/Preview.astro";
+import Tag from "astro-bulma/elements/Tag.astro";
+
+The `Tag` component renders Bulma's [tag element](https://bulma.io/documentation/elements/tag/) — a small badge for labels, statuses, or counts.
+
+## Basic tag
+
+<Preview>
+  <Tag>Default</Tag>
+</Preview>
+
+```astro
+<Tag>Default</Tag>
+```
+
+## Colors
+
+<Preview>
+  <div class="tags">
+    <Tag color="primary">Primary</Tag>
+    <Tag color="link">Link</Tag>
+    <Tag color="info">Info</Tag>
+    <Tag color="success">Success</Tag>
+    <Tag color="warning">Warning</Tag>
+    <Tag color="danger">Danger</Tag>
+    <Tag color="dark">Dark</Tag>
+    <Tag color="light">Light</Tag>
+  </div>
+</Preview>
+
+```astro
+<Tag color="primary">Primary</Tag>
+<Tag color="link">Link</Tag>
+<Tag color="info">Info</Tag>
+<Tag color="success">Success</Tag>
+<Tag color="warning">Warning</Tag>
+<Tag color="danger">Danger</Tag>
+<Tag color="dark">Dark</Tag>
+<Tag color="light">Light</Tag>
+```
+
+## Sizes
+
+<Preview>
+  <div class="tags">
+    <Tag size="small" color="info">Small</Tag>
+    <Tag color="info">Normal</Tag>
+    <Tag size="medium" color="info">Medium</Tag>
+    <Tag size="large" color="info">Large</Tag>
+  </div>
+</Preview>
+
+```astro
+<Tag size="small" color="info">Small</Tag>
+<Tag color="info">Normal</Tag>
+<Tag size="medium" color="info">Medium</Tag>
+<Tag size="large" color="info">Large</Tag>
+```
+
+## Light variant
+
+<Preview>
+  <div class="tags">
+    <Tag color="primary" light>Primary light</Tag>
+    <Tag color="danger" light>Danger light</Tag>
+  </div>
+</Preview>
+
+```astro
+<Tag color="primary" light>Primary light</Tag>
+<Tag color="danger" light>Danger light</Tag>
+```
+
+## Rounded
+
+<Preview>
+  <div class="tags">
+    <Tag color="info" rounded>Rounded</Tag>
+    <Tag color="success" rounded>Rounded</Tag>
+  </div>
+</Preview>
+
+```astro
+<Tag color="info" rounded>Rounded</Tag>
+```
+
+## Delete tag
+
+When `isDelete` is set, the tag renders as a delete/close button with no slot content.
+
+<Preview>
+  <div class="tags">
+    <Tag>Label <Tag isDelete /></Tag>
+  </div>
+</Preview>
+
+```astro
+<div class="tags">
+  <Tag>Label <Tag isDelete /></Tag>
+</div>
+```
+
+## Props
+
+| Prop       | Type                                                                                   | Default | Description                                        |
+|------------|----------------------------------------------------------------------------------------|---------|----------------------------------------------------|
+| `color`    | `"primary"` \| `"link"` \| `"info"` \| `"success"` \| `"warning"` \| `"danger"` \| `"light"` \| `"dark"` \| `"white"` \| `"black"` | — | Bulma color modifier. |
+| `size`     | `"small"` \| `"normal"` \| `"medium"` \| `"large"`                                    | —       | Size modifier.                                     |
+| `light`    | `boolean`                                                                              | —       | Light variant.                                     |
+| `rounded`  | `boolean`                                                                              | —       | Rounded pill shape.                                |
+| `isDelete` | `boolean`                                                                              | —       | Renders as a delete/close button (no slot content).|
+| `title`    | `string`                                                                               | —       | Tooltip title attribute.                           |
+| `class`    | `string`                                                                               | —       | Extra CSS classes.                                 |
+| `...`      | `*`                                                                                    | —       | Any other HTML span attributes.                    |

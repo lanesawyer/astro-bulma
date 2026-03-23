@@ -1,0 +1,127 @@
+---
+title: FileInput
+description: Bulma-styled file upload input with dynamic filename display.
+---
+
+import Preview from "../../../components/Preview.astro";
+import FileInput from "astro-bulma/forms/FileInput.astro";
+
+The `FileInput` component renders Bulma's [file upload element](https://bulma.io/documentation/form/file/) with a CTA button and a live filename display that updates when a file is selected.
+
+## Basic file input
+
+<Preview>
+  <FileInput name="avatar" label="Profile photo" />
+</Preview>
+
+```astro
+<FileInput name="avatar" label="Profile photo" />
+```
+
+## With file type filter
+
+<Preview>
+  <FileInput name="image" label="Upload image" accept="image/*" />
+</Preview>
+
+```astro
+<FileInput name="image" label="Upload image" accept="image/*" />
+```
+
+## Colors
+
+<Preview>
+  <FileInput name="f1" color="primary" />
+  <FileInput name="f2" color="info" />
+  <FileInput name="f3" color="success" />
+  <FileInput name="f4" color="warning" />
+  <FileInput name="f5" color="danger" />
+</Preview>
+
+```astro
+<FileInput name="f1" color="primary" />
+<FileInput name="f2" color="info" />
+<FileInput name="f3" color="success" />
+<FileInput name="f4" color="warning" />
+<FileInput name="f5" color="danger" />
+```
+
+## Sizes
+
+<Preview>
+  <FileInput name="sm" size="small" />
+  <FileInput name="nm" />
+  <FileInput name="md" size="medium" />
+  <FileInput name="lg" size="large" />
+</Preview>
+
+```astro
+<FileInput name="sm" size="small" />
+<FileInput name="nm" />
+<FileInput name="md" size="medium" />
+<FileInput name="lg" size="large" />
+```
+
+## Boxed style
+
+<Preview>
+  <FileInput name="boxed" boxed color="primary" ctaLabel="Upload file" />
+</Preview>
+
+```astro
+<FileInput name="boxed" boxed color="primary" ctaLabel="Upload file" />
+```
+
+## Custom labels
+
+<Preview>
+  <FileInput
+    name="doc"
+    label="Supporting document"
+    ctaLabel="Browse…"
+    placeholder="No document chosen"
+    help="PDF or Word documents only. Max 2MB."
+    accept=".pdf,.doc,.docx"
+  />
+</Preview>
+
+```astro
+<FileInput
+  name="doc"
+  label="Supporting document"
+  ctaLabel="Browse…"
+  placeholder="No document chosen"
+  help="PDF or Word documents only. Max 2MB."
+  accept=".pdf,.doc,.docx"
+/>
+```
+
+## Not full width
+
+By default `fullwidth` is `true`. Set it to `false` for an inline/compact layout:
+
+<Preview>
+  <FileInput name="compact" fullwidth={false} />
+</Preview>
+
+```astro
+<FileInput name="compact" fullwidth={false} />
+```
+
+## Props
+
+| Prop          | Type                                                         | Default           | Description                                       |
+|---------------|--------------------------------------------------------------|-------------------|---------------------------------------------------|
+| `name`        | `string`                                                     | —                 | **Required.** `name` attribute.                  |
+| `id`          | `string`                                                     | `name`            | `id` attribute; defaults to `name`.              |
+| `label`       | `string`                                                     | —                 | Label text rendered above the control.           |
+| `accept`      | `string`                                                     | —                 | Accepted file types (e.g. `"image/*"`).          |
+| `required`    | `boolean`                                                    | —                 | Required field.                                  |
+| `help`        | `string`                                                     | —                 | Help text rendered below the control.            |
+| `ctaLabel`    | `string`                                                     | `"Choose a file…"` | Text on the CTA button.                         |
+| `placeholder` | `string`                                                     | `"No file selected"` | Placeholder when no file is chosen.          |
+| `color`       | `"primary"` \| `"info"` \| `"warning"` \| `"danger"` \| `"success"` | — | Bulma color modifier.                    |
+| `size`        | `"small"` \| `"medium"` \| `"large"`                         | —                 | Size modifier.                                   |
+| `fullwidth`   | `boolean`                                                    | `true`            | Stretches to full container width.               |
+| `boxed`       | `boolean`                                                    | —                 | Boxed style variant.                             |
+| `class`       | `string`                                                     | —                 | Extra CSS classes on the `.file` wrapper.        |

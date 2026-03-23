@@ -1,0 +1,184 @@
+---
+title: TextInput
+description: Bulma-styled text input with label, icons, and help text.
+---
+
+import Preview from "../../../components/Preview.astro";
+import TextInput from "astro-bulma/forms/TextInput.astro";
+
+The `TextInput` component renders a Bulma [input field](https://bulma.io/documentation/form/input/) with optional field/label/control wrappers, icons, and help text.
+
+## Basic input with label
+
+<Preview>
+  <TextInput name="username" label="Username" placeholder="Enter your username" />
+</Preview>
+
+```astro
+<TextInput name="username" label="Username" placeholder="Enter your username" />
+```
+
+## Input types
+
+<Preview>
+  <TextInput name="email" label="Email" type="email" placeholder="you@example.com" />
+  <TextInput name="password" label="Password" type="password" />
+  <TextInput name="birthday" label="Birthday" type="date" />
+  <TextInput name="amount" label="Amount" type="number" min="0" max="100" />
+</Preview>
+
+```astro
+<TextInput name="email" label="Email" type="email" placeholder="you@example.com" />
+<TextInput name="password" label="Password" type="password" />
+<TextInput name="birthday" label="Birthday" type="date" />
+<TextInput name="amount" label="Amount" type="number" min="0" max="100" />
+```
+
+## Colors
+
+<Preview>
+  <TextInput name="ok" label="Success" color="success" value="Looks good" />
+  <TextInput name="err" label="Danger" color="danger" value="Invalid input" />
+  <TextInput name="warn" label="Warning" color="warning" />
+</Preview>
+
+```astro
+<TextInput name="ok" label="Success" color="success" value="Looks good" />
+<TextInput name="err" label="Danger" color="danger" value="Invalid input" />
+<TextInput name="warn" label="Warning" color="warning" />
+```
+
+## With icons
+
+<Preview>
+  <TextInput name="email" label="Email" type="email" iconLeft="fa-envelope" placeholder="you@example.com" />
+  <TextInput name="search" label="Search" iconLeft="fa-search" iconRight="fa-times" placeholder="Search…" />
+</Preview>
+
+```astro
+<TextInput
+  name="email"
+  label="Email"
+  type="email"
+  iconLeft="fa-envelope"
+  placeholder="you@example.com"
+/>
+<TextInput
+  name="search"
+  label="Search"
+  iconLeft="fa-search"
+  iconRight="fa-times"
+  placeholder="Search…"
+/>
+```
+
+## Help text
+
+<Preview>
+  <TextInput name="username" label="Username" help="Only letters and numbers." />
+  <TextInput name="email" label="Email" type="email" help="This address is already taken." helpColor="danger" />
+</Preview>
+
+```astro
+<TextInput name="username" label="Username" help="Only letters and numbers." />
+<TextInput
+  name="email"
+  label="Email"
+  type="email"
+  help="This address is already taken."
+  helpColor="danger"
+/>
+```
+
+## Sizes
+
+<Preview>
+  <TextInput name="sm" label="Small" size="small" />
+  <TextInput name="nm" label="Normal" />
+  <TextInput name="md" label="Medium" size="medium" />
+  <TextInput name="lg" label="Large" size="large" />
+</Preview>
+
+```astro
+<TextInput name="sm" label="Small" size="small" />
+<TextInput name="nm" label="Normal" />
+<TextInput name="md" label="Medium" size="medium" />
+<TextInput name="lg" label="Large" size="large" />
+```
+
+## Rounded
+
+<Preview>
+  <TextInput name="search" label="Search" rounded placeholder="Search…" iconLeft="fa-search" />
+</Preview>
+
+```astro
+<TextInput name="search" label="Search" rounded placeholder="Search…" iconLeft="fa-search" />
+```
+
+## Disabled & readonly
+
+<Preview>
+  <TextInput name="locked" label="Disabled" disabled value="Can't change this" />
+  <TextInput name="ro" label="Read-only" readonly value="Read only" />
+</Preview>
+
+```astro
+<TextInput name="locked" label="Disabled" disabled value="Can't change this" />
+<TextInput name="ro" label="Read-only" readonly value="Read only" />
+```
+
+## Standalone (no wrapper)
+
+Use `standalone` when composing inputs inside a Bulma `has-addons` or `is-grouped` layout:
+
+<Preview>
+  <div class="field has-addons">
+    <div class="control is-expanded">
+      <TextInput name="url" type="url" standalone placeholder="https://…" />
+    </div>
+    <div class="control">
+      <button class="button is-info">Go</button>
+    </div>
+  </div>
+</Preview>
+
+```astro
+<div class="field has-addons">
+  <div class="control is-expanded">
+    <TextInput name="url" type="url" standalone placeholder="https://…" />
+  </div>
+  <div class="control">
+    <button class="button is-info">Go</button>
+  </div>
+</div>
+```
+
+## Props
+
+| Prop               | Type                                                | Default  | Description                                              |
+|--------------------|-----------------------------------------------------|----------|----------------------------------------------------------|
+| `name`             | `string`                                            | —        | **Required.** `name` attribute.                         |
+| `id`               | `string`                                            | `name`   | `id` attribute; defaults to `name`.                     |
+| `type`             | `"text"` \| `"email"` \| `"password"` \| `"tel"` \| `"url"` \| `"number"` \| `"search"` \| `"date"` \| `"time"` | `"text"` | Input type. |
+| `label`            | `string`                                            | —        | Label text; renders field/label/control wrappers.       |
+| `placeholder`      | `string`                                            | —        | Placeholder text.                                       |
+| `value`            | `string \| number`                                  | —        | Initial value.                                          |
+| `required`         | `boolean`                                           | —        | Required field.                                         |
+| `disabled`         | `boolean`                                           | —        | Disabled state.                                         |
+| `readonly`         | `boolean`                                           | —        | Read-only state.                                        |
+| `color`            | `"primary"` \| `"link"` \| `"info"` \| `"success"` \| `"warning"` \| `"danger"` | — | Bulma color modifier. |
+| `size`             | `"small"` \| `"normal"` \| `"medium"` \| `"large"` | —        | Size modifier.                                          |
+| `rounded`          | `boolean`                                           | —        | Rounded input style.                                    |
+| `static`           | `boolean`                                           | —        | Static style (`.is-static`).                            |
+| `iconLeft`         | `string`                                            | —        | FA icon name for left icon.                             |
+| `iconLeftVariant`  | `"fas"` \| `"far"` \| `"fab"`                       | `"fas"`  | Variant for left icon.                                  |
+| `iconRight`        | `string`                                            | —        | FA icon name for right icon.                            |
+| `iconRightVariant` | `"fas"` \| `"far"` \| `"fab"`                       | `"fas"`  | Variant for right icon.                                 |
+| `help`             | `string`                                            | —        | Help text below the control.                            |
+| `helpColor`        | `"primary"` \| `"link"` \| `"info"` \| `"success"` \| `"warning"` \| `"danger"` | — | Color for help text. |
+| `standalone`       | `boolean`                                           | —        | Render only `<input>`, no field/label/control wrappers. |
+| `class`            | `string`                                            | —        | Extra classes on the `<input>`.                         |
+| `controlClass`     | `string`                                            | —        | Extra classes on the control div.                       |
+| `form`             | `string`                                            | —        | Associates input with a `<form>` by id.                 |
+| `...`              | `*`                                                 | —        | Other native input attributes (`min`, `max`, `pattern`, etc.). |

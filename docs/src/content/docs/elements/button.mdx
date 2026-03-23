@@ -1,0 +1,134 @@
+---
+title: Button
+description: Renders a styled Bulma button or link.
+---
+
+import Preview from "../../../components/Preview.astro";
+import Button from "astro-bulma/elements/Button.astro";
+
+The `Button` component renders either a `<button>` or an `<a>` element styled with Bulma's [button classes](https://bulma.io/documentation/elements/button/). Pass `href` to render a link.
+
+## Basic button
+
+<Preview>
+  <Button>Default</Button>
+</Preview>
+
+```astro
+<Button>Default</Button>
+```
+
+## Colors
+
+<Preview>
+  <div class="buttons">
+    <Button color="primary">Primary</Button>
+    <Button color="link">Link</Button>
+    <Button color="info">Info</Button>
+    <Button color="success">Success</Button>
+    <Button color="warning">Warning</Button>
+    <Button color="danger">Danger</Button>
+  </div>
+</Preview>
+
+```astro
+<Button color="primary">Primary</Button>
+<Button color="link">Link</Button>
+<Button color="info">Info</Button>
+<Button color="success">Success</Button>
+<Button color="warning">Warning</Button>
+<Button color="danger">Danger</Button>
+```
+
+## Sizes
+
+<Preview>
+  <div class="buttons are-centered">
+    <Button size="small">Small</Button>
+    <Button>Normal</Button>
+    <Button size="large">Large</Button>
+  </div>
+</Preview>
+
+```astro
+<Button size="small">Small</Button>
+<Button>Normal</Button>
+<Button size="large">Large</Button>
+```
+
+## Outlined & light variants
+
+<Preview>
+  <div class="buttons">
+    <Button color="primary" outlined>Outlined</Button>
+    <Button color="primary" light>Light</Button>
+  </div>
+</Preview>
+
+```astro
+<Button color="primary" outlined>Outlined</Button>
+<Button color="primary" light>Light</Button>
+```
+
+## Full width
+
+<Preview>
+  <Button color="info" fullwidth>Full width</Button>
+</Preview>
+
+```astro
+<Button color="info" fullwidth>Full width</Button>
+```
+
+## Disabled
+
+<Preview>
+  <Button color="primary" disabled>Disabled</Button>
+</Preview>
+
+```astro
+<Button color="primary" disabled>Disabled</Button>
+```
+
+## As a link
+
+<Preview>
+  <Button href="https://bulma.io" target="_blank" rel="noopener" color="link">
+    Open Bulma docs
+  </Button>
+</Preview>
+
+```astro
+<Button href="https://bulma.io" target="_blank" rel="noopener" color="link">
+  Open Bulma docs
+</Button>
+```
+
+## Submit button
+
+<Preview>
+  <Button type="submit" color="success">Save</Button>
+</Preview>
+
+```astro
+<Button type="submit" color="success">Save</Button>
+```
+
+## Props
+
+| Prop        | Type                                                                 | Default    | Description                                           |
+|-------------|----------------------------------------------------------------------|------------|-------------------------------------------------------|
+| `color`     | `"primary"` \| `"danger"` \| `"warning"` \| `"info"` \| `"success"` \| `"link"` \| `"light"` \| `"white"` | — | Bulma color modifier. |
+| `size`      | `"small"` \| `"large"`                                              | —          | Size modifier.                                        |
+| `fullwidth` | `boolean`                                                            | —          | Stretches to full container width.                    |
+| `outlined`  | `boolean`                                                            | —          | Outlined (transparent background) style.              |
+| `light`     | `boolean`                                                            | —          | Light variant.                                        |
+| `disabled`  | `boolean`                                                            | —          | Disables the button. Only valid without `href`.       |
+| `type`      | `"button"` \| `"submit"` \| `"reset"`                               | `"button"` | Button type. Only valid without `href`.               |
+| `form`      | `string`                                                             | —          | Associates with a `<form>` by id. Only without `href`.|
+| `href`      | `string`                                                             | —          | Renders as `<a>` when provided.                       |
+| `target`    | `string`                                                             | —          | Link target. Only valid with `href`.                  |
+| `rel`       | `string`                                                             | —          | Link rel. Only valid with `href`.                     |
+| `title`     | `string`                                                             | —          | Tooltip title.                                        |
+| `id`        | `string`                                                             | —          | Element id.                                           |
+| `class`     | `string`                                                             | —          | Extra CSS classes.                                    |

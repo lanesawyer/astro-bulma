@@ -1,0 +1,112 @@
+---
+title: Table
+description: Full-width striped Bulma table with optional column headers.
+---
+
+import Preview from "../../../components/Preview.astro";
+import Table from "astro-bulma/elements/Table.astro";
+
+The `Table` component wraps Bulma's [table element](https://bulma.io/documentation/elements/table/) in a scrollable container, with optional column headers and title.
+
+## Basic table
+
+<Preview>
+  <Table columns={["Name", "Role", "Status"]}>
+    <tbody>
+      <tr><td>Alice</td><td>Admin</td><td>Active</td></tr>
+      <tr><td>Bob</td><td>Member</td><td>Active</td></tr>
+      <tr><td>Carol</td><td>Member</td><td>Inactive</td></tr>
+    </tbody>
+  </Table>
+</Preview>
+
+```astro
+<Table columns={["Name", "Role", "Status"]}>
+  <tbody>
+    <tr><td>Alice</td><td>Admin</td><td>Active</td></tr>
+    <tr><td>Bob</td><td>Member</td><td>Active</td></tr>
+    <tr><td>Carol</td><td>Member</td><td>Inactive</td></tr>
+  </tbody>
+</Table>
+```
+
+## With title
+
+<Preview>
+  <Table title="Team Members" columns={["Name", "Role"]}>
+    <tbody>
+      <tr><td>Alice</td><td>Admin</td></tr>
+      <tr><td>Bob</td><td>Member</td></tr>
+    </tbody>
+  </Table>
+</Preview>
+
+```astro
+<Table title="Team Members" columns={["Name", "Role"]}>
+  <tbody>
+    <tr><td>Alice</td><td>Admin</td></tr>
+    <tr><td>Bob</td><td>Member</td></tr>
+  </tbody>
+</Table>
+```
+
+## Column with custom style
+
+Columns can be objects with `label` and `style` properties to set column widths or alignment:
+
+<Preview>
+  <Table columns={[{ label: "Name", style: "width: 60%" }, { label: "Score", style: "text-align: right" }]}>
+    <tbody>
+      <tr><td>Alice</td><td style="text-align: right">98</td></tr>
+      <tr><td>Bob</td><td style="text-align: right">84</td></tr>
+    </tbody>
+  </Table>
+</Preview>
+
+```astro
+<Table
+  columns={[
+    { label: "Name", style: "width: 60%" },
+    { label: "Score", style: "text-align: right" },
+  ]}
+>
+  <tbody>
+    <tr><td>Alice</td><td style="text-align: right">98</td></tr>
+    <tr><td>Bob</td><td style="text-align: right">84</td></tr>
+  </tbody>
+</Table>
+```
+
+## No columns (manual thead)
+
+<Preview>
+  <Table>
+    <thead>
+      <tr><th>Fruit</th><th>Count</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Apple</td><td>12</td></tr>
+      <tr><td>Banana</td><td>5</td></tr>
+    </tbody>
+  </Table>
+</Preview>
+
+```astro
+<Table>
+  <thead>
+    <tr><th>Fruit</th><th>Count</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>Apple</td><td>12</td></tr>
+    <tr><td>Banana</td><td>5</td></tr>
+  </tbody>
+</Table>
+```
+
+## Props
+
+| Prop        | Type                                                  | Default | Description                                    |
+|-------------|-------------------------------------------------------|---------|------------------------------------------------|
+| `title`     | `string`                                              | —       | Heading rendered above the table.              |
+| `columns`   | `(string \| { label: string; style?: string } \| null \| undefined \| false)[]` | — | Column header definitions. Falsy values are filtered out. |
+| `className` | `string`                                              | —       | Extra CSS classes on the `<table>` element.    |

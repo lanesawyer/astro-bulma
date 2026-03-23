@@ -1,0 +1,67 @@
+---
+title: Breadcrumb
+description: Bulma semantic breadcrumb navigation component.
+---
+
+import Preview from "../../../components/Preview.astro";
+import Breadcrumb from "astro-bulma/components/Breadcrumb.astro";
+
+The `Breadcrumb` component renders Bulma's [breadcrumb navigation](https://bulma.io/documentation/components/breadcrumb/) from a flat array of items. The last item is automatically marked as active.
+
+## Basic breadcrumb
+
+<Preview>
+  <Breadcrumb
+    items={[
+      { label: "Home", href: "/" },
+      { label: "Ensembles", href: "/ensembles" },
+      { label: "Chamber Orchestra" },
+    ]}
+  />
+</Preview>
+
+```astro
+<Breadcrumb
+  items={[
+    { label: "Home", href: "/" },
+    { label: "Ensembles", href: "/ensembles" },
+    { label: "Chamber Orchestra" },
+  ]}
+/>
+```
+
+## Two levels
+
+<Preview>
+  <Breadcrumb
+    items={[
+      { label: "Home", href: "/" },
+      { label: "Settings" },
+    ]}
+  />
+</Preview>
+
+```astro
+<Breadcrumb
+  items={[
+    { label: "Home", href: "/" },
+    { label: "Settings" },
+  ]}
+/>
+```
+
+## Single item (root page)
+
+<Preview>
+  <Breadcrumb items={[{ label: "Home" }]} />
+</Preview>
+
+```astro
+<Breadcrumb items={[{ label: "Home" }]} />
+```
+
+## Props
+
+| Prop    | Type                                          | Default | Description                                                        |
+|---------|-----------------------------------------------|---------|--------------------------------------------------------------------|
+| `items` | `Array<{ label: string; href?: string }>`     | —       | **Required.** Array of breadcrumb items. Last item is always active.|

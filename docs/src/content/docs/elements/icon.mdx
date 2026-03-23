@@ -1,0 +1,107 @@
+---
+title: Icon
+description: Wraps a Font Awesome icon in Bulma's icon span.
+---
+
+import Preview from "../../../components/Preview.astro";
+import Icon from "astro-bulma/elements/Icon.astro";
+
+The `Icon` component wraps a Font Awesome icon inside Bulma's `.icon` container span, applying size, color, and position modifiers correctly.
+
+:::note
+Font Awesome is a peer dependency — you must load it in your project. The easiest way is via CDN in your layout's `<head>`:
+
+```html
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" crossorigin="anonymous" />
+```
+
+Or install the package: `pnpm add @fortawesome/fontawesome-free` and import `@fortawesome/fontawesome-free/css/all.min.css`.
+:::
+
+## Basic usage
+
+<Preview>
+  <Icon icon="fa-star" />
+</Preview>
+
+```astro
+<Icon icon="fa-star" />
+```
+
+## Sizes
+
+The `size` prop controls the Bulma wrapper container (useful for input icon alignment). To visually scale the glyph, use Font Awesome's own size modifiers in the `icon` string:
+
+<Preview>
+  <div style="display: flex; align-items: center; gap: 1rem;">
+    <Icon icon="fa-home fa-xs" />
+    <Icon icon="fa-home fa-sm" />
+    <Icon icon="fa-home" />
+    <Icon icon="fa-home fa-lg" />
+    <Icon icon="fa-home fa-2x" />
+    <Icon icon="fa-home fa-3x" />
+  </div>
+</Preview>
+
+```astro
+<Icon icon="fa-home fa-xs" />
+<Icon icon="fa-home fa-sm" />
+<Icon icon="fa-home" />
+<Icon icon="fa-home fa-lg" />
+<Icon icon="fa-home fa-2x" />
+<Icon icon="fa-home fa-3x" />
+```
+
+The `size` prop sets the Bulma `.icon` wrapper dimensions — pair it with a matching FA size modifier when using icons inside input controls:
+
+<Preview>
+  <Icon icon="fa-home" size="small" />
+  <Icon icon="fa-home fa-lg" size="medium" />
+  <Icon icon="fa-home fa-2x" size="large" />
+</Preview>
+
+```astro
+<Icon icon="fa-home" size="small" />
+<Icon icon="fa-home fa-lg" size="medium" />
+<Icon icon="fa-home fa-2x" size="large" />
+```
+
+## Colors
+
+<Preview>
+  <Icon icon="fa-heart" color="danger" />
+  <Icon icon="fa-check" color="success" />
+  <Icon icon="fa-info-circle" color="info" />
+</Preview>
+
+```astro
+<Icon icon="fa-heart" color="danger" />
+<Icon icon="fa-check" color="success" />
+<Icon icon="fa-info-circle" color="info" />
+```
+
+## Variants (Font Awesome prefix)
+
+<Preview>
+  <Icon icon="fa-clock" variant="fas" />
+  <Icon icon="fa-clock" variant="far" />
+  <Icon icon="fa-github" variant="fab" />
+</Preview>
+
+```astro
+<Icon icon="fa-clock" variant="fas" />
+<Icon icon="fa-clock" variant="far" />
+<Icon icon="fa-github" variant="fab" />
+```
+
+
+## Props
+
+| Prop       | Type                                        | Default | Description                                       |
+|------------|---------------------------------------------|---------|---------------------------------------------------|
+| `icon`     | `string`                                    | —       | **Required.** FA icon name, e.g. `"fa-plus"`.     |
+| `variant`  | `"fas"` \| `"far"` \| `"fab"` \| `"fal"` \| `"fad"` | `"fas"` | Font Awesome variant prefix.         |
+| `size`     | `"small"` \| `"medium"` \| `"large"`        | —       | Bulma size modifier on the wrapper span.          |
+| `color`    | `string`                                    | —       | Applies `has-text-{color}` to the wrapper.        |
+| `position` | `"left"` \| `"right"`                       | —       | Position inside a Bulma input control.            |
+| `class`    | `string`                                    | —       | Extra classes on the wrapper span.                |

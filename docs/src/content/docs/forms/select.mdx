@@ -1,0 +1,215 @@
+---
+title: Select
+description: Bulma-styled select dropdown with label, icon, and help text.
+---
+
+import Preview from "../../../components/Preview.astro";
+import Select from "astro-bulma/forms/Select.astro";
+
+The `Select` component wraps Bulma's [select element](https://bulma.io/documentation/form/select/) with optional field/label/control wrappers, icon, and help text. Slot content should be `<option>` elements.
+
+## Basic select
+
+<Preview>
+  <Select name="fruit" label="Favourite fruit">
+    <option value="">Pick one…</option>
+    <option value="apple">Apple</option>
+    <option value="banana">Banana</option>
+    <option value="cherry">Cherry</option>
+  </Select>
+</Preview>
+
+```astro
+<Select name="fruit" label="Favourite fruit">
+  <option value="">Pick one…</option>
+  <option value="apple">Apple</option>
+  <option value="banana">Banana</option>
+  <option value="cherry">Cherry</option>
+</Select>
+```
+
+## Colors
+
+<Preview>
+  <Select name="c1" label="Success" color="success">
+    <option>Option A</option>
+  </Select>
+  <Select name="c2" label="Danger" color="danger">
+    <option>Option A</option>
+  </Select>
+  <Select name="c3" label="Info" color="info">
+    <option>Option A</option>
+  </Select>
+</Preview>
+
+```astro
+<Select name="c1" label="Success" color="success">
+  <option>Option A</option>
+</Select>
+```
+
+## Sizes
+
+<Preview>
+  <Select name="s1" label="Small" size="small">
+    <option>Option</option>
+  </Select>
+  <Select name="s2" label="Normal">
+    <option>Option</option>
+  </Select>
+  <Select name="s3" label="Medium" size="medium">
+    <option>Option</option>
+  </Select>
+  <Select name="s4" label="Large" size="large">
+    <option>Option</option>
+  </Select>
+</Preview>
+
+```astro
+<Select name="s1" label="Small" size="small"><option>Option</option></Select>
+<Select name="s2" label="Normal"><option>Option</option></Select>
+<Select name="s3" label="Medium" size="medium"><option>Option</option></Select>
+<Select name="s4" label="Large" size="large"><option>Option</option></Select>
+```
+
+## With icon
+
+<Preview>
+  <Select name="country" label="Country" iconLeft="fa-globe">
+    <option value="">Select a country…</option>
+    <option value="us">United States</option>
+    <option value="gb">United Kingdom</option>
+    <option value="ca">Canada</option>
+  </Select>
+</Preview>
+
+```astro
+<Select name="country" label="Country" iconLeft="fa-globe">
+  <option value="">Select a country…</option>
+  <option value="us">United States</option>
+  <option value="gb">United Kingdom</option>
+  <option value="ca">Canada</option>
+</Select>
+```
+
+## Help text
+
+<Preview>
+  <Select name="role" label="Role" help="Contact an admin to change your role." helpColor="info">
+    <option>Member</option>
+    <option>Admin</option>
+  </Select>
+</Preview>
+
+```astro
+<Select name="role" label="Role" help="Contact an admin to change your role." helpColor="info">
+  <option>Member</option>
+  <option>Admin</option>
+</Select>
+```
+
+## Rounded
+
+<Preview>
+  <Select name="rnd" label="Rounded" rounded>
+    <option>Option A</option>
+    <option>Option B</option>
+  </Select>
+</Preview>
+
+```astro
+<Select name="rnd" label="Rounded" rounded>
+  <option>Option A</option>
+  <option>Option B</option>
+</Select>
+```
+
+## Loading state
+
+<Preview>
+  <Select name="loading" label="Loading" loading>
+    <option>Option A</option>
+  </Select>
+</Preview>
+
+```astro
+<Select name="loading" label="Loading" loading>
+  <option>Option A</option>
+</Select>
+```
+
+## Multiple select
+
+<Preview>
+  <Select name="tags" label="Tags" multiple>
+    <option value="js">JavaScript</option>
+    <option value="ts">TypeScript</option>
+    <option value="astro">Astro</option>
+    <option value="css">CSS</option>
+  </Select>
+</Preview>
+
+```astro
+<Select name="tags" label="Tags" multiple>
+  <option value="js">JavaScript</option>
+  <option value="ts">TypeScript</option>
+  <option value="astro">Astro</option>
+  <option value="css">CSS</option>
+</Select>
+```
+
+## Standalone
+
+Use `standalone` when composing inside a Bulma `has-addons` or custom grouped layout:
+
+<Preview>
+  <div class="field has-addons">
+    <div class="control">
+      <Select name="unit" standalone>
+        <option value="px">px</option>
+        <option value="rem">rem</option>
+        <option value="em">em</option>
+      </Select>
+    </div>
+    <div class="control is-expanded">
+      <input class="input" type="number" placeholder="Value" />
+    </div>
+  </div>
+</Preview>
+
+```astro
+<div class="field has-addons">
+  <div class="control">
+    <Select name="unit" standalone>
+      <option value="px">px</option>
+      <option value="rem">rem</option>
+    </Select>
+  </div>
+  <div class="control is-expanded">
+    <input class="input" type="number" placeholder="Value" />
+  </div>
+</div>
+```
+
+## Props
+
+| Prop              | Type                                                | Default | Description                                              |
+|-------------------|-----------------------------------------------------|---------|----------------------------------------------------------|
+| `name`            | `string`                                            | —       | **Required.** `name` attribute.                         |
+| `id`              | `string`                                            | `name`  | `id` attribute; defaults to `name`.                     |
+| `label`           | `string`                                            | —       | Label text; renders field/label/control wrappers.       |
+| `required`        | `boolean`                                           | —       | Required field.                                         |
+| `disabled`        | `boolean`                                           | —       | Disabled state.                                         |
+| `multiple`        | `boolean`                                           | —       | Multi-select listbox.                                   |
+| `size`            | `"small"` \| `"normal"` \| `"medium"` \| `"large"` | —       | Size modifier.                                          |
+| `color`           | `"primary"` \| `"link"` \| `"info"` \| `"success"` \| `"warning"` \| `"danger"` | — | Bulma color modifier. |
+| `rounded`         | `boolean`                                           | —       | Rounded style.                                          |
+| `loading`         | `boolean`                                           | —       | Loading spinner indicator.                              |
+| `fullwidth`       | `boolean`                                           | —       | Stretches to fill container.                            |
+| `iconLeft`        | `string`                                            | —       | FA icon name for left icon.                             |
+| `iconLeftVariant` | `"fas"` \| `"far"` \| `"fab"`                       | `"fas"` | Variant for left icon.                                  |
+| `help`            | `string`                                            | —       | Help text below the control.                            |
+| `helpColor`       | `"primary"` \| `"link"` \| `"info"` \| `"success"` \| `"warning"` \| `"danger"` | — | Color for help text. |
+| `standalone`      | `boolean`                                           | —       | Render only `div.select + select`, no field/label/control. |
+| `class`           | `string`                                            | —       | Extra classes on the `div.select` wrapper.              |
+| `form`            | `string`                                            | —       | Associates select with a `<form>` by id.                |

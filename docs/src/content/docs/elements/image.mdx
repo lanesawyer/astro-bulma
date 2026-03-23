@@ -1,0 +1,88 @@
+---
+title: Image
+description: Bulma image figure wrapper with optional Astro image optimization.
+---
+
+import Preview from "../../../components/Preview.astro";
+import Image from "astro-bulma/elements/Image.astro";
+
+The `Image` component wraps Bulma's `.image` figure element. For real URLs it uses Astro's `<Image>` component for optimization; for `data:` URIs it falls back to a plain `<img>`.
+
+## Fixed size
+
+<Preview>
+  <Image src="https://bulma.io/assets/images/placeholders/96x96.png" alt="96×96 placeholder" size="96x96" />
+</Preview>
+
+```astro
+<Image
+  src="https://bulma.io/assets/images/placeholders/96x96.png"
+  alt="96×96 placeholder"
+  size="96x96"
+/>
+```
+
+## Fixed size options
+
+Available sizes: `16x16`, `24x24`, `32x32`, `48x48`, `64x64`, `96x96`, `128x128`.
+
+<Preview>
+  <div class="is-flex" style="gap: 0.5rem; align-items: flex-end;">
+    <Image src="https://bulma.io/assets/images/placeholders/32x32.png" alt="32x32" size="32x32" />
+    <Image src="https://bulma.io/assets/images/placeholders/64x64.png" alt="64x64" size="64x64" />
+    <Image src="https://bulma.io/assets/images/placeholders/96x96.png" alt="96x96" size="96x96" />
+    <Image src="https://bulma.io/assets/images/placeholders/128x128.png" alt="128x128" size="128x128" />
+  </div>
+</Preview>
+
+```astro
+<Image src="..." alt="32x32" size="32x32" />
+<Image src="..." alt="64x64" size="64x64" />
+<Image src="..." alt="96x96" size="96x96" />
+<Image src="..." alt="128x128" size="128x128" />
+```
+
+## Aspect ratio
+
+<Preview>
+  <Image src="https://bulma.io/assets/images/placeholders/1280x960.png" alt="16by9" ratio="16by9" style="max-width: 320px;" />
+</Preview>
+
+```astro
+<Image
+  src="https://bulma.io/assets/images/placeholders/1280x960.png"
+  alt="16by9"
+  ratio="16by9"
+/>
+```
+
+Available ratios: `square`, `1by1`, `5by4`, `4by3`, `3by2`, `5by3`, `16by9`, `2by1`, `3by1`, `4by5`, `3by4`, `2by3`, `3by5`, `9by16`, `1by2`, `1by3`.
+
+## Rounded
+
+<Preview>
+  <Image src="https://bulma.io/assets/images/placeholders/96x96.png" alt="rounded" size="96x96" rounded />
+</Preview>
+
+```astro
+<Image
+  src="https://bulma.io/assets/images/placeholders/96x96.png"
+  alt="rounded"
+  size="96x96"
+  rounded
+/>
+```
+
+## Props
+
+| Prop         | Type      | Default | Description                                     |
+|--------------|-----------|---------|-------------------------------------------------|
+| `src`        | `string`  | —       | **Required.** Image URL or data URI.            |
+| `alt`        | `string`  | —       | **Required.** Alt text.                         |
+| `size`       | `FixedSize` | —     | Fixed pixel size (e.g. `"96x96"`).              |
+| `ratio`      | `Ratio`   | —       | Aspect ratio class (e.g. `"16by9"`).            |
+| `rounded`    | `boolean` | —       | Circular mask on the image.                     |
+| `fullwidth`  | `boolean` | —       | Stretches figure to full width.                 |
+| `class`      | `string`  | —       | Extra classes on the `<figure>` wrapper.        |
+| `style`      | `string`  | —       | Inline styles on the `<figure>` wrapper.        |
+| `imgStyle`   | `string`  | —       | Inline styles on the `<img>` element.           |

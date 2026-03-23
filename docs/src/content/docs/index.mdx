@@ -1,0 +1,86 @@
+---
+title: astro-bulma
+description: Astro component library wrapping Bulma CSS — typed, zero-client-JS components.
+template: splash
+hero:
+  tagline: Typed, zero-client-JS Astro components wrapping Bulma CSS.
+---
+
+import { Card, CardGrid, LinkButton } from "@astrojs/starlight/components";
+
+<div style="display: flex; gap: 1rem; margin-bottom: 2rem; flex-wrap: wrap;">
+  <LinkButton href={`${import.meta.env.BASE_URL.replace(/\/$/, "")}/elements/box/`} icon="right-arrow">
+    Get started
+  </LinkButton>
+  <LinkButton href="https://github.com/lanesawyer/astro-bulma" icon="external" variant="secondary">
+    View on GitHub
+  </LinkButton>
+</div>
+
+## What's included
+
+<CardGrid>
+  <Card title="7 Elements" icon="puzzle">
+    Box, Button, Icon, Image, Notification, Table, Tag
+  </Card>
+  <Card title="4 Form components" icon="pencil">
+    TextInput, Select, Checkbox, FileInput
+  </Card>
+  <Card title="5 Components" icon="bars">
+    Breadcrumb, Card, Message, Modal, Tabs
+  </Card>
+  <Card title="Zero JS frameworks" icon="rocket">
+    Pure Astro components. Interactive pieces use vanilla JS scoped inside `astro:page-load`.
+  </Card>
+</CardGrid>
+
+## Installation
+
+```sh
+pnpm add astro-bulma bulma
+```
+
+Then import Bulma's CSS in your layout:
+
+```astro
+---
+// src/layouts/Layout.astro
+---
+<html>
+  <head>
+    <link rel="stylesheet" href="/node_modules/bulma/css/bulma.min.css" />
+  </head>
+  <body><slot /></body>
+</html>
+```
+
+Or import it in a global CSS file:
+
+```css
+@import "bulma/css/bulma.min.css";
+```
+
+## Usage
+
+```astro
+---
+import { Button, Box, Notification } from "astro-bulma";
+---
+
+<Box>
+  <Notification color="success" dismissible>
+    Everything is working!
+  </Notification>
+  <Button color="primary" type="submit">Save</Button>
+</Box>
+```
+
+## Individual imports
+
+You can also import components directly from their path:
+
+```astro
+import Box from "astro-bulma/elements/Box.astro";
+import TextInput from "astro-bulma/forms/TextInput.astro";
+import Modal from "astro-bulma/components/Modal.astro";
+```

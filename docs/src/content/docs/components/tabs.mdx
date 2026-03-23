@@ -1,0 +1,126 @@
+---
+title: Tabs
+description: Bulma tabs component with client-side panel switching.
+---
+
+import Preview from "../../../components/Preview.astro";
+import Tabs from "astro-bulma/components/Tabs.astro";
+
+The `Tabs` component renders Bulma's [tabs](https://bulma.io/documentation/components/tabs/) with built-in client-side panel switching. Tab panels are associated by matching `data-tab-panel` attributes.
+
+## Basic tabs
+
+<Preview>
+  <Tabs tabs={[{ id: "tab1", label: "First" }, { id: "tab2", label: "Second" }, { id: "tab3", label: "Third" }]}>
+    <div data-tab-panel="tab1"><p>Content for the <strong>First</strong> tab.</p></div>
+    <div data-tab-panel="tab2"><p>Content for the <strong>Second</strong> tab.</p></div>
+    <div data-tab-panel="tab3"><p>Content for the <strong>Third</strong> tab.</p></div>
+  </Tabs>
+</Preview>
+
+```astro
+<Tabs
+  tabs={[
+    { id: "tab1", label: "First" },
+    { id: "tab2", label: "Second" },
+    { id: "tab3", label: "Third" },
+  ]}
+>
+  <div data-tab-panel="tab1"><p>Content for the First tab.</p></div>
+  <div data-tab-panel="tab2"><p>Content for the Second tab.</p></div>
+  <div data-tab-panel="tab3"><p>Content for the Third tab.</p></div>
+</Tabs>
+```
+
+## With counts
+
+Add a `count` to display a badge next to the tab label:
+
+<Preview>
+  <Tabs tabs={[
+    { id: "all", label: "All", count: 42 },
+    { id: "active", label: "Active", count: 15 },
+    { id: "archived", label: "Archived", count: 27 },
+  ]}>
+    <div data-tab-panel="all"><p>All 42 items.</p></div>
+    <div data-tab-panel="active"><p>15 active items.</p></div>
+    <div data-tab-panel="archived"><p>27 archived items.</p></div>
+  </Tabs>
+</Preview>
+
+```astro
+<Tabs
+  tabs={[
+    { id: "all", label: "All", count: 42 },
+    { id: "active", label: "Active", count: 15 },
+    { id: "archived", label: "Archived", count: 27 },
+  ]}
+>
+  <div data-tab-panel="all"><p>All 42 items.</p></div>
+  <div data-tab-panel="active"><p>15 active items.</p></div>
+  <div data-tab-panel="archived"><p>27 archived items.</p></div>
+</Tabs>
+```
+
+## Boxed style
+
+<Preview>
+  <Tabs boxed tabs={[{ id: "a", label: "Alpha" }, { id: "b", label: "Beta" }, { id: "c", label: "Gamma" }]}>
+    <div data-tab-panel="a"><p>Alpha panel.</p></div>
+    <div data-tab-panel="b"><p>Beta panel.</p></div>
+    <div data-tab-panel="c"><p>Gamma panel.</p></div>
+  </Tabs>
+</Preview>
+
+```astro
+<Tabs
+  boxed
+  tabs={[
+    { id: "a", label: "Alpha" },
+    { id: "b", label: "Beta" },
+    { id: "c", label: "Gamma" },
+  ]}
+>
+  <div data-tab-panel="a"><p>Alpha panel.</p></div>
+  <div data-tab-panel="b"><p>Beta panel.</p></div>
+  <div data-tab-panel="c"><p>Gamma panel.</p></div>
+</Tabs>
+```
+
+## Sizes
+
+<Preview>
+  <Tabs size="small" tabs={[{ id: "x", label: "Small" }, { id: "y", label: "Tabs" }]}>
+    <div data-tab-panel="x"><p>Small tab panel.</p></div>
+    <div data-tab-panel="y"><p>Another small panel.</p></div>
+  </Tabs>
+</Preview>
+
+```astro
+<Tabs size="small" tabs={[...]}>...</Tabs>
+```
+
+## Panel content
+
+Each panel must be a direct slot child with `data-tab-panel` matching the corresponding tab `id`. Panels that don't match the active tab are hidden via `hidden`:
+
+```astro
+<Tabs tabs={[{ id: "info", label: "Info" }, { id: "settings", label: "Settings" }]}>
+  <!-- Wrap in any element with data-tab-panel -->
+  <div data-tab-panel="info">
+    <p>Info content here.</p>
+  </div>
+  <div data-tab-panel="settings">
+    <form>...</form>
+  </div>
+</Tabs>
+```
+
+## Props
+
+| Prop    | Type                                                 | Default | Description                                  |
+|---------|------------------------------------------------------|---------|----------------------------------------------|
+| `tabs`  | `Array<{ id: string; label: string; count?: number }>` | —    | **Required.** Ordered list of tab definitions. |
+| `size`  | `"small"` \| `"medium"` \| `"large"`                 | —       | Bulma size modifier.                         |
+| `boxed` | `boolean`                                            | —       | Adds `.is-boxed` to the tabs nav.            |
+| `class` | `string`                                             | —       | Extra classes on the outer wrapper `<div>`.  |

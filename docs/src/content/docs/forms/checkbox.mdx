@@ -1,0 +1,120 @@
+---
+title: Checkbox
+description: Bulma-styled checkbox wrapped in a label element.
+---
+
+import Preview from "../../../components/Preview.astro";
+import Checkbox from "astro-bulma/forms/Checkbox.astro";
+
+The `Checkbox` component renders a Bulma [checkbox](https://bulma.io/documentation/form/checkbox/) inside a `<label>` element. Use the `label` prop for plain text, or the default slot for rich content.
+
+## Basic checkbox
+
+<Preview>
+  <Checkbox name="agree" label="I agree to the terms" />
+</Preview>
+
+```astro
+<Checkbox name="agree" label="I agree to the terms" />
+```
+
+## Pre-checked
+
+<Preview>
+  <Checkbox name="active" label="Active" checked />
+</Preview>
+
+```astro
+<Checkbox name="active" label="Active" checked />
+```
+
+## Required
+
+<Preview>
+  <Checkbox name="tos" label="Accept terms of service" required />
+</Preview>
+
+```astro
+<Checkbox name="tos" label="Accept terms of service" required />
+```
+
+## Disabled
+
+<Preview>
+  <Checkbox name="locked" label="Locked option" disabled />
+  <Checkbox name="locked-checked" label="Locked and checked" disabled checked />
+</Preview>
+
+```astro
+<Checkbox name="locked" label="Locked option" disabled />
+<Checkbox name="locked-checked" label="Locked and checked" disabled checked />
+```
+
+## Rich slot content
+
+Use the default slot instead of `label` to include HTML inside the label:
+
+<Preview>
+  <Checkbox name="rich">
+    I agree to the <a href="#">terms of service</a> and <a href="#">privacy policy</a>
+  </Checkbox>
+</Preview>
+
+```astro
+<Checkbox name="rich">
+  I agree to the <a href="#">terms of service</a> and <a href="#">privacy policy</a>
+</Checkbox>
+```
+
+## With value (checkbox group)
+
+<Preview>
+  <p class="label">Interests</p>
+  <Checkbox name="interests" value="music" label="Music" />
+  <Checkbox name="interests" value="sport" label="Sport" />
+  <Checkbox name="interests" value="tech" label="Technology" checked />
+</Preview>
+
+```astro
+<Checkbox name="interests" value="music" label="Music" />
+<Checkbox name="interests" value="sport" label="Sport" />
+<Checkbox name="interests" value="tech" label="Technology" checked />
+```
+
+## Data attributes
+
+`data-*` and `aria-*` attributes are forwarded to the `<label>` element; all other attributes are forwarded to the `<input>`:
+
+<Preview>
+  <Checkbox
+    name="item"
+    label="Item"
+    data-item-id="42"
+    aria-label="Select item 42"
+  />
+</Preview>
+
+```astro
+<Checkbox
+  name="item"
+  label="Item"
+  data-item-id="42"
+  aria-label="Select item 42"
+/>
+```
+
+## Props
+
+| Prop       | Type      | Default | Description                                           |
+|------------|-----------|---------|-------------------------------------------------------|
+| `name`     | `string`  | —       | **Required.** `name` attribute.                      |
+| `id`       | `string`  | `name`  | `id` attribute; defaults to `name`.                  |
+| `label`    | `string`  | —       | Label text. Use the slot for rich content instead.   |
+| `value`    | `string`  | —       | `value` attribute (useful in checkbox groups).       |
+| `checked`  | `boolean` | —       | Pre-checked state.                                   |
+| `required` | `boolean` | —       | Required field.                                      |
+| `disabled` | `boolean` | —       | Disabled state.                                      |
+| `class`    | `string`  | —       | Extra classes on the wrapping `<label>`.             |
+| `data-*`   | `*`       | —       | Forwarded to `<label>`.                              |
+| `aria-*`   | `*`       | —       | Forwarded to `<label>`.                              |
+| `...`      | `*`       | —       | Other native input attributes forwarded to `<input>`.|

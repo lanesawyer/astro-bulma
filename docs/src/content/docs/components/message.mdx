@@ -1,0 +1,93 @@
+---
+title: Message
+description: Bulma message box component with optional header slot.
+---
+
+import Preview from "../../../components/Preview.astro";
+import Message from "astro-bulma/components/Message.astro";
+
+The `Message` component renders Bulma's [message element](https://bulma.io/documentation/components/message/) — a colored block for displaying informational text, warnings, or callouts. An optional `header` slot adds a title bar.
+
+## Basic message
+
+<Preview>
+  <Message>
+    This is a plain message body.
+  </Message>
+</Preview>
+
+```astro
+<Message>
+  This is a plain message body.
+</Message>
+```
+
+## Colors
+
+<Preview>
+  <Message color="primary">Primary message.</Message>
+  <Message color="link">Link message.</Message>
+  <Message color="info">Info message.</Message>
+  <Message color="success">Success message.</Message>
+  <Message color="warning">Warning message.</Message>
+  <Message color="danger">Danger message.</Message>
+  <Message color="dark">Dark message.</Message>
+</Preview>
+
+```astro
+<Message color="primary">Primary message.</Message>
+<Message color="link">Link message.</Message>
+<Message color="info">Info message.</Message>
+<Message color="success">Success message.</Message>
+<Message color="warning">Warning message.</Message>
+<Message color="danger">Danger message.</Message>
+<Message color="dark">Dark message.</Message>
+```
+
+## With header
+
+<Preview>
+  <Message color="info">
+    <Fragment slot="header">Heads up!</Fragment>
+    This feature is currently in beta. Some things may not work as expected.
+  </Message>
+</Preview>
+
+```astro
+<Message color="info">
+  <Fragment slot="header">Heads up!</Fragment>
+  This feature is currently in beta. Some things may not work as expected.
+</Message>
+```
+
+## Sizes
+
+<Preview>
+  <Message color="primary" size="small">Small message.</Message>
+  <Message color="primary">Normal message.</Message>
+  <Message color="primary" size="medium">Medium message.</Message>
+  <Message color="primary" size="large">Large message.</Message>
+</Preview>
+
+```astro
+<Message color="primary" size="small">Small message.</Message>
+<Message color="primary">Normal message.</Message>
+<Message color="primary" size="medium">Medium message.</Message>
+<Message color="primary" size="large">Large message.</Message>
+```
+
+## Props
+
+| Prop    | Type                                                               | Default | Description                              |
+|---------|--------------------------------------------------------------------|---------|------------------------------------------|
+| `color` | `"dark"` \| `"link"` \| `"primary"` \| `"info"` \| `"success"` \| `"warning"` \| `"danger"` | — | Bulma color modifier. |
+| `size`  | `"small"` \| `"medium"` \| `"large"`                               | —       | Size modifier.                           |
+| `style` | `string`                                                           | —       | Inline styles on the outer `<article>`.  |
+| `class` | `string`                                                           | —       | Extra CSS classes.                       |
+
+## Slots
+
+| Slot    | Description                                              |
+|---------|----------------------------------------------------------|
+| `header`| Rendered inside `<div class="message-header">`.         |
+| default | Rendered inside `<div class="message-body">`.           |

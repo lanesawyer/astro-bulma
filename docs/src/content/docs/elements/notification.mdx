@@ -1,0 +1,74 @@
+---
+title: Notification
+description: Bulma notification box for alert messages.
+---
+
+import Preview from "../../../components/Preview.astro";
+import Notification from "astro-bulma/elements/Notification.astro";
+
+The `Notification` component renders Bulma's [notification element](https://bulma.io/documentation/elements/notification/) — a bold block used to display notices or alerts.
+
+## Basic notification
+
+<Preview>
+  <Notification>This is a plain notification.</Notification>
+</Preview>
+
+```astro
+<Notification>This is a plain notification.</Notification>
+```
+
+## Colors
+
+<Preview>
+  <Notification color="primary">Primary</Notification>
+  <Notification color="info">Info</Notification>
+  <Notification color="success">Success</Notification>
+  <Notification color="warning">Warning</Notification>
+  <Notification color="danger">Danger</Notification>
+  <Notification color="link">Link</Notification>
+</Preview>
+
+```astro
+<Notification color="primary">Primary</Notification>
+<Notification color="info">Info</Notification>
+<Notification color="success">Success</Notification>
+<Notification color="warning">Warning</Notification>
+<Notification color="danger">Danger</Notification>
+<Notification color="link">Link</Notification>
+```
+
+## Light variants
+
+<Preview>
+  <Notification color="primary" light>Primary light</Notification>
+  <Notification color="danger" light>Danger light</Notification>
+</Preview>
+
+```astro
+<Notification color="primary" light>Primary light</Notification>
+<Notification color="danger" light>Danger light</Notification>
+```
+
+## Dismissible
+
+<Preview>
+  <Notification color="info" dismissible>
+    Click the × button to dismiss this notification.
+  </Notification>
+</Preview>
+
+```astro
+<Notification color="info" dismissible>
+  Click the × button to dismiss this notification.
+</Notification>
+```
+
+## Props
+
+| Prop          | Type                                                          | Default | Description                            |
+|---------------|---------------------------------------------------------------|---------|----------------------------------------|
+| `color`       | `"link"` \| `"primary"` \| `"info"` \| `"success"` \| `"warning"` \| `"danger"` | — | Bulma color modifier. |
+| `light`       | `boolean`                                                     | —       | Light variant.                         |
+| `dismissible` | `boolean`                                                     | —       | Adds a × delete button that removes the element. |
+| `class`       | `string`                                                      | —       | Extra CSS classes.                     |

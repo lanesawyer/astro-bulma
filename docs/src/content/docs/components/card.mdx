@@ -1,0 +1,144 @@
+---
+title: Card
+description: Bulma card component with header, image, content, and footer slots.
+---
+
+import Preview from "../../../components/Preview.astro";
+import Card from "astro-bulma/components/Card.astro";
+import Button from "astro-bulma/elements/Button.astro";
+
+The `Card` component renders Bulma's [card element](https://bulma.io/documentation/components/card/) with named slots for `header`, `image`, default content, and `footer`. Sections are only rendered when their slot is provided.
+
+## Content only
+
+<Preview>
+  <div style="max-width: 360px;">
+    <Card>
+      <p class="title">Card title</p>
+      <p class="subtitle">Card subtitle</p>
+      <p>Some body content goes here.</p>
+    </Card>
+  </div>
+</Preview>
+
+```astro
+<Card>
+  <p class="title">Card title</p>
+  <p class="subtitle">Card subtitle</p>
+  <p>Some body content goes here.</p>
+</Card>
+```
+
+## With header
+
+<Preview>
+  <div style="max-width: 360px;">
+    <Card>
+      <Fragment slot="header">
+        <p class="card-header-title">Card with header</p>
+      </Fragment>
+      <p>Body content.</p>
+    </Card>
+  </div>
+</Preview>
+
+```astro
+<Card>
+  <Fragment slot="header">
+    <p class="card-header-title">Card with header</p>
+  </Fragment>
+  <p>Body content.</p>
+</Card>
+```
+
+## With footer
+
+<Preview>
+  <div style="max-width: 360px;">
+    <Card>
+      <p>Card with a footer.</p>
+      <Fragment slot="footer">
+        <a class="card-footer-item" href="#">Save</a>
+        <a class="card-footer-item" href="#">Cancel</a>
+      </Fragment>
+    </Card>
+  </div>
+</Preview>
+
+```astro
+<Card>
+  <p>Card with a footer.</p>
+  <Fragment slot="footer">
+    <a class="card-footer-item" href="#">Save</a>
+    <a class="card-footer-item" href="#">Cancel</a>
+  </Fragment>
+</Card>
+```
+
+## Full card with all slots
+
+<Preview>
+  <div style="max-width: 360px;">
+    <Card>
+      <Fragment slot="header">
+        <p class="card-header-title">Full card</p>
+        <button class="card-header-icon" aria-label="more options">
+          <span class="icon"><i class="fas fa-angle-down"></i></span>
+        </button>
+      </Fragment>
+      <Fragment slot="image">
+        <figure class="image is-4by3">
+          <img src="https://bulma.io/assets/images/placeholders/1280x960.png" alt="Placeholder" />
+        </figure>
+      </Fragment>
+      <p class="title is-4">Card title</p>
+      <p class="subtitle is-6">Card subtitle</p>
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+      <Fragment slot="footer">
+        <a class="card-footer-item" href="#">Details</a>
+        <a class="card-footer-item" href="#">Edit</a>
+        <a class="card-footer-item has-text-danger" href="#">Delete</a>
+      </Fragment>
+    </Card>
+  </div>
+</Preview>
+
+```astro
+<Card>
+  <Fragment slot="header">
+    <p class="card-header-title">Full card</p>
+    <button class="card-header-icon" aria-label="more options">
+      <span class="icon"><i class="fas fa-angle-down"></i></span>
+    </button>
+  </Fragment>
+  <Fragment slot="image">
+    <figure class="image is-4by3">
+      <img src="..." alt="Placeholder" />
+    </figure>
+  </Fragment>
+  <p class="title is-4">Card title</p>
+  <p class="subtitle is-6">Card subtitle</p>
+  <p>Body content.</p>
+  <Fragment slot="footer">
+    <a class="card-footer-item" href="#">Details</a>
+    <a class="card-footer-item" href="#">Edit</a>
+    <a class="card-footer-item has-text-danger" href="#">Delete</a>
+  </Fragment>
+</Card>
+```
+
+## Props
+
+| Prop           | Type     | Default | Description                                               |
+|----------------|----------|---------|-----------------------------------------------------------|
+| `class`        | `string` | —       | Extra classes on the outer `div.card`.                   |
+| `contentClass` | `string` | —       | Extra classes on `div.card-content`. Ignored if using a raw `content` named slot. |
+
+## Slots
+
+| Slot      | Description                                              |
+|-----------|----------------------------------------------------------|
+| `header`  | Rendered inside `<header class="card-header">`.         |
+| `image`   | Rendered inside `<div class="card-image">`.             |
+| default   | Rendered inside `<div class="card-content">`.           |
+| `footer`  | Rendered inside `<footer class="card-footer">`.         |

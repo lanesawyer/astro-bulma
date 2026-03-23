@@ -1,0 +1,64 @@
+---
+title: Box
+description: A simple white box to separate content from the rest of the page.
+---
+
+import Preview from "../../../components/Preview.astro";
+import Box from "astro-bulma/elements/Box.astro";
+import Button from "astro-bulma/elements/Button.astro";
+
+The `Box` component renders Bulma's [box element](https://bulma.io/documentation/elements/box/) — a white padded container for grouping content.
+
+## Basic example
+
+<Preview>
+  <Box>
+    This content is inside a box.
+  </Box>
+</Preview>
+
+```astro
+<Box>
+  This content is inside a box.
+</Box>
+```
+
+## With additional classes
+
+<Preview>
+  <Box class="has-background-primary-light">
+    A box with a custom background.
+  </Box>
+</Preview>
+
+```astro
+<Box class="has-background-primary-light">
+  A box with a custom background.
+</Box>
+```
+
+## Nested content
+
+<Preview>
+  <Box>
+    <p class="title is-5">Card title</p>
+    <p class="subtitle is-6">A subtitle</p>
+    <Button color="primary">Action</Button>
+  </Box>
+</Preview>
+
+```astro
+<Box>
+  <p class="title is-5">Card title</p>
+  <p class="subtitle is-6">A subtitle</p>
+  <Button color="primary">Action</Button>
+</Box>
+```
+
+## Props
+
+| Prop    | Type     | Default | Description                         |
+|---------|----------|---------|-------------------------------------|
+| `class` | `string` | —       | Extra CSS classes on the `div.box`. |
+| `id`    | `string` | —       | `id` attribute on the `div.box`.    |
+| `...`   | `*`      | —       | Any other HTML `div` attributes.    |

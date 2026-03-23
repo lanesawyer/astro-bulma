@@ -1,0 +1,98 @@
+---
+title: Modal
+description: Bulma card-style modal dialog with header, body, and footer slots.
+---
+
+import Preview from "../../../components/Preview.astro";
+import Modal from "astro-bulma/components/Modal.astro";
+import Button from "astro-bulma/elements/Button.astro";
+
+The `Modal` component renders Bulma's [card-style modal](https://bulma.io/documentation/components/modal/). Toggle it by adding/removing `.is-active` on the modal's `id`. A built-in script handles closing via `data-modal-close` attributes and clicking the background.
+
+## Basic modal
+
+<Preview>
+  <Button color="primary" onclick="document.getElementById('demo-modal').classList.add('is-active')">
+    Open modal
+  </Button>
+
+  <Modal id="demo-modal" title="Example modal">
+    <p>This is the modal body. Add any content here.</p>
+  </Modal>
+</Preview>
+
+```astro
+<Button
+  color="primary"
+  onclick="document.getElementById('my-modal').classList.add('is-active')"
+>
+  Open modal
+</Button>
+
+<Modal id="my-modal" title="My modal">
+  <p>This is the modal body.</p>
+</Modal>
+```
+
+## With custom footer
+
+The `footer` slot replaces the default Close button:
+
+<Preview>
+  <Button color="info" onclick="document.getElementById('confirm-modal').classList.add('is-active')">
+    Open confirm dialog
+  </Button>
+
+  <Modal id="confirm-modal" title="Confirm action">
+    <p>Are you sure you want to delete this item? This action cannot be undone.</p>
+    <Fragment slot="footer">
+      <Button type="button" color="danger" data-modal-close>Delete</Button>
+      <Button type="button" data-modal-close>Cancel</Button>
+    </Fragment>
+  </Modal>
+</Preview>
+
+```astro
+<Button
+  color="info"
+  onclick="document.getElementById('confirm-modal').classList.add('is-active')"
+>
+  Open confirm dialog
+</Button>
+
+<Modal id="confirm-modal" title="Confirm action">
+  <p>Are you sure you want to delete this item?</p>
+  <Fragment slot="footer">
+    <Button type="button" color="danger" data-modal-close>Delete</Button>
+    <Button type="button" data-modal-close>Cancel</Button>
+  </Fragment>
+</Modal>
+```
+
+## Opening and closing
+
+Toggle visibility by toggling `.is-active` on the element with the modal's `id`:
+
+```js
+// Open
+document.getElementById("my-modal").classList.add("is-active");
+
+// Close
+document.getElementById("my-modal").classList.remove("is-active");
+```
+
+Any element with `data-modal-close` inside the modal (or the backdrop) will close it automatically.
+
+## Props
+
+| Prop    | Type     | Default | Description                                   |
+|---------|----------|---------|-----------------------------------------------|
+| `id`    | `string` | —       | **Required.** The modal element's `id`.      |
+| `title` | `string` | —       | **Required.** Title shown in the modal header.|
+
+## Slots
+
+| Slot     | Description                                                                     |
+|----------|---------------------------------------------------------------------------------|
+| default  | Modal body content.                                                             |
+| `footer` | Footer content. Defaults to a Close button with `data-modal-close`.            |
