@@ -1,0 +1,90 @@
+---
+title: PageLayout
+description: Page-level layout with a title bar, optional notification, and named slots for actions and modals.
+---
+
+import Preview from "../../../components/Preview.astro";
+import PageLayout from "astro-bulma/layouts/PageLayout.astro";
+import Button from "astro-bulma/elements/Button.astro";
+
+The `PageLayout` component renders a Bulma level-based page header with a title and optional subtitle, then your page content below. It does not include an HTML shell — wrap it inside your app's base layout.
+
+## Basic
+
+<Preview>
+  <PageLayout pageTitle="Users">
+    <p>Page content goes here.</p>
+  </PageLayout>
+</Preview>
+
+```astro
+<PageLayout pageTitle="Users">
+  <p>Page content goes here.</p>
+</PageLayout>
+```
+
+## With subtitle
+
+<Preview>
+  <PageLayout pageTitle="Users" pageSubtitle="Manage your team members">
+    <p>Page content goes here.</p>
+  </PageLayout>
+</Preview>
+
+```astro
+<PageLayout pageTitle="Users" pageSubtitle="Manage your team members">
+  <p>Page content goes here.</p>
+</PageLayout>
+```
+
+## With action button
+
+<Preview>
+  <PageLayout pageTitle="Users">
+    <Button slot="action" color="primary">New user</Button>
+    <p>Page content goes here.</p>
+  </PageLayout>
+</Preview>
+
+```astro
+<PageLayout pageTitle="Users">
+  <Button slot="action" color="primary">New user</Button>
+  <p>Page content goes here.</p>
+</PageLayout>
+```
+
+## With notification message
+
+<Preview>
+  <PageLayout pageTitle="Users" message="User created successfully." messageType="success">
+    <p>Page content goes here.</p>
+  </PageLayout>
+</Preview>
+
+```astro
+<PageLayout
+  pageTitle="Users"
+  message="User created successfully."
+  messageType="success"
+>
+  <p>Page content goes here.</p>
+</PageLayout>
+```
+
+## Props
+
+| Prop           | Type                                                        | Default     | Description                                        |
+|----------------|-------------------------------------------------------------|-------------|----------------------------------------------------|
+| `pageTitle`    | `string`                                                    | —           | The page heading rendered in the level bar.        |
+| `pageSubtitle` | `string`                                                    | —           | Optional subtitle rendered below the page heading. |
+| `message`      | `string`                                                    | —           | If set, renders a `Notification` below the header. |
+| `messageType`  | `"link" \| "primary" \| "info" \| "success" \| "warning" \| "danger"` | `"success"` | Color of the notification.            |
+
+## Slots
+
+| Slot      | Description                                                    |
+|-----------|----------------------------------------------------------------|
+| `before`  | Rendered above the level header bar.                           |
+| `action`  | Rendered on the right side of the level header bar.            |
+| default   | Main page content, rendered below the header and notification. |
+| `modals`  | Rendered after the main content; intended for modal components.|

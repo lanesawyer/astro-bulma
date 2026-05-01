@@ -1,0 +1,19 @@
+---
+interface Props {
+  width?: "narrow" | "medium" | "wide";
+}
+
+const { width = "narrow" } = Astro.props;
+
+const columnClass = {
+  narrow: "is-5-tablet is-4-desktop",
+  medium: "is-6-tablet is-5-desktop",
+  wide: "is-8-tablet is-7-desktop",
+}[width];
+---
+
+<div class="columns is-centered">
+  <div class={`column ${columnClass}`}>
+    <slot />
+  </div>
+</div>
