@@ -1,0 +1,63 @@
+---
+title: SingleColumnLayout
+description: Centers content in a single responsive column with configurable width.
+---
+
+import Preview from "../../../components/Preview.astro";
+import SingleColumnLayout from "astro-bulma/layouts/SingleColumnLayout.astro";
+
+The `SingleColumnLayout` component wraps its children in a horizontally centered Bulma column. It does not include an HTML shell — wrap it inside your app's base layout.
+
+## Narrow (default)
+
+<Preview>
+  <SingleColumnLayout>
+    <p class="box">Narrow centered content.</p>
+  </SingleColumnLayout>
+</Preview>
+
+```astro
+<SingleColumnLayout>
+  <p class="box">Narrow centered content.</p>
+</SingleColumnLayout>
+```
+
+## Medium
+
+<Preview>
+  <SingleColumnLayout width="medium">
+    <p class="box">Medium centered content.</p>
+  </SingleColumnLayout>
+</Preview>
+
+```astro
+<SingleColumnLayout width="medium">
+  <p class="box">Medium centered content.</p>
+</SingleColumnLayout>
+```
+
+## Wide
+
+<Preview>
+  <SingleColumnLayout width="wide">
+    <p class="box">Wide centered content.</p>
+  </SingleColumnLayout>
+</Preview>
+
+```astro
+<SingleColumnLayout width="wide">
+  <p class="box">Wide centered content.</p>
+</SingleColumnLayout>
+```
+
+## Props
+
+| Prop    | Type                           | Default    | Description                                    |
+|---------|--------------------------------|------------|------------------------------------------------|
+| `width` | `"narrow" \| "medium" \| "wide"` | `"narrow"` | Controls the column width at tablet and above. |
+
+## Slots
+
+| Slot    | Description          |
+|---------|----------------------|
+| default | The column's content.|
