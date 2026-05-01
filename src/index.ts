@@ -13,6 +13,10 @@ export { default as FileInput } from './forms/FileInput.astro';
 export { default as Select } from './forms/Select.astro';
 export { default as TextInput } from './forms/TextInput.astro';
 
+// Layouts
+export { default as PageLayout } from './layouts/PageLayout.astro';
+export { default as SingleColumnLayout } from './layouts/SingleColumnLayout.astro';
+
 // Components
 export { default as Breadcrumb } from './components/Breadcrumb.astro';
 export { default as Card } from './components/Card.astro';

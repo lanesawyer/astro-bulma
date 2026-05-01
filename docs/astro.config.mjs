@@ -118,6 +118,13 @@ export default defineConfig({
             { label: "Tabs", slug: "components/tabs" },
           ],
         },
+        {
+          label: "Layouts",
+          items: [
+            { label: "PageLayout", slug: "layouts/pagelayout" },
+            { label: "SingleColumnLayout", slug: "layouts/singlecolumnlayout" },
+          ],
+        },
       ],
       customCss: [
         "@fortawesome/fontawesome-free/css/all.min.css",
@@ -136,6 +143,7 @@ export default defineConfig({
         "astro-bulma/elements": new URL("../src/elements", import.meta.url).pathname,
         "astro-bulma/forms": new URL("../src/forms", import.meta.url).pathname,
         "astro-bulma/components": new URL("../src/components", import.meta.url).pathname,
+        "astro-bulma/layouts": new URL("../src/layouts", import.meta.url).pathname,
         "astro-bulma": new URL("../src/index.ts", import.meta.url).pathname,
       },
     },
