@@ -25,6 +25,7 @@
     "check": "astro check",
     "lint": "oxlint src --deny-warnings",
     "fmt": "oxlint src --fix && prettier --write \"src/**/*.astro\"",
+    "fmt:check": "prettier --check \"src/**/*.astro\"",
     "test": "vitest run",
     "test:watch": "vitest",
     "test:coverage": "vitest run --coverage"
