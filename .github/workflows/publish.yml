@@ -34,8 +34,8 @@ jobs:
       - name: Determine next version
         id: version
         run: |
-          TAG=$(pnpm exec git-cliff --bumped-version)
-          VERSION=${TAG#v}
+          VERSION=$(pnpm exec git-cliff --bumped-version)
+          TAG="v$VERSION"
           echo "tag=$TAG" >> "$GITHUB_OUTPUT"
           echo "version=$VERSION" >> "$GITHUB_OUTPUT"
 
