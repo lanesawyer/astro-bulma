@@ -11,11 +11,24 @@
     "astro-component"
   ],
   "license": "(GPL-3.0-only OR MIT)",
+  "homepage": "https://github.com/lanesawyer/astro-bulma#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lanesawyer/astro-bulma.git"
+  },
+  "bugs": {
+    "url": "https://github.com/lanesawyer/astro-bulma/issues"
+  },
+  "files": [
+    "src/"
+  ],
   "exports": {
     ".": "./src/index.ts"
   },
   "scripts": {
     "dev": "astro dev",
+    "changelog": "git cliff --output CHANGELOG.md",
+    "prepublishOnly": "pnpm check && pnpm lint && pnpm test",
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
