@@ -1,0 +1,9 @@
+{
+  "extends": "./tsconfig.json",
+  "include": [".astro/types.d.ts", "src/**/*"],
+  "exclude": ["dist"],
+  "compilerOptions": {
+    "declaration": true,
+    "declarationDir": "dist"
+  }
+}

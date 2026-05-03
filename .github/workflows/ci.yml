@@ -26,6 +26,26 @@ jobs:
       - name: Build
         run: pnpm build
 
+  build-docs:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: pnpm/action-setup@v5
+        with:
+          version: 11.0.3
+
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 24.13.1
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Build docs
+        run: pnpm docs:build
+
   check:
     runs-on: ubuntu-latest
     steps:
@@ -45,6 +65,26 @@ jobs:
 
       - name: Type check
         run: pnpm check
+
+  check-docs:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: pnpm/action-setup@v5
+        with:
+          version: 11.0.3
+
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 24.13.1
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Type check docs
+        run: pnpm check:docs
 
   lint:
     runs-on: ubuntu-latest
