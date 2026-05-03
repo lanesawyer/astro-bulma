@@ -23,8 +23,10 @@
     "docs:build": "astro --root docs build",
     "docs:preview": "astro --root docs preview",
     "check": "astro check",
+    "check:docs": "astro --root docs check",
     "lint": "oxlint src --deny-warnings",
     "fmt": "oxlint src --fix && prettier --write \"src/**/*.astro\"",
+    "fmt:check": "prettier --check \"src/**/*.astro\"",
     "test": "vitest run",
     "test:watch": "vitest",
     "test:coverage": "vitest run --coverage"

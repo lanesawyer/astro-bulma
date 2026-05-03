@@ -8,7 +8,12 @@ interface Props {
   messageType?: "link" | "primary" | "info" | "success" | "warning" | "danger";
 }
 
-const { pageTitle, pageSubtitle, message, messageType = "success" } = Astro.props;
+const {
+  pageTitle,
+  pageSubtitle,
+  message,
+  messageType = "success",
+} = Astro.props;
 ---
 
 <slot name="before" />
