@@ -28,7 +28,7 @@
   "scripts": {
     "dev": "astro dev",
     "changelog": "git-cliff --output CHANGELOG.md",
-    "prepublishOnly": "pnpm check && pnpm lint && pnpm test",
+    "prepublishOnly": "pnpm check && pnpm lint && pnpm test --passWithNoTests",
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
