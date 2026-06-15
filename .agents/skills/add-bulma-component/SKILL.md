@@ -76,7 +76,15 @@ Pick the directory by kind:
    `<Preview>` blocks paired with fenced `astro` code samples). For
    Bulma-native components, link to the matching Bulma docs page in the intro.
 
-5. **Verify.**
+5. **Register it in the docs sidebar.** Creating the `.mdx` is not enough — the
+   Starlight sidebar in `docs/astro.config.mjs` is an explicit list, so the page
+   won't appear until you add it. Add an entry to the matching `items` array
+   (`Elements`, `Forms`, `Components`, `Layouts`), keeping the existing order:
+   ```js
+   { label: "Name", slug: "<dir>/<name>" },
+   ```
+
+6. **Verify.**
    ```bash
    pnpm check   # astro type check
    pnpm lint    # oxlint --deny-warnings

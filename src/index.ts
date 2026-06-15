@@ -22,4 +22,5 @@ export { default as Breadcrumb } from './components/Breadcrumb.astro';
 export { default as Card } from './components/Card.astro';
 export { default as Message } from './components/Message.astro';
 export { default as Modal } from './components/Modal.astro';
+export { default as Navbar } from './components/Navbar.astro';
 export { default as Tabs } from './components/Tabs.astro';

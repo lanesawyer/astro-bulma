@@ -6,6 +6,8 @@ interface Props {
 const { class: className } = Astro.props;
 ---
 
-<div class:list={["preview", className]}>
+<!-- `not-content` opts out of Starlight's markdown flow styles (e.g. the
+     adjacent-sibling margin rule) which otherwise leak into Bulma layouts. -->
+<div class:list={["preview", "not-content", className]}>
   <slot />
 </div>
