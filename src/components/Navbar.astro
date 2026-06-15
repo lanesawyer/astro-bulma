@@ -1,0 +1,108 @@
+---
+/**
+ * Bulma navbar with a responsive burger toggle.
+ *
+ * Usage:
+ *   <Navbar color="primary">
+ *     <a slot="brand" class="navbar-item" href="/">Home</a>
+ *     <Fragment slot="start">
+ *       <a class="navbar-item" href="/docs">Docs</a>
+ *     </Fragment>
+ *     <Fragment slot="end">
+ *       <a class="navbar-item" href="/login">Log in</a>
+ *     </Fragment>
+ *   </Navbar>
+ *
+ * Slots:
+ *   brand — left-aligned items always visible (logo, primary links)
+ *   start — items aligned to the left of the collapsible menu
+ *   end   — items aligned to the right of the collapsible menu
+ */
+
+interface Props {
+  /** Bulma color modifier, e.g. 'primary', 'dark'. */
+  color?: string;
+  /** Pin the navbar to the top or bottom of the viewport. */
+  fixed?: "top" | "bottom";
+  /** Adds is-transparent. */
+  transparent?: boolean;
+  /** Adds is-spaced. */
+  spaced?: boolean;
+  /** Adds has-shadow. */
+  shadow?: boolean;
+  /** aria-label for the <nav>. */
+  ariaLabel?: string;
+  /** id for the collapsible menu (defaults to a generated value). */
+  menuId?: string;
+  class?: string;
+  [key: string]: unknown;
+}
+
+const {
+  color,
+  fixed,
+  transparent,
+  spaced,
+  shadow,
+  ariaLabel = "main navigation",
+  menuId = `navbar-menu-${Math.random().toString(36).slice(2, 9)}`,
+  class: className,
+  ...rest
+} = Astro.props;
+
+const classes = [
+  "navbar",
+  color && `is-${color}`,
+  fixed && `is-fixed-${fixed}`,
+  transparent && "is-transparent",
+  spaced && "is-spaced",
+  shadow && "has-shadow",
+  className,
+]
+  .filter(Boolean)
+  .join(" ");
+
+const hasBrand = Astro.slots.has("brand");
+const hasStart = Astro.slots.has("start");
+const hasEnd = Astro.slots.has("end");
+---
+
+<nav class={classes} role="navigation" aria-label={ariaLabel} {...rest}>
+  <div class="navbar-brand">
+    {hasBrand && <slot name="brand" />}
+    <a
+      role="button"
+      class="navbar-burger"
+      aria-label="menu"
+      aria-expanded="false"
+      data-target={menuId}
+    >
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    </a>
+  </div>
+
+  <div id={menuId} class="navbar-menu">
+    <div class="navbar-start">{hasStart && <slot name="start" />}</div>
+    <div class="navbar-end">{hasEnd && <slot name="end" />}</div>
+  </div>
+</nav>
+
+<script>
+  // Runs once (Astro deduplicates module scripts). Delegated so it works
+  // without <ClientRouter> and survives navigations — same pattern as Modal.
+  document.addEventListener("click", (e) => {
+    const burger = (e.target as HTMLElement).closest<HTMLElement>(
+      ".navbar-burger",
+    );
+    if (!burger) return;
+
+    const targetId = burger.dataset.target;
+    const menu = targetId && document.getElementById(targetId);
+    const active = burger.classList.toggle("is-active");
+    burger.setAttribute("aria-expanded", String(active));
+    menu?.classList.toggle("is-active", active);
+  });
+</script>

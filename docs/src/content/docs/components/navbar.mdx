@@ -1,0 +1,76 @@
+---
+title: Navbar
+description: Bulma navbar with a responsive burger toggle.
+---
+
+import Preview from "../../../components/Preview.astro";
+import Navbar from "astro-bulma/components/Navbar.astro";
+
+The `Navbar` component renders Bulma's [navbar](https://bulma.io/documentation/components/navbar/) with a built-in burger toggle for mobile. The required JavaScript ships with the component, so the hamburger menu works out of the box. Content goes into three named slots: `brand`, `start`, and `end`.
+
+## Basic navbar
+
+<Preview>
+  <Navbar color="primary">
+    <a slot="brand" class="navbar-item" href="#">astro-bulma</a>
+    <Fragment slot="start">
+      <a class="navbar-item" href="#">Home</a>
+      <a class="navbar-item" href="#">Docs</a>
+    </Fragment>
+    <Fragment slot="end">
+      <a class="navbar-item" href="#">Log in</a>
+    </Fragment>
+  </Navbar>
+</Preview>
+
+```astro
+<Navbar color="primary">
+  <a slot="brand" class="navbar-item" href="/">astro-bulma</a>
+  <Fragment slot="start">
+    <a class="navbar-item" href="/">Home</a>
+    <a class="navbar-item" href="/docs">Docs</a>
+  </Fragment>
+  <Fragment slot="end">
+    <a class="navbar-item" href="/login">Log in</a>
+  </Fragment>
+</Navbar>
+```
+
+## Mobile burger
+
+On narrow viewports (below the Bulma desktop breakpoint), the `start`/`end` menu
+collapses and a hamburger button appears in the brand area. The component
+registers a click handler that toggles `is-active` on both the burger and its
+menu — no extra setup required.
+
+## Dropdowns
+
+Use Bulma's `navbar-item has-dropdown is-hoverable` markup inside any slot:
+
+```astro
+<Navbar>
+  <a slot="brand" class="navbar-item" href="/">Logo</a>
+  <Fragment slot="start">
+    <div class="navbar-item has-dropdown is-hoverable">
+      <a class="navbar-link">More</a>
+      <div class="navbar-dropdown">
+        <a class="navbar-item" href="/about">About</a>
+        <a class="navbar-item" href="/contact">Contact</a>
+      </div>
+    </div>
+  </Fragment>
+</Navbar>
+```
+
+## Props
+
+| Prop          | Type                       | Default              | Description                                        |
+|---------------|----------------------------|----------------------|----------------------------------------------------|
+| `color`       | `string`                   | —                    | Bulma color modifier, e.g. `primary`, `dark`.      |
+| `fixed`       | `"top"` \| `"bottom"`      | —                    | Pins the navbar to the top or bottom of the viewport. |
+| `transparent` | `boolean`                  | —                    | Adds `is-transparent`.                             |
+| `spaced`      | `boolean`                  | —                    | Adds `is-spaced`.                                  |
+| `shadow`      | `boolean`                  | —                    | Adds `has-shadow`.                                 |
+| `ariaLabel`   | `string`                   | `"main navigation"`  | `aria-label` for the `<nav>`.                      |
+| `menuId`      | `string`                   | generated            | id linking the burger to its collapsible menu.     |
+| `class`       | `string`                   | —                    | Extra classes on the `<nav>`.                      |

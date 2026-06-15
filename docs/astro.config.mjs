@@ -115,6 +115,7 @@ export default defineConfig({
             { label: "Card", slug: "components/card" },
             { label: "Message", slug: "components/message" },
             { label: "Modal", slug: "components/modal" },
+            { label: "Navbar", slug: "components/navbar" },
             { label: "Tabs", slug: "components/tabs" },
           ],
         },
