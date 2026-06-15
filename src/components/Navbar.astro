@@ -100,7 +100,7 @@ const hasEnd = Astro.slots.has("end");
     if (!burger) return;
 
     const targetId = burger.dataset.target;
-    const menu = targetId && document.getElementById(targetId);
+    const menu = targetId ? document.getElementById(targetId) : null;
     const active = burger.classList.toggle("is-active");
     burger.setAttribute("aria-expanded", String(active));
     menu?.classList.toggle("is-active", active);
