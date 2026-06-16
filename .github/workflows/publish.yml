@@ -58,7 +58,7 @@ jobs:
           git add CHANGELOG.md package.json
           git commit -m "chore(release): ${{ steps.version.outputs.tag }}"
           git tag ${{ steps.version.outputs.tag }} -m "Release ${{ steps.version.outputs.tag }}"
-          git push https://${{ secrets.RELEASE_TOKEN }}@github.com/${{ github.repository }}.git main --follow-tags
+          git push https://${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git main --follow-tags
 
       - name: Publish to npm
         run: pnpm publish --no-git-checks --provenance --access public
