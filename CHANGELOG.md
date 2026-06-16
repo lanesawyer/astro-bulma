@@ -2,6 +2,23 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.1.0] - 2026-06-16
+
+### Bug Fixes
+- Tag name in publish action (#12) ([`99ee3ca`](https://github.com/lanesawyer/astro-bulma/commit/99ee3caf41407a58f5e35a4c5e6e69d9fb176c2b))
+- Revert token change (#13) ([`e797a11`](https://github.com/lanesawyer/astro-bulma/commit/e797a1176591d0a7c995c3ba8b5edde7b947a085))
+
+
+### Features
+- **navbar**: Add responsive navbar with burger toggle (#10) ([`b40a877`](https://github.com/lanesawyer/astro-bulma/commit/b40a87766d66c2a6eda60bedf3d17bcec91b3831))
+- **progress**: Add Progress bar element (#11) ([`964240d`](https://github.com/lanesawyer/astro-bulma/commit/964240d2b47b09b5aa11637465000ea42c12c9ef))
+
+
+### Miscellaneous
+- Update changelog for untypical release (#8) ([`e8cba0c`](https://github.com/lanesawyer/astro-bulma/commit/e8cba0c1ffb4e9e0a8b4289b1cee9a8ccdfb137c))
+- Generic agent setup, make a skill for new/updated components (#9) ([`073159a`](https://github.com/lanesawyer/astro-bulma/commit/073159a87712c6bad07a99920120f6c2c78377b8))
+
+
 ## [0.0.1] - 2026-05-03
 
 ### Bug Fixes
