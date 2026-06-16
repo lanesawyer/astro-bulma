@@ -1,0 +1,78 @@
+---
+title: Progress
+description: Bulma progress bar element for showing completion or loading state.
+---
+
+import Preview from "../../../components/Preview.astro";
+import Progress from "astro-bulma/elements/Progress.astro";
+
+The `Progress` component renders Bulma's [progress bar element](https://bulma.io/documentation/elements/progress/) — a native `<progress>` for showing completion or loading state.
+
+## Basic progress
+
+<Preview>
+  <Progress value={45} max={100} />
+</Preview>
+
+```astro
+<Progress value={45} max={100} />
+```
+
+## Colors
+
+<Preview>
+  <Progress color="primary" value={15} />
+  <Progress color="link" value={30} />
+  <Progress color="info" value={45} />
+  <Progress color="success" value={60} />
+  <Progress color="warning" value={75} />
+  <Progress color="danger" value={90} />
+</Preview>
+
+```astro
+<Progress color="primary" value={15} />
+<Progress color="link" value={30} />
+<Progress color="info" value={45} />
+<Progress color="success" value={60} />
+<Progress color="warning" value={75} />
+<Progress color="danger" value={90} />
+```
+
+## Sizes
+
+<Preview>
+  <Progress size="small" color="info" value={30} />
+  <Progress color="info" value={45} />
+  <Progress size="medium" color="info" value={60} />
+  <Progress size="large" color="info" value={75} />
+</Preview>
+
+```astro
+<Progress size="small" color="info" value={30} />
+<Progress color="info" value={45} />
+<Progress size="medium" color="info" value={60} />
+<Progress size="large" color="info" value={75} />
+```
+
+## Indeterminate
+
+Omit `value` for an animated, indeterminate progress bar (useful for loading states).
+
+<Preview>
+  <Progress color="primary" />
+</Preview>
+
+```astro
+<Progress color="primary" />
+```
+
+## Props
+
+| Prop    | Type                                                                                         | Default | Description                                                  |
+|---------|----------------------------------------------------------------------------------------------|---------|--------------------------------------------------------------|
+| `color` | `"primary"` \| `"link"` \| `"info"` \| `"success"` \| `"warning"` \| `"danger"` \| `"light"` \| `"dark"` | —   | Bulma color modifier.                                        |
+| `size`  | `"small"` \| `"medium"` \| `"large"`                                                          | —       | Size modifier.                                               |
+| `value` | `number`                                                                                      | —       | Current value. Omit for an indeterminate (animated) bar.     |
+| `max`   | `number`                                                                                      | `100`   | Maximum value.                                               |
+| `class` | `string`                                                                                      | —       | Extra CSS classes.                                           |
+| `...`   | `*`                                                                                           | —       | Any other HTML progress attributes.                          |

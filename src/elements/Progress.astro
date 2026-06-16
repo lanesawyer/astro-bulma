@@ -1,0 +1,45 @@
+---
+type Color =
+  | "primary"
+  | "link"
+  | "info"
+  | "success"
+  | "warning"
+  | "danger"
+  | "light"
+  | "dark";
+
+type Size = "small" | "medium" | "large";
+
+interface Props {
+  color?: Color;
+  size?: Size;
+  /** Current value. Omit for an indeterminate (animated) progress bar. */
+  value?: number;
+  max?: number;
+  class?: string;
+  [key: string]: unknown;
+}
+
+const {
+  color,
+  size,
+  value,
+  max = 100,
+  class: className,
+  ...rest
+} = Astro.props;
+
+const classes = [
+  "progress",
+  color && `is-${color}`,
+  size && `is-${size}`,
+  className,
+]
+  .filter(Boolean)
+  .join(" ");
+---
+
+<progress class={classes} value={value} max={max} {...rest}>
+  {value != null ? `${value}%` : null}
+</progress>
