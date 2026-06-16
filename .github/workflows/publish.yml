@@ -34,8 +34,8 @@ jobs:
       - name: Determine next version
         id: version
         run: |
-          VERSION=$(pnpm exec git-cliff --bumped-version)
-          TAG="v$VERSION"
+          TAG=$(pnpm exec git-cliff --bumped-version)
+          VERSION="${TAG#v}"
           echo "tag=$TAG" >> "$GITHUB_OUTPUT"
           echo "version=$VERSION" >> "$GITHUB_OUTPUT"
 
@@ -55,11 +55,12 @@ jobs:
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email 'github-actions[bot]@users.noreply.github.com'
-          set +e
           git add CHANGELOG.md package.json
           git commit -m "chore(release): ${{ steps.version.outputs.tag }}"
           git tag ${{ steps.version.outputs.tag }} -m "Release ${{ steps.version.outputs.tag }}"
-          git push https://${{ secrets.GITHUB_TOKEN }}@github.com/${GITHUB_REPOSITORY}.git main --follow-tags
+          git push https://${{ secrets.RELEASE_TOKEN }}@github.com/${{ github.repository }}.git main --follow-tags
 
       - name: Publish to npm
         run: pnpm publish --no-git-checks --provenance --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
