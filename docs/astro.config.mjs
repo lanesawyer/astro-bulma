@@ -24,6 +24,19 @@ function scopeBulmaPlugin() {
     const root = postcss.parse(css);
 
     root.walkRules((/** @type {import("postcss").Rule} */ rule) => {
+      // Keyframe selectors (`0%`, `from`, `to`) live inside @keyframes and must
+      // not be scoped — prepending `.preview` corrupts the animation.
+      const parent = rule.parent;
+      if (
+        parent &&
+        parent.type === "atrule" &&
+        /keyframes$/i.test(
+          /** @type {import("postcss").AtRule} */ (parent).name,
+        )
+      ) {
+        return;
+      }
+
       rule.selectors = rule.selectors.map((sel) => {
         const transform = selectorParser((selectors) => {
           selectors.each((selector) => {
@@ -95,6 +108,7 @@ export default defineConfig({
             { label: "Icon", slug: "elements/icon" },
             { label: "Image", slug: "elements/image" },
             { label: "Notification", slug: "elements/notification" },
+            { label: "Progress", slug: "elements/progress" },
             { label: "Table", slug: "elements/table" },
             { label: "Tag", slug: "elements/tag" },
           ],
