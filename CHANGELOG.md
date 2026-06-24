@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.2.5] - 2026-06-24
+
+### Bug Fixes
+- **integration**: Log warnings when build-time theme injection finds no HTML files (#19) ([`e40ba9c`](https://github.com/lanesawyer/astro-bulma/commit/e40ba9c72de2d4fd74d1c4137ad6f8dc25204ca3))
+
+
 ## [0.2.4] - 2026-06-24
 
 ### Bug Fixes
