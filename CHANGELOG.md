@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.2.0] - 2026-06-24
+
+### Features
+- **integration**: Add astrobulma() integration for Bulma CSS variable theming (#14) ([`34f4d86`](https://github.com/lanesawyer/astro-bulma/commit/34f4d8691efbb73ed0700df3d45663b02aa31097))
+
+
 ## [0.1.0] - 2026-06-16
 
 ### Bug Fixes
