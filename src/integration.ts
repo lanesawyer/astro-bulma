@@ -34,7 +34,7 @@ export function astrobulma(
       "astro:build:done": ({ dir, pages }) => {
         const styleTag = `<style>:root{${vars}}</style>`;
         for (const { pathname } of pages) {
-          const file = new URL(`${pathname}index.html`, dir);
+          const file = new URL(`${pathname.replace(/^\//, "")}index.html`, dir);
           try {
             const html = readFileSync(file, "utf8");
             writeFileSync(file, html.replace("</head>", `${styleTag}</head>`));
