@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.2.1] - 2026-06-24
+
+### Bug Fixes
+- **integration**: Export astrobulma from a separate subpath to avoid .astro parse errors (#15) ([`f09a3f1`](https://github.com/lanesawyer/astro-bulma/commit/f09a3f1cfe8f9b27b944ade5a56cbcd0175bcd26))
+
+
 ## [0.2.0] - 2026-06-24
 
 ### Features
