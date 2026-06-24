@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.2.4] - 2026-06-24
+
+### Bug Fixes
+- **integration**: Use assets map for build-time HTML injection (#18) ([`6282ba4`](https://github.com/lanesawyer/astro-bulma/commit/6282ba43ad782ce6df3ea7857bae48a82fbecdec))
+
+
 ## [0.2.3] - 2026-06-24
 
 ### Bug Fixes
