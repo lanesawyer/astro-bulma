@@ -1,5 +1,6 @@
 import type { AstroIntegration } from "astro";
 import { readFileSync, writeFileSync } from "node:fs";
+import { fileURLToPath } from "node:url";
 
 export type BulmaTheme = Record<string, string>;
 
@@ -28,18 +29,22 @@ export function astrobulma(
         injectScript("head-inline", js);
       },
 
-      // Build: post-process HTML files and inject right before </head>, so
-      // the style lands after all linked stylesheets and wins the cascade
-      // with a plain :root selector.
-      "astro:build:done": ({ dir, pages }) => {
+      // Build: post-process HTML files using direct file URLs from the assets
+      // map (Astro 5+). Injecting right before </head> means the style lands
+      // after all <link rel="stylesheet"> tags and wins the cascade at equal
+      // specificity with a plain :root selector.
+      "astro:build:done": ({ assets }) => {
         const styleTag = `<style>:root{${vars}}</style>`;
-        for (const { pathname } of pages) {
-          const file = new URL(`${pathname}index.html`, dir);
-          try {
-            const html = readFileSync(file, "utf8");
-            writeFileSync(file, html.replace("</head>", `${styleTag}</head>`));
-          } catch {
-            // some pages (redirects, etc.) have no index.html
+        for (const urls of assets.values()) {
+          for (const url of urls) {
+            if (!url.pathname.endsWith(".html")) continue;
+            try {
+              const file = fileURLToPath(url);
+              const html = readFileSync(file, "utf8");
+              writeFileSync(file, html.replace("</head>", `${styleTag}</head>`));
+            } catch {
+              // skip — redirect stubs, race conditions, etc.
+            }
           }
         }
       },
