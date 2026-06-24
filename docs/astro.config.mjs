@@ -98,7 +98,10 @@ export default defineConfig({
       sidebar: [
         {
           label: "Getting Started",
-          items: [{ label: "Introduction", slug: "index" }],
+          items: [
+            { label: "Introduction", slug: "index" },
+            { label: "Theming", slug: "theming" },
+          ],
         },
         {
           label: "Elements",

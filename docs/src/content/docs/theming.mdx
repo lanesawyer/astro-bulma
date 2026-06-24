@@ -1,0 +1,76 @@
+---
+title: Theming
+description: Override Bulma CSS variables site-wide using the astrobulma() integration.
+---
+
+Bulma 1.0 exposes every design token as a [CSS custom property](https://bulma.io/documentation/features/css-variables/). The `astrobulma()` Astro integration lets you override any of those variables site-wide from your `astro.config.mjs`, with no CSS file to maintain.
+
+## Setup
+
+Add the integration to your Astro config:
+
+```js
+// astro.config.mjs
+import { defineConfig } from "astro/config";
+import { astrobulma } from "astro-bulma";
+
+export default defineConfig({
+  integrations: [
+    astrobulma({
+      theme: {
+        "--bulma-primary": "#8b5cf6",
+        "--bulma-primary-h": "263",
+        "--bulma-primary-s": "70%",
+        "--bulma-primary-l": "50%",
+      },
+    }),
+  ],
+});
+```
+
+Keys must be the full CSS variable name including the `--bulma-` prefix. Values are plain strings passed verbatim into a `:root { … }` block injected into every page's `<head>`.
+
+## Finding variable names
+
+Every Bulma component lists its variables on its documentation page. You can also inspect the computed styles on any element in DevTools — all Bulma variables are prefixed `--bulma-`.
+
+The [Bulma CSS variables reference](https://bulma.io/documentation/features/css-variables/) lists all available variables.
+
+## Color variables
+
+Bulma 1.0 derives colors using HSL components. To fully override a semantic color (primary, link, info, success, warning, danger), set all four variables:
+
+```js
+astrobulma({
+  theme: {
+    "--bulma-primary":   "hsl(263, 70%, 50%)",
+    "--bulma-primary-h": "263",
+    "--bulma-primary-s": "70%",
+    "--bulma-primary-l": "50%",
+  },
+})
+```
+
+Setting only `--bulma-primary` changes the base color, but Bulma's hover, active, and text variants are computed from the `h`/`s`/`l` parts — so update all four for consistent results.
+
+## Other variables
+
+Any Bulma variable can be overridden the same way:
+
+```js
+astrobulma({
+  theme: {
+    "--bulma-radius":          "0.5rem",
+    "--bulma-radius-large":    "1rem",
+    "--bulma-family-primary":  "'Inter', sans-serif",
+    "--bulma-weight-bold":     "800",
+    "--bulma-block-spacing":   "2rem",
+  },
+})
+```
+
+## How it works
+
+In production builds the integration's `astro:build:done` hook post-processes every generated HTML file, injecting a `<style>:root { … }</style>` block right before `</head>`. Because the style lands after all `<link rel="stylesheet">` tags, it wins the cascade at equal specificity with no tricks required.
+
+In development the integration adds a Vite middleware that buffers each HTML response and applies the same injection before it's sent to the browser.
