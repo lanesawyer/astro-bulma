@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.2.3] - 2026-06-24
+
+### Bug Fixes
+- **integration**: Strip leading slash from pathname before building dist file URL (#17) ([`e9b5c4b`](https://github.com/lanesawyer/astro-bulma/commit/e9b5c4bd4c67e8723b8144e32f4044faf9843913))
+
+
 ## [0.2.2] - 2026-06-24
 
 ### Bug Fixes
