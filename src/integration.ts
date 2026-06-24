@@ -33,19 +33,30 @@ export function astrobulma(
       // map (Astro 5+). Injecting right before </head> means the style lands
       // after all <link rel="stylesheet"> tags and wins the cascade at equal
       // specificity with a plain :root selector.
-      "astro:build:done": ({ assets }) => {
+      "astro:build:done": ({ assets, logger }) => {
         const styleTag = `<style>:root{${vars}}</style>`;
+        let injected = 0;
         for (const urls of assets.values()) {
           for (const url of urls) {
             if (!url.pathname.endsWith(".html")) continue;
             try {
               const file = fileURLToPath(url);
               const html = readFileSync(file, "utf8");
+              if (!html.includes("</head>")) {
+                logger.warn(`astrobulma: no </head> found in ${file}`);
+                continue;
+              }
               writeFileSync(file, html.replace("</head>", `${styleTag}</head>`));
-            } catch {
-              // skip — redirect stubs, race conditions, etc.
+              injected++;
+            } catch (e) {
+              logger.warn(`astrobulma: failed to inject into ${url.href}: ${e}`);
             }
           }
+        }
+        if (injected === 0) {
+          logger.warn(`astrobulma: theme vars set but no HTML files were found in the assets map — theme will not be applied in the build`);
+        } else {
+          logger.info(`astrobulma: injected theme into ${injected} HTML file(s)`);
         }
       },
     },
