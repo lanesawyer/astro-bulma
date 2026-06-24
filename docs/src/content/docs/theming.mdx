@@ -73,4 +73,6 @@ astrobulma({
 
 In production builds the integration's `astro:build:done` hook post-processes every generated HTML file, injecting a `<style>:root { … }</style>` block right before `</head>`. Because the style lands after all `<link rel="stylesheet">` tags, it wins the cascade at equal specificity with no tricks required.
 
-In development the integration adds a Vite middleware that buffers each HTML response and applies the same injection before it's sent to the browser.
+In production builds the integration post-processes every generated HTML file, injecting a `<style>:root { … }</style>` block right before `</head>` — after all linked stylesheets, so it wins the cascade.
+
+In development, Vite injects CSS at runtime rather than via `<link>` tags, so source order isn't reliable. The integration uses a small `<script>` in `<head>` that writes `html:root { … }` — a selector with higher specificity than Bulma's `:root` — ensuring your overrides win regardless of when Vite injects Bulma's styles.

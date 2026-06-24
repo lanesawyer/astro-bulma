@@ -13,14 +13,26 @@ export function astrobulma(
     return { name: "astrobulma", hooks: {} };
   }
 
-  // Injected right before </head>, so it comes after all linked stylesheets —
-  // plain :root wins the cascade without any specificity tricks.
-  const styleTag = `<style>:root{${entries.map(([k, v]) => `${k}:${v}`).join(";")}}`;
+  const vars = entries.map(([k, v]) => `${k}:${v}`).join(";");
 
   return {
     name: "astrobulma",
     hooks: {
+      // Dev: inject via a head-inline script. Vite injects CSS at runtime so
+      // we can't control cascade position — use html:root (specificity 0,1,1)
+      // to beat Bulma's :root (0,1,0) regardless of source order.
+      "astro:config:setup": ({ command, injectScript }) => {
+        if (command !== "dev") return;
+        const css = `html:root{${vars}}`;
+        const js = `(function(){var s=document.createElement('style');s.textContent=${JSON.stringify(css)};document.head.appendChild(s)})();`;
+        injectScript("head-inline", js);
+      },
+
+      // Build: post-process HTML files and inject right before </head>, so
+      // the style lands after all linked stylesheets and wins the cascade
+      // with a plain :root selector.
       "astro:build:done": ({ dir, pages }) => {
+        const styleTag = `<style>:root{${vars}}</style>`;
         for (const { pathname } of pages) {
           const file = new URL(`${pathname}index.html`, dir);
           try {
@@ -30,41 +42,6 @@ export function astrobulma(
             // some pages (redirects, etc.) have no index.html
           }
         }
-      },
-
-      "astro:server:setup": ({ server }) => {
-        server.middlewares.use((_req, res, next) => {
-          const originalEnd = res.end.bind(res);
-          const chunks: Buffer[] = [];
-
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          (res as any).write = (chunk: any): boolean => {
-            chunks.push(Buffer.isBuffer(chunk) ? chunk : Buffer.from(chunk));
-            return true;
-          };
-
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          (res as any).end = (chunk?: any): typeof res => {
-            if (chunk != null) {
-              chunks.push(Buffer.isBuffer(chunk) ? chunk : Buffer.from(chunk));
-            }
-            const contentType = res.getHeader("content-type");
-            if (
-              typeof contentType === "string" &&
-              contentType.includes("text/html")
-            ) {
-              const body = Buffer.concat(chunks).toString("utf8");
-              const injected = body.replace("</head>", `${styleTag}</head>`);
-              res.setHeader("content-length", Buffer.byteLength(injected, "utf8"));
-              originalEnd(injected);
-            } else {
-              originalEnd(Buffer.concat(chunks));
-            }
-            return res;
-          };
-
-          next();
-        });
       },
     },
   };
