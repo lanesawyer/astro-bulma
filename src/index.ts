@@ -1,3 +1,7 @@
+// Integration
+export { astrobulma } from './integration';
+export type { BulmaTheme } from './integration';
+
 // Elements
 export { default as Box } from './elements/Box.astro';
 export { default as Button } from './elements/Button.astro';
