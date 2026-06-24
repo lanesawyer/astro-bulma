@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.2.6] - 2026-06-24
+
+### Bug Fixes
+- **integration**: Use head-inline for all render modes, drop astro:build:done (#20) ([`2fea561`](https://github.com/lanesawyer/astro-bulma/commit/2fea5611ec9d2f7ea66003b2d1aaa796021d0087))
+
+
 ## [0.2.5] - 2026-06-24
 
 ### Bug Fixes
