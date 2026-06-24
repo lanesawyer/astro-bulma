@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.2.2] - 2026-06-24
+
+### Bug Fixes
+- **integration**: Use per-mode injection strategy for theme variables (#16) ([`026ce16`](https://github.com/lanesawyer/astro-bulma/commit/026ce16eb1810f1f7879ac5aaade2d11b88661e8))
+
+
 ## [0.2.1] - 2026-06-24
 
 ### Bug Fixes
