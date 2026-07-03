@@ -35,7 +35,7 @@ Note that unlike a scripted dropdown, clicking outside or pressing <kbd>Escape</
 
 ## Hoverable
 
-`hoverable` dropdowns also open on hover:
+`hoverable` dropdowns open on hover instead of click (the trigger button is inert). They render Bulma's plain `div` markup rather than `<details>`, since a closed `<details>` hides its content at the browser level and would defeat the CSS `:hover` reveal:
 
 <Preview class="preview-tall">
   <Dropdown label="Hover me" hoverable>
