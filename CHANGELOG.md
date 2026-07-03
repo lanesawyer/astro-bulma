@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.3.0] - 2026-07-03
+
+### Features
+- Add remaining Bulma 1.0 elements, forms, components, and layouts (#21) ([`f63c4a2`](https://github.com/lanesawyer/astro-bulma/commit/f63c4a22580d2edcd23c25781fe3be957a1a74fb))
+
+
 ## [0.2.6] - 2026-06-24
 
 ### Bug Fixes
