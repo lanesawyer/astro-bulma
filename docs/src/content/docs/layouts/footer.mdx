@@ -1,0 +1,38 @@
+---
+title: Footer
+description: A simple responsive footer.
+---
+
+import Preview from "../../../components/Preview.astro";
+import Footer from "astro-bulma/layouts/Footer.astro";
+
+The `Footer` component renders Bulma's [footer element](https://bulma.io/documentation/layout/footer/) — a simple padded container that can hold anything.
+
+## Basic example
+
+<Preview>
+  <Footer>
+    <div class="content has-text-centered">
+      <p>
+        <strong>astro-bulma</strong> by <a href="https://github.com/lanesawyer">Lane Sawyer</a>.
+      </p>
+    </div>
+  </Footer>
+</Preview>
+
+```astro
+<Footer>
+  <div class="content has-text-centered">
+    <p>
+      <strong>astro-bulma</strong> by <a href="https://github.com/lanesawyer">Lane Sawyer</a>.
+    </p>
+  </div>
+</Footer>
+```
+
+## Props
+
+| Prop    | Type     | Default | Description                            |
+|---------|----------|---------|----------------------------------------|
+| `class` | `string` | —       | Extra classes on the `footer.footer`.  |
+| `...`   | `*`      | —       | Any other HTML `footer` attributes.    |

@@ -1,0 +1,56 @@
+---
+title: Pagination
+description: A responsive, usable, and flexible pagination.
+---
+
+import Preview from "../../../components/Preview.astro";
+import Pagination from "astro-bulma/components/Pagination.astro";
+
+The `Pagination` component renders Bulma [pagination](https://bulma.io/documentation/components/pagination/). It always shows the first and last page, the current page with its direct neighbors, and ellipses for any gaps. Page links are built from `hrefTemplate`, with `{page}` replaced by the page number.
+
+## Basic example
+
+<Preview>
+  <Pagination current={5} total={12} hrefTemplate="#page-{page}" />
+</Preview>
+
+```astro
+<Pagination current={5} total={12} hrefTemplate="/posts/{page}" />
+```
+
+## Rounded and sized
+
+<Preview>
+  <Pagination current={2} total={5} hrefTemplate="#page-{page}" rounded size="small" />
+</Preview>
+
+```astro
+<Pagination current={2} total={5} hrefTemplate="/posts/{page}" rounded size="small" />
+```
+
+## Alignment
+
+<Preview>
+  <Pagination current={1} total={3} hrefTemplate="#page-{page}" align="centered" />
+</Preview>
+
+```astro
+<Pagination current={1} total={3} hrefTemplate="/posts/{page}" align="centered" />
+```
+
+The previous/next buttons disable themselves at the first and last page.
+
+## Props
+
+| Prop            | Type                             | Default       | Description                                             |
+|-----------------|----------------------------------|---------------|---------------------------------------------------------|
+| `current`       | `number`                         | —             | **Required.** The current page (1-based).               |
+| `total`         | `number`                         | —             | **Required.** Total number of pages.                    |
+| `hrefTemplate`  | `string`                         | `"#"`         | URL template; `{page}` is replaced by the page number.  |
+| `size`          | `"small" \| "medium" \| "large"` | —             | Size modifier.                                          |
+| `rounded`       | `boolean`                        | —             | Rounded page links.                                     |
+| `align`         | `"centered" \| "right"`          | —             | Alignment of the pagination list.                       |
+| `previousLabel` | `string`                         | `"Previous"`  | Text for the previous button.                           |
+| `nextLabel`     | `string`                         | `"Next page"` | Text for the next button.                               |
+| `class`         | `string`                         | —             | Extra classes on the `nav.pagination`.                  |
+| `...`           | `*`                              | —             | Any other HTML `nav` attributes.                        |

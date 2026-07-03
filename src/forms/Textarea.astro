@@ -1,0 +1,136 @@
+---
+/**
+ * Textarea component following the Bulma textarea spec.
+ * https://bulma.io/documentation/form/textarea/
+ *
+ * Usage (with field/label/control wrapper):
+ *   <Textarea name="bio" label="Bio" placeholder="Tell us about yourself" rows={4} />
+ *
+ * Usage (standalone — just the <textarea>, no wrappers):
+ *   <Textarea name="notes" standalone />
+ */
+
+interface Props {
+  /** textarea name attribute (required) */
+  name: string;
+  /** textarea id; defaults to name */
+  id?: string;
+  /** label text; renders field/label/control wrappers when set */
+  label?: string;
+  placeholder?: string;
+  /** Initial content of the textarea */
+  value?: string;
+  rows?: number;
+  required?: boolean;
+  disabled?: boolean;
+  readonly?: boolean;
+  /** HTML form attribute (associates textarea with a form by id) */
+  form?: string;
+  /** additional HTML attributes like maxlength, wrap, etc. */
+  [key: string]: unknown;
+
+  // Bulma modifiers
+  color?: "primary" | "link" | "info" | "success" | "warning" | "danger";
+  size?: "small" | "normal" | "medium" | "large";
+  /** .has-fixed-size — disables manual resizing */
+  fixedSize?: boolean;
+
+  /** Help text rendered below the control */
+  help?: string;
+  /** Color for the help text */
+  helpColor?: "primary" | "link" | "info" | "success" | "warning" | "danger";
+
+  /** When true, renders only the <textarea> element with no field/control wrappers */
+  standalone?: boolean;
+  /** Extra classes on the <textarea> element */
+  class?: string;
+  /** Extra classes on the control div (e.g. "is-loading") */
+  controlClass?: string;
+}
+
+const {
+  name,
+  id,
+  label,
+  placeholder,
+  value,
+  rows,
+  required,
+  disabled,
+  readonly,
+  form,
+  color,
+  size,
+  fixedSize,
+  help,
+  helpColor,
+  standalone,
+  class: className,
+  controlClass,
+  ...rest
+} = Astro.props;
+
+const textareaId = id ?? name;
+
+const textareaClasses = [
+  "textarea",
+  color && `is-${color}`,
+  size && `is-${size}`,
+  fixedSize && "has-fixed-size",
+  className,
+]
+  .filter(Boolean)
+  .join(" ");
+
+const controlClasses = ["control", controlClass].filter(Boolean).join(" ");
+---
+
+{
+  standalone ? (
+    <textarea
+      class={textareaClasses}
+      id={textareaId}
+      name={name}
+      placeholder={placeholder}
+      rows={rows}
+      required={required}
+      disabled={disabled}
+      readonly={readonly}
+      form={form}
+      set:text={value ?? ""}
+      {...rest}
+    />
+  ) : (
+    <div class="field">
+      {label && (
+        <label class="label" for={textareaId}>
+          {label}
+        </label>
+      )}
+      <div class={controlClasses}>
+        <textarea
+          class={textareaClasses}
+          id={textareaId}
+          name={name}
+          placeholder={placeholder}
+          rows={rows}
+          required={required}
+          disabled={disabled}
+          readonly={readonly}
+          form={form}
+          set:text={value ?? ""}
+          {...rest}
+        />
+      </div>
+      {help && (
+        <p
+          class={["help", helpColor && `is-${helpColor}`]
+            .filter(Boolean)
+            .join(" ")}
+        >
+          {help}
+        </p>
+      )}
+    </div>
+  )
+}

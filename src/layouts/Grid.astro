@@ -1,0 +1,83 @@
+---
+/**
+ * Smart grid following the Bulma grid spec (new in Bulma 1.0).
+ * https://bulma.io/documentation/grid/
+ *
+ * By default the grid is "smart": columns fit as many cells of at least
+ * the minimum width as possible. Set `fixed` (with optional `cols`) for
+ * a fixed number of columns instead.
+ *
+ * Usage:
+ *   <Grid minCol={4} gap={2}>
+ *     <Cell>1</Cell>
+ *     <Cell>2</Cell>
+ *   </Grid>
+ */
+type GapSize = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8;
+
+type Props = {
+  /** Minimum cell width step, 1–32 (.is-col-min-*, each step is 1.5rem) */
+  minCol?: number;
+  /** Gap between cells, 0–8 */
+  gap?: GapSize;
+  /** Column gap only, 0–8 */
+  columnGap?: GapSize;
+  /** Row gap only, 0–8 */
+  rowGap?: GapSize;
+  /** Wrap in .fixed-grid for a fixed number of columns */
+  fixed?: boolean;
+  /** Column count for fixed grids, 1–12 (.has-*-cols; implies fixed) */
+  cols?: number;
+  /** .has-auto-count — fixed grid column count adapts per breakpoint */
+  autoCount?: boolean;
+  class?: string;
+  [key: string]: unknown;
+};
+
+const {
+  minCol,
+  gap,
+  columnGap,
+  rowGap,
+  fixed,
+  cols,
+  autoCount,
+  class: className,
+  ...rest
+} = Astro.props;
+
+const isFixed = fixed || cols !== undefined || autoCount;
+
+const gridClasses = [
+  "grid",
+  minCol !== undefined && `is-col-min-${minCol}`,
+  gap !== undefined && `is-gap-${gap}`,
+  columnGap !== undefined && `is-column-gap-${columnGap}`,
+  rowGap !== undefined && `is-row-gap-${rowGap}`,
+  className,
+]
+  .filter(Boolean)
+  .join(" ");
+
+const fixedClasses = [
+  "fixed-grid",
+  cols !== undefined && `has-${cols}-cols`,
+  autoCount && "has-auto-count",
+]
+  .filter(Boolean)
+  .join(" ");
+---
+
+{
+  isFixed ? (
+    <div class={fixedClasses}>
+      <div class={gridClasses} {...rest}>
+        <slot />
+      </div>
+    </div>
+  ) : (
+    <div class={gridClasses} {...rest}>
+      <slot />
+    </div>
+  )
+}

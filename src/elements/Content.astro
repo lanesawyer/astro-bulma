@@ -1,0 +1,24 @@
+---
+/**
+ * Content component following the Bulma content spec.
+ * https://bulma.io/documentation/elements/content/
+ *
+ * Applies Bulma typography to raw HTML (headings, lists, tables, etc.)
+ * that you can't add classes to, like CMS or markdown output.
+ */
+type Props = {
+  size?: "small" | "normal" | "medium" | "large";
+  class?: string;
+  [key: string]: unknown;
+};
+
+const { size, class: className, ...rest } = Astro.props;
+
+const classes = ["content", size && `is-${size}`, className]
+  .filter(Boolean)
+  .join(" ");
+---
+
+<div class={classes} {...rest}>
+  <slot />
+</div>

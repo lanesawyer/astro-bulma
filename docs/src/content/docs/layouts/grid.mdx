@@ -1,0 +1,107 @@
+---
+title: Grid
+description: The smart 2D grid new in Bulma 1.0.
+---
+
+import Preview from "../../../components/Preview.astro";
+import Grid from "astro-bulma/layouts/Grid.astro";
+import Cell from "astro-bulma/layouts/Cell.astro";
+
+The `Grid` and `Cell` components render Bulma's [smart grid](https://bulma.io/documentation/grid/), new in Bulma 1.0. By default the grid is *smart*: it fits as many cells of at least the minimum width as possible. Set `cols` (or `fixed`) for a fixed number of columns instead.
+
+## Smart grid
+
+<Preview>
+  <Grid minCol={4} gap={2}>
+    <Cell><div class="notification is-primary">1</div></Cell>
+    <Cell><div class="notification is-primary">2</div></Cell>
+    <Cell><div class="notification is-primary">3</div></Cell>
+    <Cell><div class="notification is-primary">4</div></Cell>
+    <Cell><div class="notification is-primary">5</div></Cell>
+    <Cell><div class="notification is-primary">6</div></Cell>
+  </Grid>
+</Preview>
+
+```astro
+<Grid minCol={4} gap={2}>
+  <Cell>1</Cell>
+  <Cell>2</Cell>
+  <Cell>3</Cell>
+  <Cell>4</Cell>
+  <Cell>5</Cell>
+  <Cell>6</Cell>
+</Grid>
+```
+
+## Fixed grid
+
+`cols` wraps the grid in `.fixed-grid` with a fixed column count:
+
+<Preview>
+  <Grid cols={4}>
+    <Cell><div class="notification is-info">1</div></Cell>
+    <Cell><div class="notification is-info">2</div></Cell>
+    <Cell><div class="notification is-info">3</div></Cell>
+    <Cell><div class="notification is-info">4</div></Cell>
+    <Cell><div class="notification is-info">5</div></Cell>
+  </Grid>
+</Preview>
+
+```astro
+<Grid cols={4}>
+  <Cell>1</Cell>
+  <Cell>2</Cell>
+  <!-- always 4 columns per row -->
+</Grid>
+```
+
+## Spanning cells
+
+<Preview>
+  <Grid cols={4}>
+    <Cell colSpan={2}><div class="notification is-warning">colSpan 2</div></Cell>
+    <Cell><div class="notification is-info">2</div></Cell>
+    <Cell rowSpan={2}><div class="notification is-danger" style="height: 100%">rowSpan 2</div></Cell>
+    <Cell><div class="notification is-info">4</div></Cell>
+    <Cell><div class="notification is-info">5</div></Cell>
+    <Cell><div class="notification is-info">6</div></Cell>
+  </Grid>
+</Preview>
+
+```astro
+<Grid cols={4}>
+  <Cell colSpan={2}>colSpan 2</Cell>
+  <Cell>2</Cell>
+  <Cell rowSpan={2}>rowSpan 2</Cell>
+  <Cell>4</Cell>
+  <Cell>5</Cell>
+  <Cell>6</Cell>
+</Grid>
+```
+
+## Grid props
+
+| Prop        | Type      | Default | Description                                                       |
+|-------------|-----------|---------|-------------------------------------------------------------------|
+| `minCol`    | `number`  | —       | Minimum cell width step, 1–32 (each step is 1.5rem).              |
+| `gap`       | `0`–`8`   | —       | Gap between cells.                                                |
+| `columnGap` | `0`–`8`   | —       | Column gap only.                                                  |
+| `rowGap`    | `0`–`8`   | —       | Row gap only.                                                     |
+| `fixed`     | `boolean` | —       | Wrap in `.fixed-grid` for a fixed number of columns.              |
+| `cols`      | `number`  | —       | Column count for fixed grids, 1–12 (implies `fixed`).             |
+| `autoCount` | `boolean` | —       | Fixed grid column count adapts per breakpoint (implies `fixed`).  |
+| `class`     | `string`  | —       | Extra classes on the `div.grid`.                                  |
+| `...`       | `*`       | —       | Any other HTML `div` attributes.                                  |
+
+## Cell props
+
+| Prop         | Type     | Default | Description                                          |
+|--------------|----------|---------|------------------------------------------------------|
+| `colStart`   | `number` | —       | Which column the cell starts at.                     |
+| `colFromEnd` | `number` | —       | Which column the cell ends at, counting from the end.|
+| `colSpan`    | `number` | —       | How many columns the cell spans.                     |
+| `rowStart`   | `number` | —       | Which row the cell starts at.                        |
+| `rowFromEnd` | `number` | —       | Which row the cell ends at, counting from the end.   |
+| `rowSpan`    | `number` | —       | How many rows the cell spans.                        |
+| `class`      | `string` | —       | Extra classes on the `div.cell`.                     |
+| `...`        | `*`      | —       | Any other HTML `div` attributes.                     |

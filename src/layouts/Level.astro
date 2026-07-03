@@ -1,0 +1,47 @@
+---
+/**
+ * Level component following the Bulma level spec.
+ * https://bulma.io/documentation/layout/level/
+ *
+ * Put children in the "left" and "right" slots (each child should carry
+ * class="level-item"), or use the default slot alone for a centered level:
+ *
+ *   <Level>
+ *     <div class="level-item" slot="left"><Title size={5}>123 posts</Title></div>
+ *     <div class="level-item" slot="right"><Button color="success">New</Button></div>
+ *   </Level>
+ */
+type Props = {
+  /** .is-mobile — keep the level horizontal on mobile */
+  mobile?: boolean;
+  class?: string;
+  [key: string]: unknown;
+};
+
+const { mobile, class: className, ...rest } = Astro.props;
+
+const hasLeft = Astro.slots.has("left");
+const hasRight = Astro.slots.has("right");
+
+const classes = ["level", mobile && "is-mobile", className]
+  .filter(Boolean)
+  .join(" ");
+---
+
+<nav class={classes} {...rest}>
+  {
+    hasLeft && (
+      <div class="level-left">
+        <slot name="left" />
+      </div>
+    )
+  }
+  <slot />
+  {
+    hasRight && (
+      <div class="level-right">
+        <slot name="right" />
+      </div>
+    )
+  }
+</nav>

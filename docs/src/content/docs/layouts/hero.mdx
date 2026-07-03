@@ -1,0 +1,84 @@
+---
+title: Hero
+description: An imposing hero banner to showcase something.
+---
+
+import Preview from "../../../components/Preview.astro";
+import Hero from "astro-bulma/layouts/Hero.astro";
+import Title from "astro-bulma/elements/Title.astro";
+import Subtitle from "astro-bulma/elements/Subtitle.astro";
+
+The `Hero` component renders Bulma's [hero banner](https://bulma.io/documentation/layout/hero/). The default slot fills the hero body; the `head` and `foot` slots (shown in taller heroes) hold content above and below it.
+
+## Basic example
+
+<Preview>
+  <Hero>
+    <Title>Hero title</Title>
+    <Subtitle>Hero subtitle</Subtitle>
+  </Hero>
+</Preview>
+
+```astro
+<Hero>
+  <Title>Hero title</Title>
+  <Subtitle>Hero subtitle</Subtitle>
+</Hero>
+```
+
+## Colors
+
+<Preview>
+  <Hero color="primary">
+    <Title>Primary hero</Title>
+    <Subtitle>Primary subtitle</Subtitle>
+  </Hero>
+</Preview>
+
+```astro
+<Hero color="primary">
+  <Title>Primary hero</Title>
+  <Subtitle>Primary subtitle</Subtitle>
+</Hero>
+```
+
+## Sizes
+
+<Preview>
+  <Hero color="info" size="small">
+    <Title>Small hero</Title>
+  </Hero>
+</Preview>
+
+```astro
+<Hero color="info" size="small">…</Hero>
+<Hero color="info" size="medium">…</Hero>
+<Hero color="info" size="fullheight">…</Hero>
+```
+
+## Head and foot slots
+
+```astro
+<Hero color="primary" size="medium">
+  <nav slot="head" class="tabs">…</nav>
+  <Title>Body content</Title>
+  <nav slot="foot" class="tabs is-boxed is-fullwidth">…</nav>
+</Hero>
+```
+
+## Props
+
+| Prop    | Type                                                                                           | Default | Description                     |
+|---------|------------------------------------------------------------------------------------------------|---------|---------------------------------|
+| `color` | `"primary" \| "link" \| "info" \| "success" \| "warning" \| "danger" \| "light" \| "dark"`     | —       | Color modifier.                 |
+| `size`  | `"small" \| "medium" \| "large" \| "halfheight" \| "fullheight" \| "fullheight-with-navbar"`   | —       | Size modifier.                  |
+| `class` | `string`                                                                                       | —       | Extra classes on `section.hero`.|
+| `...`   | `*`                                                                                            | —       | Any other `section` attributes. |
+
+### Slots
+
+| Slot      | Description                        |
+|-----------|------------------------------------|
+| (default) | Content of the `hero-body`.        |
+| `head`    | Content of the `hero-head`.        |
+| `foot`    | Content of the `hero-foot`.        |

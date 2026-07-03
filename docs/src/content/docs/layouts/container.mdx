@@ -1,0 +1,67 @@
+---
+title: Container
+description: A simple container to center your content horizontally.
+---
+
+import Preview from "../../../components/Preview.astro";
+import Container from "astro-bulma/layouts/Container.astro";
+
+The `Container` component renders Bulma's [container element](https://bulma.io/documentation/layout/container/) — the most basic layout element, centering content horizontally with a max width per breakpoint.
+
+## Basic example
+
+<Preview>
+  <Container>
+    <div class="notification is-primary">
+      This container is centered on desktop and larger viewports.
+    </div>
+  </Container>
+</Preview>
+
+```astro
+<Container>
+  <div class="notification is-primary">
+    This container is centered on desktop and larger viewports.
+  </div>
+</Container>
+```
+
+## Breakpoint variants
+
+`widescreen`/`fullhd` only activate the container from that breakpoint up; `max-tablet`/`max-desktop`/`max-widescreen` cap the maximum width:
+
+<Preview>
+  <Container breakpoint="max-desktop">
+    <div class="notification is-info">
+      This container has a max width of the desktop breakpoint.
+    </div>
+  </Container>
+</Preview>
+
+```astro
+<Container breakpoint="widescreen">…</Container>
+<Container breakpoint="max-desktop">…</Container>
+```
+
+## Fluid
+
+<Preview>
+  <Container fluid>
+    <div class="notification is-success">
+      Full width, with a fixed 32px gap on either side.
+    </div>
+  </Container>
+</Preview>
+
+```astro
+<Container fluid>…</Container>
+```
+
+## Props
+
+| Prop         | Type                                                                            | Default | Description                             |
+|--------------|---------------------------------------------------------------------------------|---------|-----------------------------------------|
+| `breakpoint` | `"widescreen" \| "fullhd" \| "max-tablet" \| "max-desktop" \| "max-widescreen"` | —       | Breakpoint behavior.                    |
+| `fluid`      | `boolean`                                                                       | —       | Full width with a fixed 32px side gap.  |
+| `class`      | `string`                                                                        | —       | Extra classes on the `div.container`.   |
+| `...`        | `*`                                                                             | —       | Any other HTML `div` attributes.        |

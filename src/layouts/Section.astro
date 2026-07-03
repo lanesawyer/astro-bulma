@@ -1,0 +1,22 @@
+---
+/**
+ * Section component following the Bulma section spec.
+ * https://bulma.io/documentation/layout/section/
+ */
+type Props = {
+  /** Spacing size (default padding is 3rem 1.5rem) */
+  size?: "medium" | "large";
+  class?: string;
+  [key: string]: unknown;
+};
+
+const { size, class: className, ...rest } = Astro.props;
+
+const classes = ["section", size && `is-${size}`, className]
+  .filter(Boolean)
+  .join(" ");
+---
+
+<section class={classes} {...rest}>
+  <slot />
+</section>

@@ -1,0 +1,18 @@
+---
+/**
+ * Block component following the Bulma block spec.
+ * https://bulma.io/documentation/elements/block/
+ */
+type Props = {
+  class?: string;
+  [key: string]: unknown;
+};
+
+const { class: className, ...rest } = Astro.props;
+
+const classes = ["block", className].filter(Boolean).join(" ");
+---
+
+<div class={classes} {...rest}>
+  <slot />
+</div>

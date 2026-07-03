@@ -1,0 +1,22 @@
+---
+/**
+ * Subtitle component following the Bulma title spec.
+ * https://bulma.io/documentation/elements/title/
+ */
+type Props = {
+  /** Size modifier, 1 (largest) to 6 (smallest) */
+  size?: 1 | 2 | 3 | 4 | 5 | 6;
+  /** HTML tag to render, defaults to h2 */
+  as?: "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "p";
+  class?: string;
+  [key: string]: unknown;
+};
+
+const { size, as: Tag = "h2", class: className, ...rest } = Astro.props;
+
+const classes = ["subtitle", size && `is-${size}`, className]
+  .filter(Boolean)
+  .join(" ");
+---
+
+<Tag class={classes} {...rest}><slot /></Tag>

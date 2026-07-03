@@ -1,0 +1,54 @@
+---
+title: Delete
+description: A versatile delete/close cross.
+---
+
+import Preview from "../../../components/Preview.astro";
+import Delete from "astro-bulma/elements/Delete.astro";
+
+The `Delete` component renders Bulma's [delete element](https://bulma.io/documentation/elements/delete/) — a `button` with a close cross that works across many other components. Note that `Notification`, `Message`, `Modal`, and `Tag` already include their own close affordances.
+
+## Sizes
+
+<Preview>
+  <Delete size="small" />
+  <Delete />
+  <Delete size="medium" />
+  <Delete size="large" />
+</Preview>
+
+```astro
+<Delete size="small" />
+<Delete />
+<Delete size="medium" />
+<Delete size="large" />
+```
+
+## Attaching behavior
+
+`Delete` renders no JavaScript of its own — attach behavior with standard attributes:
+
+<Preview>
+  <div class="tags">
+    <span class="tag is-info">
+      Removable tag
+      <Delete size="small" onclick="this.parentElement.remove()" />
+    </span>
+  </div>
+</Preview>
+
+```astro
+<span class="tag is-info">
+  Removable tag
+  <Delete size="small" onclick="this.parentElement.remove()" />
+</span>
+```
+
+## Props
+
+| Prop    | Type                              | Default   | Description                              |
+|---------|-----------------------------------|-----------|------------------------------------------|
+| `size`  | `"small" \| "medium" \| "large"`  | —         | Size modifier.                           |
+| `label` | `string`                          | `"Close"` | `aria-label` for the button.             |
+| `class` | `string`                          | —         | Extra CSS classes on the `button.delete`.|
+| `...`   | `*`                               | —         | Any other HTML `button` attributes.      |

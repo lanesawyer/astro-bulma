@@ -1,0 +1,48 @@
+---
+title: Section
+description: A simple container to divide your page into sections.
+---
+
+import Preview from "../../../components/Preview.astro";
+import Section from "astro-bulma/layouts/Section.astro";
+import Title from "astro-bulma/elements/Title.astro";
+import Subtitle from "astro-bulma/elements/Subtitle.astro";
+
+The `Section` component renders Bulma's [section element](https://bulma.io/documentation/layout/section/) for dividing a page into horizontal bands of content.
+
+## Basic example
+
+<Preview>
+  <Section>
+    <Title>Section</Title>
+    <Subtitle>A simple container to divide your page into <strong>sections</strong>.</Subtitle>
+  </Section>
+</Preview>
+
+```astro
+<Section>
+  <Title>Section</Title>
+  <Subtitle>A simple container to divide your page into <strong>sections</strong>.</Subtitle>
+</Section>
+```
+
+## Sizes
+
+<Preview>
+  <Section size="medium">
+    <Title>Medium section</Title>
+  </Section>
+</Preview>
+
+```astro
+<Section size="medium">…</Section>
+<Section size="large">…</Section>
+```
+
+## Props
+
+| Prop    | Type                    | Default | Description                          |
+|---------|-------------------------|---------|--------------------------------------|
+| `size`  | `"medium" \| "large"`   | —       | Spacing size modifier.               |
+| `class` | `string`                | —       | Extra classes on the `section`.      |
+| `...`   | `*`                     | —       | Any other HTML `section` attributes. |

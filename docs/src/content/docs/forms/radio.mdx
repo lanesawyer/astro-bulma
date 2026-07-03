@@ -1,0 +1,75 @@
+---
+title: Radio
+description: Bulma-styled radio button wrapped in a label element.
+---
+
+import Preview from "../../../components/Preview.astro";
+import Radio from "astro-bulma/forms/Radio.astro";
+
+The `Radio` component renders a Bulma [radio button](https://bulma.io/documentation/form/radio/) inside a `<label>` element. Radios sharing the same `name` form a group.
+
+## Basic radio group
+
+<Preview>
+  <div class="control">
+    <Radio name="rsvp" value="yes" label="Going" />
+    <Radio name="rsvp" value="no" label="Not going" />
+    <Radio name="rsvp" value="maybe" label="Maybe" />
+  </div>
+</Preview>
+
+```astro
+<div class="control">
+  <Radio name="rsvp" value="yes" label="Going" />
+  <Radio name="rsvp" value="no" label="Not going" />
+  <Radio name="rsvp" value="maybe" label="Maybe" />
+</div>
+```
+
+## Pre-checked and disabled
+
+<Preview>
+  <div class="control">
+    <Radio name="foobar" value="foo" label="Foo" checked />
+    <Radio name="foobar" value="bar" label="Bar" />
+    <Radio name="foobar" value="baz" label="Baz (unavailable)" disabled />
+  </div>
+</Preview>
+
+```astro
+<Radio name="foobar" value="foo" label="Foo" checked />
+<Radio name="foobar" value="bar" label="Bar" />
+<Radio name="foobar" value="baz" label="Baz (unavailable)" disabled />
+```
+
+## Rich slot content
+
+Use the default slot instead of `label` to include HTML inside the label:
+
+<Preview>
+  <div class="control">
+    <Radio name="plan" value="free"><strong>Free</strong> — $0/month</Radio>
+    <Radio name="plan" value="pro"><strong>Pro</strong> — $10/month</Radio>
+  </div>
+</Preview>
+
+```astro
+<Radio name="plan" value="free"><strong>Free</strong> — $0/month</Radio>
+<Radio name="plan" value="pro"><strong>Pro</strong> — $10/month</Radio>
+```
+
+## Props
+
+| Prop       | Type      | Default           | Description                                            |
+|------------|-----------|-------------------|--------------------------------------------------------|
+| `name`     | `string`  | —                 | **Required.** Radios with the same `name` form a group.|
+| `value`    | `string`  | —                 | **Required.** `value` attribute.                       |
+| `id`       | `string`  | `"{name}-{value}"`| `id` attribute.                                        |
+| `label`    | `string`  | —                 | Label text. Use the slot for rich content instead.     |
+| `checked`  | `boolean` | —                 | Pre-checked state.                                     |
+| `required` | `boolean` | —                 | Required field.                                        |
+| `disabled` | `boolean` | —                 | Disabled state.                                        |
+| `class`    | `string`  | —                 | Extra classes on the wrapping `<label>`.               |
+| `data-*`   | `*`       | —                 | Forwarded to `<label>`.                                |
+| `aria-*`   | `*`       | —                 | Forwarded to `<label>`.                                |
+| `...`      | `*`       | —                 | Other native input attributes forwarded to `<input>`.  |

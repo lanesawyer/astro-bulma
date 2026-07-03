@@ -1,0 +1,109 @@
+---
+/**
+ * Field component following Bulma's general form spec.
+ * https://bulma.io/documentation/form/general/
+ *
+ * A generic .field wrapper for composing custom form layouts. Pair with
+ * the `standalone` prop on form components, wrapping each in a .control:
+ *
+ *   <Field addons>
+ *     <div class="control"><TextInput name="q" standalone /></div>
+ *     <div class="control"><Button color="info">Search</Button></div>
+ *   </Field>
+ *
+ *   <Field label="Country" for="country" help="Where you live">
+ *     <div class="control"><Select name="country" options={countries} standalone /></div>
+ *   </Field>
+ *
+ * In horizontal mode the slot content goes inside .field-body, so children
+ * should themselves be fields:
+ *
+ *   <Field horizontal label="From">
+ *     <TextInput name="first" placeholder="First name" />
+ *   </Field>
+ */
+
+interface Props {
+  /** label text rendered above the field (or beside it when horizontal) */
+  label?: string;
+  /** id of the control the label points at */
+  for?: string;
+  /** .is-grouped — children are separate .control elements side by side */
+  grouped?: boolean;
+  /** .is-grouped-multiline — grouped controls can wrap onto multiple lines */
+  groupedMultiline?: boolean;
+  /** .has-addons — children .control elements are attached together */
+  addons?: boolean;
+  /** Alignment for grouped/addons layouts */
+  align?: "centered" | "right";
+  /** .is-horizontal — label beside the field body */
+  horizontal?: boolean;
+  /** Size of the field label in horizontal mode */
+  labelSize?: "small" | "normal" | "medium" | "large";
+  /** Help text rendered below the field */
+  help?: string;
+  /** Color for the help text */
+  helpColor?: "primary" | "link" | "info" | "success" | "warning" | "danger";
+  class?: string;
+  [key: string]: unknown;
+}
+
+const {
+  label,
+  for: htmlFor,
+  grouped,
+  groupedMultiline,
+  addons,
+  align,
+  horizontal,
+  labelSize = "normal",
+  help,
+  helpColor,
+  class: className,
+  ...rest
+} = Astro.props;
+
+const classes = [
+  "field",
+  grouped && "is-grouped",
+  grouped && align && `is-grouped-${align}`,
+  groupedMultiline && "is-grouped-multiline",
+  addons && "has-addons",
+  addons && align && `has-addons-${align}`,
+  horizontal && "is-horizontal",
+  className,
+]
+  .filter(Boolean)
+  .join(" ");
+
+const helpClasses = ["help", helpColor && `is-${helpColor}`]
+  .filter(Boolean)
+  .join(" ");
+---
+
+{
+  horizontal ? (
+    <div class={classes} {...rest}>
+      <div class={`field-label is-${labelSize}`}>
+        {label && (
+          <label class="label" for={htmlFor}>
+            {label}
+          </label>
+        )}
+      </div>
+      <div class="field-body">
+        <slot />
+      </div>
+    </div>
+  ) : (
+    <div class={classes} {...rest}>
+      {label && (
+        <label class="label" for={htmlFor}>
+          {label}
+        </label>
+      )}
+      <slot />
+      {help && <p class={helpClasses}>{help}</p>}
+    </div>
+  )
+}

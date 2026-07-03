@@ -1,0 +1,116 @@
+---
+title: Field
+description: A generic field wrapper for composing custom form layouts.
+---
+
+import Preview from "../../../components/Preview.astro";
+import Field from "astro-bulma/forms/Field.astro";
+import TextInput from "astro-bulma/forms/TextInput.astro";
+import Button from "astro-bulma/elements/Button.astro";
+
+The `Field` component renders Bulma's [generic field wrapper](https://bulma.io/documentation/form/general/) for building custom form layouts. Form components like `TextInput` and `Select` already wrap themselves in a field — reach for `Field` when you need grouped controls, addons, horizontal layouts, or a shared label over custom content. Pair it with the `standalone` prop on form components, wrapping each control in a `div.control`.
+
+## With label and help
+
+<Preview>
+  <Field label="Username" for="username" help="Only letters and numbers.">
+    <div class="control">
+      <TextInput name="username" standalone />
+    </div>
+  </Field>
+</Preview>
+
+```astro
+<Field label="Username" for="username" help="Only letters and numbers.">
+  <div class="control">
+    <TextInput name="username" standalone />
+  </div>
+</Field>
+```
+
+## Addons
+
+`addons` glues the child controls together:
+
+<Preview>
+  <Field addons>
+    <div class="control is-expanded">
+      <TextInput name="q" placeholder="Find a repository" standalone />
+    </div>
+    <div class="control">
+      <Button color="info">Search</Button>
+    </div>
+  </Field>
+</Preview>
+
+```astro
+<Field addons>
+  <div class="control is-expanded">
+    <TextInput name="q" placeholder="Find a repository" standalone />
+  </div>
+  <div class="control">
+    <Button color="info">Search</Button>
+  </div>
+</Field>
+```
+
+## Grouped
+
+`grouped` keeps the controls separate but side by side. Add `align` to position the group and `groupedMultiline` to let it wrap:
+
+<Preview>
+  <Field grouped>
+    <div class="control">
+      <Button color="primary">Submit</Button>
+    </div>
+    <div class="control">
+      <Button>Cancel</Button>
+    </div>
+  </Field>
+</Preview>
+
+```astro
+<Field grouped>
+  <div class="control">
+    <Button color="primary">Submit</Button>
+  </div>
+  <div class="control">
+    <Button>Cancel</Button>
+  </div>
+</Field>
+```
+
+## Horizontal
+
+In horizontal mode the label sits beside the field body. Children of the default slot should themselves be fields:
+
+<Preview>
+  <Field horizontal label="From">
+    <TextInput name="first-name" placeholder="First name" />
+    <TextInput name="last-name" placeholder="Last name" />
+  </Field>
+</Preview>
+
+```astro
+<Field horizontal label="From">
+  <TextInput name="first-name" placeholder="First name" />
+  <TextInput name="last-name" placeholder="Last name" />
+</Field>
+```
+
+## Props
+
+| Prop               | Type                                          | Default    | Description                                             |
+|--------------------|-----------------------------------------------|------------|---------------------------------------------------------|
+| `label`            | `string`                                      | —          | Label above the field (or beside it when horizontal).   |
+| `for`              | `string`                                      | —          | `for` attribute of the label.                           |
+| `grouped`          | `boolean`                                     | —          | Children are separate controls side by side.            |
+| `groupedMultiline` | `boolean`                                     | —          | Grouped controls can wrap onto multiple lines.          |
+| `addons`           | `boolean`                                     | —          | Child controls are attached together.                   |
+| `align`            | `"centered" \| "right"`                       | —          | Alignment for grouped/addons layouts.                   |
+| `horizontal`       | `boolean`                                     | —          | Label beside the field body.                            |
+| `labelSize`        | `"small" \| "normal" \| "medium" \| "large"`  | `"normal"` | Label size in horizontal mode.                          |
+| `help`             | `string`                                      | —          | Help text below the field (non-horizontal only).        |
+| `helpColor`        | `"primary" \| "link" \| "info" \| "success" \| "warning" \| "danger"` | — | Color for the help text.       |
+| `class`            | `string`                                      | —          | Extra classes on the `div.field`.                       |
+| `...`              | `*`                                           | —          | Any other HTML `div` attributes.                        |

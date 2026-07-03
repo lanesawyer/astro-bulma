@@ -1,0 +1,122 @@
+---
+title: Columns
+description: A responsive column system built on Flexbox.
+---
+
+import Preview from "../../../components/Preview.astro";
+import Columns from "astro-bulma/layouts/Columns.astro";
+import Column from "astro-bulma/layouts/Column.astro";
+
+The `Columns` and `Column` components render Bulma's [column system](https://bulma.io/documentation/columns/). Add as many `Column` children as you want — they'll share the width equally unless sized.
+
+## Basic example
+
+<Preview>
+  <Columns>
+    <Column><div class="notification is-primary">First</div></Column>
+    <Column><div class="notification is-primary">Second</div></Column>
+    <Column><div class="notification is-primary">Third</div></Column>
+  </Columns>
+</Preview>
+
+```astro
+<Columns>
+  <Column>First</Column>
+  <Column>Second</Column>
+  <Column>Third</Column>
+</Columns>
+```
+
+## Sizes and offsets
+
+Size columns with a 12-column fraction (`1`–`12`) or a named fraction (`"half"`, `"one-third"`, …):
+
+<Preview>
+  <Columns>
+    <Column size={8}><div class="notification is-info">is-8</div></Column>
+    <Column><div class="notification is-info">auto</div></Column>
+  </Columns>
+  <Columns>
+    <Column size="half" offset="one-quarter">
+      <div class="notification is-info">is-half is-offset-one-quarter</div>
+    </Column>
+  </Columns>
+</Preview>
+
+```astro
+<Columns>
+  <Column size={8}>is-8</Column>
+  <Column>auto</Column>
+</Columns>
+<Columns>
+  <Column size="half" offset="one-quarter">is-half is-offset-one-quarter</Column>
+</Columns>
+```
+
+## Multiline
+
+<Preview>
+  <Columns multiline>
+    <Column size={4}><div class="notification is-warning">is-4</div></Column>
+    <Column size={4}><div class="notification is-warning">is-4</div></Column>
+    <Column size={4}><div class="notification is-warning">is-4</div></Column>
+    <Column size={4}><div class="notification is-warning">is-4</div></Column>
+    <Column size={4}><div class="notification is-warning">is-4</div></Column>
+  </Columns>
+</Preview>
+
+```astro
+<Columns multiline>
+  <Column size={4}>is-4</Column>
+  <Column size={4}>is-4</Column>
+  <!-- wraps onto a second line -->
+</Columns>
+```
+
+## Custom gap
+
+<Preview>
+  <Columns gap={1}>
+    <Column><div class="notification is-success">gap 1</div></Column>
+    <Column><div class="notification is-success">gap 1</div></Column>
+  </Columns>
+</Preview>
+
+```astro
+<Columns gap={1}>
+  <Column>gap 1</Column>
+  <Column>gap 1</Column>
+</Columns>
+```
+
+## Responsive sizes
+
+For per-breakpoint behavior, pass Bulma's responsive classes directly:
+
+```astro
+<Column class="is-half-tablet is-one-third-desktop">…</Column>
+```
+
+## Columns props
+
+| Prop        | Type          | Default | Description                                  |
+|-------------|---------------|---------|----------------------------------------------|
+| `multiline` | `boolean`     | —       | Columns wrap onto multiple lines.            |
+| `gapless`   | `boolean`     | —       | Remove the gap between columns.              |
+| `centered`  | `boolean`     | —       | Center columns horizontally.                 |
+| `vcentered` | `boolean`     | —       | Align columns vertically.                    |
+| `mobile`    | `boolean`     | —       | Keep columns side by side on mobile.         |
+| `desktop`   | `boolean`     | —       | Only activate columns from desktop up.       |
+| `gap`       | `0`–`8`       | —       | Custom gap size (adds `is-variable`).        |
+| `class`     | `string`      | —       | Extra classes on the `div.columns`.          |
+| `...`       | `*`           | —       | Any other HTML `div` attributes.             |
+
+## Column props
+
+| Prop     | Type                          | Default | Description                                       |
+|----------|-------------------------------|---------|---------------------------------------------------|
+| `size`   | `1`–`12` or a named fraction  | —       | Width (`"half"`, `"one-third"`, `"two-fifths"`, …).|
+| `offset` | `1`–`12` or a named fraction  | —       | Left offset.                                      |
+| `narrow` | `boolean`                     | —       | Only take the width of the content.               |
+| `class`  | `string`                      | —       | Extra classes on the `div.column`.                |
+| `...`    | `*`                           | —       | Any other HTML `div` attributes.                  |

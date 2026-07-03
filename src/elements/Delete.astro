@@ -1,0 +1,24 @@
+---
+/**
+ * Delete component following the Bulma delete spec.
+ * https://bulma.io/documentation/elements/delete/
+ *
+ * A versatile close/delete cross. Attach behavior via standard
+ * attributes, e.g. <Delete onclick="this.parentElement.remove()" />.
+ */
+type Props = {
+  size?: "small" | "medium" | "large";
+  /** Accessible label, defaults to "Close" */
+  label?: string;
+  class?: string;
+  [key: string]: unknown;
+};
+
+const { size, label = "Close", class: className, ...rest } = Astro.props;
+
+const classes = ["delete", size && `is-${size}`, className]
+  .filter(Boolean)
+  .join(" ");
+---
+
+<button class={classes} aria-label={label} {...rest}></button>

@@ -1,0 +1,80 @@
+---
+title: Media
+description: The famous media object, compatible with any type of content.
+---
+
+import Preview from "../../../components/Preview.astro";
+import Media from "astro-bulma/layouts/Media.astro";
+import Image from "astro-bulma/elements/Image.astro";
+import Delete from "astro-bulma/elements/Delete.astro";
+
+The `Media` component renders Bulma's [media object](https://bulma.io/documentation/layout/media-object/). The default slot fills the content area; use the `left` slot for a figure (avatar, image) and the `right` slot for side actions. Nest `Media` components inside the default slot for threaded layouts like comments.
+
+## Basic example
+
+<Preview>
+  <Media>
+    <Image slot="left" src="https://bulma.io/assets/images/placeholders/128x128.png" size="64x64" alt="Avatar" />
+    <div class="content">
+      <p>
+        <strong>John Smith</strong> <small>@johnsmith</small> <small>31m</small>
+        <br />
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+      </p>
+    </div>
+    <Delete slot="right" />
+  </Media>
+</Preview>
+
+```astro
+<Media>
+  <Image slot="left" src="avatar.png" size="64x64" alt="Avatar" />
+  <div class="content">
+    <p>
+      <strong>John Smith</strong> <small>@johnsmith</small> <small>31m</small>
+      <br />
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+    </p>
+  </div>
+  <Delete slot="right" />
+</Media>
+```
+
+## Nested media
+
+<Preview>
+  <Media>
+    <Image slot="left" src="https://bulma.io/assets/images/placeholders/128x128.png" size="64x64" alt="Avatar" />
+    <p>A parent comment.</p>
+    <Media>
+      <Image slot="left" src="https://bulma.io/assets/images/placeholders/128x128.png" size="48x48" alt="Avatar" />
+      <p>A nested reply.</p>
+    </Media>
+  </Media>
+</Preview>
+
+```astro
+<Media>
+  <Image slot="left" src="avatar.png" size="64x64" alt="Avatar" />
+  <p>A parent comment.</p>
+  <Media>
+    <Image slot="left" src="avatar.png" size="48x48" alt="Avatar" />
+    <p>A nested reply.</p>
+  </Media>
+</Media>
+```
+
+## Props
+
+| Prop    | Type     | Default | Description                              |
+|---------|----------|---------|------------------------------------------|
+| `class` | `string` | —       | Extra classes on the `article.media`.    |
+| `...`   | `*`      | —       | Any other HTML `article` attributes.     |
+
+### Slots
+
+| Slot      | Description                                |
+|-----------|--------------------------------------------|
+| (default) | Content of the `media-content`.            |
+| `left`    | Content of the `media-left` figure.        |
+| `right`   | Content of the `media-right` side.         |

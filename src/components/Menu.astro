@@ -1,0 +1,89 @@
+---
+/**
+ * Bulma menu component — a vertical navigation sidebar.
+ * https://bulma.io/documentation/components/menu/
+ *
+ * Usage:
+ *   <Menu
+ *     sections={[
+ *       {
+ *         label: "General",
+ *         items: [
+ *           { label: "Dashboard", href: "/" },
+ *           { label: "Customers", href: "/customers", active: true },
+ *         ],
+ *       },
+ *       {
+ *         label: "Administration",
+ *         items: [
+ *           {
+ *             label: "Team Settings",
+ *             href: "/team",
+ *             children: [{ label: "Members", href: "/team/members" }],
+ *           },
+ *         ],
+ *       },
+ *     ]}
+ *   />
+ */
+
+interface MenuItem {
+  label: string;
+  href?: string;
+  active?: boolean;
+  /** One level of nested items, rendered as a sub-list */
+  children?: MenuItem[];
+}
+
+interface MenuSection {
+  /** Optional .menu-label heading above the list */
+  label?: string;
+  items: MenuItem[];
+}
+
+interface Props {
+  sections: MenuSection[];
+  class?: string;
+  [key: string]: unknown;
+}
+
+const { sections, class: className, ...rest } = Astro.props;
+---
+
+<aside class:list={["menu", className]} {...rest}>
+  {
+    sections.map((section) => (
+      <>
+        {section.label && <p class="menu-label">{section.label}</p>}
+        <ul class="menu-list">
+          {section.items.map((item) => (
+            <li>
+              <a
+                href={item.href}
+                class={item.active ? "is-active" : undefined}
+                aria-current={item.active ? "page" : undefined}
+              >
+                {item.label}
+              </a>
+              {item.children && (
+                <ul>
+                  {item.children.map((child) => (
+                    <li>
+                      <a
+                        href={child.href}
+                        class={child.active ? "is-active" : undefined}
+                        aria-current={child.active ? "page" : undefined}
+                      >
+                        {child.label}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </li>
+          ))}
+        </ul>
+      </>
+    ))
+  }
+</aside>

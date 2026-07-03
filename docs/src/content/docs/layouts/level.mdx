@@ -1,0 +1,96 @@
+---
+title: Level
+description: A multi-purpose horizontal level with vertically centered children.
+---
+
+import Preview from "../../../components/Preview.astro";
+import Level from "astro-bulma/layouts/Level.astro";
+import Title from "astro-bulma/elements/Title.astro";
+import Button from "astro-bulma/elements/Button.astro";
+
+The `Level` component renders Bulma's [level element](https://bulma.io/documentation/layout/level/). Put children in the `left` and `right` slots — each child should carry `class="level-item"` — or use the default slot alone for a centered level.
+
+## Left and right
+
+<Preview>
+  <Level>
+    <div class="level-item" slot="left">
+      <Title size={5} as="p">123 posts</Title>
+    </div>
+    <div class="level-item" slot="right">
+      <Button color="success">New</Button>
+    </div>
+  </Level>
+</Preview>
+
+```astro
+<Level>
+  <div class="level-item" slot="left">
+    <Title size={5} as="p">123 posts</Title>
+  </div>
+  <div class="level-item" slot="right">
+    <Button color="success">New</Button>
+  </div>
+</Level>
+```
+
+## Centered stats
+
+<Preview>
+  <Level>
+    <div class="level-item has-text-centered">
+      <div>
+        <p class="heading">Tweets</p>
+        <p class="title">3,456</p>
+      </div>
+    </div>
+    <div class="level-item has-text-centered">
+      <div>
+        <p class="heading">Following</p>
+        <p class="title">123</p>
+      </div>
+    </div>
+    <div class="level-item has-text-centered">
+      <div>
+        <p class="heading">Followers</p>
+        <p class="title">456K</p>
+      </div>
+    </div>
+  </Level>
+</Preview>
+
+```astro
+<Level>
+  <div class="level-item has-text-centered">
+    <div>
+      <p class="heading">Tweets</p>
+      <p class="title">3,456</p>
+    </div>
+  </div>
+  <!-- more level-items… -->
+</Level>
+```
+
+## Mobile
+
+By default a level stacks vertically on mobile; `mobile` keeps it horizontal.
+
+```astro
+<Level mobile>…</Level>
+```
+
+## Props
+
+| Prop     | Type      | Default | Description                            |
+|----------|-----------|---------|----------------------------------------|
+| `mobile` | `boolean` | —       | Keep the level horizontal on mobile.   |
+| `class`  | `string`  | —       | Extra classes on the `nav.level`.      |
+| `...`    | `*`       | —       | Any other HTML `nav` attributes.       |
+
+### Slots
+
+| Slot      | Description                                       |
+|-----------|---------------------------------------------------|
+| (default) | Centered `level-item` children.                   |
+| `left`    | `level-item` children for the `level-left` side.  |
+| `right`   | `level-item` children for the `level-right` side. |

@@ -1,0 +1,138 @@
+---
+/**
+ * Bulma dropdown component, zero-JS via the native <details> element.
+ * https://bulma.io/documentation/components/dropdown/
+ *
+ * The browser handles the open/close toggle, so no JavaScript ships with
+ * this component. Unlike a scripted dropdown, clicking outside or
+ * pressing Escape does not close an open menu.
+ *
+ * `hoverable` dropdowns render a plain <div> instead (Bulma's original
+ * markup): a closed <details> hides its content at the UA level, which
+ * would defeat Bulma's :hover reveal. Their trigger button is inert.
+ *
+ * Pass menu items via the default slot using Bulma's own classes:
+ *
+ *   <Dropdown label="Dropdown menu">
+ *     <a href="#" class="dropdown-item">First item</a>
+ *     <hr class="dropdown-divider" />
+ *     <div class="dropdown-item">Any content</div>
+ *   </Dropdown>
+ *
+ * Use the "trigger" slot to replace the default label/caret inside the
+ * trigger button. Keep it non-interactive (spans, icons — not buttons or
+ * links), since nested interactive elements swallow the toggle click.
+ */
+import Icon from "../elements/Icon.astro";
+
+interface Props {
+  /** Text for the default trigger button; ignored when using the trigger slot */
+  label?: string;
+  /** .is-hoverable — open on hover, CSS only */
+  hoverable?: boolean;
+  /** .is-right — align the menu with the right edge of the trigger */
+  right?: boolean;
+  /** .is-up — open the menu above the trigger */
+  up?: boolean;
+  /** Render the dropdown initially open */
+  active?: boolean;
+  /** Extra classes on the trigger button (e.g. "is-primary") */
+  triggerClass?: string;
+  class?: string;
+  [key: string]: unknown;
+}
+
+const {
+  label,
+  hoverable,
+  right,
+  up,
+  active,
+  triggerClass,
+  class: className,
+  ...rest
+} = Astro.props;
+
+const hasTrigger = Astro.slots.has("trigger");
+
+const classes = [
+  "dropdown",
+  hoverable && "is-hoverable",
+  hoverable && active && "is-active",
+  right && "is-right",
+  up && "is-up",
+  className,
+]
+  .filter(Boolean)
+  .join(" ");
+
+const triggerClasses = ["button", triggerClass].filter(Boolean).join(" ");
+---
+
+{
+  hoverable ? (
+    <div class={classes} {...rest}>
+      <div class="dropdown-trigger">
+        <button class={triggerClasses} aria-haspopup="true">
+          {hasTrigger ? (
+            <slot name="trigger" />
+          ) : (
+            <>
+              <span>{label}</span>
+              <Icon icon={up ? "fa-angle-up" : "fa-angle-down"} size="small" />
+            </>
+          )}
+        </button>
+      </div>
+      <div class="dropdown-menu" role="menu">
+        <div class="dropdown-content">
+          <slot />
+        </div>
+      </div>
+    </div>
+  ) : (
+    <details class={classes} open={active} {...rest}>
+      <summary class={triggerClasses} aria-haspopup="true">
+        {hasTrigger ? (
+          <slot name="trigger" />
+        ) : (
+          <>
+            <span>{label}</span>
+            <Icon icon={up ? "fa-angle-up" : "fa-angle-down"} size="small" />
+          </>
+        )}
+      </summary>
+      <div class="dropdown-menu" role="menu">
+        <div class="dropdown-content">
+          <slot />
+        </div>
+      </div>
+    </details>
+  )
+}
+
+<style>
+  /* Hide the native disclosure marker; the caret icon replaces it. */
+  summary {
+    list-style: none;
+  }
+  summary::-webkit-details-marker {
+    display: none;
+  }
+  /* Bulma only shows .dropdown-menu on .is-active/.is-hoverable:hover;
+     mirror that for the native open state. */
+  details[open] > .dropdown-menu {
+    display: block;
+  }
+  /* Bulma's global reset is `* { box-sizing: inherit }`, but children of
+     <details> inherit through the UA's ::details-content pseudo-element,
+     which resolves to content-box and breaks the menu layout. Restore
+     border-box explicitly, including slotted items. The .dropdown class
+     keeps the specificity above `* { box-sizing: inherit }` resets. */
+  details.dropdown > summary,
+  details.dropdown :global(*),
+  details.dropdown :global(*)::before,
+  details.dropdown :global(*)::after {
+    box-sizing: border-box;
+  }
+</style>
