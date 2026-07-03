@@ -1,0 +1,67 @@
+---
+title: Content
+description: A single class to handle WYSIWYG-generated or markdown content.
+---
+
+import Preview from "../../../components/Preview.astro";
+import BulmaContent from "astro-bulma/elements/Content.astro";
+
+The `Content` component renders Bulma's [content element](https://bulma.io/documentation/elements/content/). It styles raw HTML you can't add classes to — headings, paragraphs, lists, tables, blockquotes — which makes it ideal for CMS or markdown output.
+
+## Basic example
+
+<Preview>
+  <BulmaContent>
+    <h3>Hello World</h3>
+    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+    <ul>
+      <li>Styled list item</li>
+      <li>Another list item</li>
+    </ul>
+    <blockquote>A styled blockquote.</blockquote>
+  </BulmaContent>
+</Preview>
+
+```astro
+<Content>
+  <h3>Hello World</h3>
+  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+  <ul>
+    <li>Styled list item</li>
+    <li>Another list item</li>
+  </ul>
+  <blockquote>A styled blockquote.</blockquote>
+</Content>
+```
+
+## Sizes
+
+<Preview>
+  <BulmaContent size="small">
+    <h3>Small content</h3>
+    <p>Lorem ipsum dolor sit amet.</p>
+  </BulmaContent>
+  <BulmaContent size="large">
+    <h3>Large content</h3>
+    <p>Lorem ipsum dolor sit amet.</p>
+  </BulmaContent>
+</Preview>
+
+```astro
+<Content size="small">
+  <h3>Small content</h3>
+  <p>Lorem ipsum dolor sit amet.</p>
+</Content>
+<Content size="large">
+  <h3>Large content</h3>
+  <p>Lorem ipsum dolor sit amet.</p>
+</Content>
+```
+
+## Props
+
+| Prop    | Type                                          | Default | Description                             |
+|---------|-----------------------------------------------|---------|-----------------------------------------|
+| `size`  | `"small" \| "normal" \| "medium" \| "large"`  | —       | Typography size modifier.               |
+| `class` | `string`                                      | —       | Extra CSS classes on the `div.content`. |
+| `...`   | `*`                                           | —       | Any other HTML `div` attributes.        |

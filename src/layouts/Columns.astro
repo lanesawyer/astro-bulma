@@ -1,0 +1,61 @@
+---
+/**
+ * Columns container following the Bulma columns spec.
+ * https://bulma.io/documentation/columns/
+ *
+ * Usage:
+ *   <Columns>
+ *     <Column>First</Column>
+ *     <Column>Second</Column>
+ *   </Columns>
+ */
+type Props = {
+  /** .is-multiline — columns wrap onto multiple lines */
+  multiline?: boolean;
+  /** .is-gapless — remove the gap between columns */
+  gapless?: boolean;
+  /** .is-centered — center columns horizontally */
+  centered?: boolean;
+  /** .is-vcentered — align columns vertically */
+  vcentered?: boolean;
+  /** .is-mobile — keep columns side by side on mobile */
+  mobile?: boolean;
+  /** .is-desktop — only activate columns from desktop up */
+  desktop?: boolean;
+  /** Custom gap size 0–8 (adds .is-variable) */
+  gap?: 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8;
+  class?: string;
+  [key: string]: unknown;
+};
+
+const {
+  multiline,
+  gapless,
+  centered,
+  vcentered,
+  mobile,
+  desktop,
+  gap,
+  class: className,
+  ...rest
+} = Astro.props;
+
+const classes = [
+  "columns",
+  multiline && "is-multiline",
+  gapless && "is-gapless",
+  centered && "is-centered",
+  vcentered && "is-vcentered",
+  mobile && "is-mobile",
+  desktop && "is-desktop",
+  gap !== undefined && "is-variable",
+  gap !== undefined && `is-${gap}`,
+  className,
+]
+  .filter(Boolean)
+  .join(" ");
+---
+
+<div class={classes} {...rest}>
+  <slot />
+</div>

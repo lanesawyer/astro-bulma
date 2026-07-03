@@ -106,23 +106,30 @@ export default defineConfig({
         {
           label: "Elements",
           items: [
+            { label: "Block", slug: "elements/block" },
             { label: "Box", slug: "elements/box" },
             { label: "Button", slug: "elements/button" },
+            { label: "Content", slug: "elements/content" },
+            { label: "Delete", slug: "elements/delete" },
             { label: "Icon", slug: "elements/icon" },
             { label: "Image", slug: "elements/image" },
             { label: "Notification", slug: "elements/notification" },
             { label: "Progress", slug: "elements/progress" },
             { label: "Table", slug: "elements/table" },
             { label: "Tag", slug: "elements/tag" },
+            { label: "Title & Subtitle", slug: "elements/title" },
           ],
         },
         {
           label: "Forms",
           items: [
             { label: "TextInput", slug: "forms/textinput" },
+            { label: "Textarea", slug: "forms/textarea" },
             { label: "Select", slug: "forms/select" },
             { label: "Checkbox", slug: "forms/checkbox" },
+            { label: "Radio", slug: "forms/radio" },
             { label: "FileInput", slug: "forms/fileinput" },
+            { label: "Field", slug: "forms/field" },
           ],
         },
         {
@@ -130,15 +137,32 @@ export default defineConfig({
           items: [
             { label: "Breadcrumb", slug: "components/breadcrumb" },
             { label: "Card", slug: "components/card" },
+            { label: "Dropdown", slug: "components/dropdown" },
+            { label: "Menu", slug: "components/menu" },
             { label: "Message", slug: "components/message" },
             { label: "Modal", slug: "components/modal" },
             { label: "Navbar", slug: "components/navbar" },
+            { label: "Pagination", slug: "components/pagination" },
+            { label: "Panel", slug: "components/panel" },
             { label: "Tabs", slug: "components/tabs" },
+          ],
+        },
+        {
+          label: "Columns & Grid",
+          items: [
+            { label: "Columns", slug: "layouts/columns" },
+            { label: "Grid", slug: "layouts/grid" },
           ],
         },
         {
           label: "Layouts",
           items: [
+            { label: "Container", slug: "layouts/container" },
+            { label: "Hero", slug: "layouts/hero" },
+            { label: "Section", slug: "layouts/section" },
+            { label: "Level", slug: "layouts/level" },
+            { label: "Media", slug: "layouts/media" },
+            { label: "Footer", slug: "layouts/footer" },
             { label: "PageLayout", slug: "layouts/pagelayout" },
             { label: "SingleColumnLayout", slug: "layouts/singlecolumnlayout" },
           ],

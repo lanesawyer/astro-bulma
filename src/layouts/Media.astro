@@ -1,0 +1,48 @@
+---
+/**
+ * Media object following the Bulma media spec.
+ * https://bulma.io/documentation/layout/media-object/
+ *
+ * The default slot fills .media-content. Use the "left" slot for the
+ * figure (avatar/image) and the "right" slot for side actions:
+ *
+ *   <Media>
+ *     <Image slot="left" src="avatar.png" size="64x64" />
+ *     <p><strong>John Smith</strong> — Lorem ipsum…</p>
+ *     <Delete slot="right" />
+ *   </Media>
+ *
+ * Nest Media components inside the default slot for threaded layouts.
+ */
+type Props = {
+  class?: string;
+  [key: string]: unknown;
+};
+
+const { class: className, ...rest } = Astro.props;
+
+const hasLeft = Astro.slots.has("left");
+const hasRight = Astro.slots.has("right");
+
+const classes = ["media", className].filter(Boolean).join(" ");
+---
+
+<article class={classes} {...rest}>
+  {
+    hasLeft && (
+      <figure class="media-left">
+        <slot name="left" />
+      </figure>
+    )
+  }
+  <div class="media-content">
+    <slot />
+  </div>
+  {
+    hasRight && (
+      <div class="media-right">
+        <slot name="right" />
+      </div>
+    )
+  }
+</article>

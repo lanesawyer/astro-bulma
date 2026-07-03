@@ -1,0 +1,50 @@
+---
+/**
+ * Grid cell following the Bulma grid spec (new in Bulma 1.0).
+ * https://bulma.io/documentation/grid/cell/
+ */
+type Props = {
+  /** Which column the cell starts at (.is-col-start-*) */
+  colStart?: number;
+  /** Which column the cell ends at, counting from the end (.is-col-from-end-*) */
+  colFromEnd?: number;
+  /** How many columns the cell spans (.is-col-span-*) */
+  colSpan?: number;
+  /** Which row the cell starts at (.is-row-start-*) */
+  rowStart?: number;
+  /** Which row the cell ends at, counting from the end (.is-row-from-end-*) */
+  rowFromEnd?: number;
+  /** How many rows the cell spans (.is-row-span-*) */
+  rowSpan?: number;
+  class?: string;
+  [key: string]: unknown;
+};
+
+const {
+  colStart,
+  colFromEnd,
+  colSpan,
+  rowStart,
+  rowFromEnd,
+  rowSpan,
+  class: className,
+  ...rest
+} = Astro.props;
+
+const classes = [
+  "cell",
+  colStart !== undefined && `is-col-start-${colStart}`,
+  colFromEnd !== undefined && `is-col-from-end-${colFromEnd}`,
+  colSpan !== undefined && `is-col-span-${colSpan}`,
+  rowStart !== undefined && `is-row-start-${rowStart}`,
+  rowFromEnd !== undefined && `is-row-from-end-${rowFromEnd}`,
+  rowSpan !== undefined && `is-row-span-${rowSpan}`,
+  className,
+]
+  .filter(Boolean)
+  .join(" ");
+---
+
+<div class={classes} {...rest}>
+  <slot />
+</div>

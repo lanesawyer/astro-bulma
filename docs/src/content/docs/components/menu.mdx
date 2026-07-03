@@ -1,0 +1,95 @@
+---
+title: Menu
+description: A simple vertical navigation menu.
+---
+
+import Preview from "../../../components/Preview.astro";
+import Menu from "astro-bulma/components/Menu.astro";
+
+The `Menu` component renders a Bulma [menu](https://bulma.io/documentation/components/menu/) — a vertical navigation sidebar built from a `sections` array. Items support one level of nesting.
+
+## Basic example
+
+<Preview>
+  <Menu
+    sections={[
+      {
+        label: "General",
+        items: [
+          { label: "Dashboard", href: "#" },
+          { label: "Customers", href: "#" },
+        ],
+      },
+      {
+        label: "Administration",
+        items: [
+          { label: "Team Settings", href: "#" },
+          {
+            label: "Manage Your Team",
+            href: "#",
+            active: true,
+            children: [
+              { label: "Members", href: "#" },
+              { label: "Plugins", href: "#" },
+            ],
+          },
+          { label: "Invitations", href: "#" },
+        ],
+      },
+    ]}
+  />
+</Preview>
+
+```astro
+<Menu
+  sections={[
+    {
+      label: "General",
+      items: [
+        { label: "Dashboard", href: "/dashboard" },
+        { label: "Customers", href: "/customers" },
+      ],
+    },
+    {
+      label: "Administration",
+      items: [
+        { label: "Team Settings", href: "/team" },
+        {
+          label: "Manage Your Team",
+          href: "/team/manage",
+          active: true,
+          children: [
+            { label: "Members", href: "/team/members" },
+            { label: "Plugins", href: "/team/plugins" },
+          ],
+        },
+        { label: "Invitations", href: "/team/invitations" },
+      ],
+    },
+  ]}
+/>
+```
+
+## Props
+
+| Prop       | Type            | Default | Description                          |
+|------------|-----------------|---------|--------------------------------------|
+| `sections` | `MenuSection[]` | —       | **Required.** Menu structure.        |
+| `class`    | `string`        | —       | Extra classes on the `aside.menu`.   |
+| `...`      | `*`             | —       | Any other HTML `aside` attributes.   |
+
+### Types
+
+```ts
+interface MenuSection {
+  label?: string; // optional .menu-label heading
+  items: MenuItem[];
+}
+
+interface MenuItem {
+  label: string;
+  href?: string;
+  active?: boolean;
+  children?: MenuItem[]; // one level of nesting
+}
+```

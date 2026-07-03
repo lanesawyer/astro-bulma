@@ -1,0 +1,49 @@
+---
+/**
+ * Bulma panel component.
+ * https://bulma.io/documentation/components/panel/
+ *
+ * Pass blocks via the default slot using Bulma's own classes, and tab
+ * links via the "tabs" slot:
+ *
+ *   <Panel heading="Repositories" color="primary">
+ *     <Fragment slot="tabs">
+ *       <a class="is-active">All</a>
+ *       <a>Public</a>
+ *     </Fragment>
+ *     <a class="panel-block is-active">astro-bulma</a>
+ *     <a class="panel-block">bulma</a>
+ *     <div class="panel-block">
+ *       <Button fullwidth outlined color="link">Reset filters</Button>
+ *     </div>
+ *   </Panel>
+ */
+
+interface Props {
+  /** Text for the .panel-heading */
+  heading?: string;
+  color?: "primary" | "link" | "info" | "success" | "warning" | "danger";
+  class?: string;
+  [key: string]: unknown;
+}
+
+const { heading, color, class: className, ...rest } = Astro.props;
+
+const hasTabs = Astro.slots.has("tabs");
+
+const classes = ["panel", color && `is-${color}`, className]
+  .filter(Boolean)
+  .join(" ");
+---
+
+<nav class={classes} {...rest}>
+  {heading && <p class="panel-heading">{heading}</p>}
+  {
+    hasTabs && (
+      <p class="panel-tabs">
+        <slot name="tabs" />
+      </p>
+    )
+  }
+  <slot />
+</nav>

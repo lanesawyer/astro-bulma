@@ -1,0 +1,111 @@
+---
+/**
+ * Bulma dropdown component with click-to-toggle behavior.
+ * https://bulma.io/documentation/components/dropdown/
+ *
+ * Pass menu items via the default slot using Bulma's own classes:
+ *
+ *   <Dropdown label="Dropdown menu">
+ *     <a href="#" class="dropdown-item">First item</a>
+ *     <a href="#" class="dropdown-item is-active">Active item</a>
+ *     <hr class="dropdown-divider" />
+ *     <div class="dropdown-item">Any content</div>
+ *   </Dropdown>
+ *
+ * Use the "trigger" slot to replace the default button. `hoverable`
+ * dropdowns open on hover via CSS alone (no JS attached).
+ */
+import Icon from "../elements/Icon.astro";
+
+interface Props {
+  /** Text for the default trigger button; ignored when using the trigger slot */
+  label?: string;
+  /** .is-hoverable — open on hover, CSS only */
+  hoverable?: boolean;
+  /** .is-right — align the menu with the right edge of the trigger */
+  right?: boolean;
+  /** .is-up — open the menu above the trigger */
+  up?: boolean;
+  /** Render the dropdown initially open */
+  active?: boolean;
+  class?: string;
+  [key: string]: unknown;
+}
+
+const {
+  label,
+  hoverable,
+  right,
+  up,
+  active,
+  class: className,
+  ...rest
+} = Astro.props;
+
+const hasTrigger = Astro.slots.has("trigger");
+
+const classes = [
+  "dropdown",
+  hoverable && "is-hoverable",
+  right && "is-right",
+  up && "is-up",
+  active && "is-active",
+  className,
+]
+  .filter(Boolean)
+  .join(" ");
+---
+
+<div class={classes} data-dropdown={hoverable ? undefined : true} {...rest}>
+  <div class="dropdown-trigger">
+    {
+      hasTrigger ? (
+        <slot name="trigger" />
+      ) : (
+        <button class="button" aria-haspopup="true">
+          <span>{label}</span>
+          <Icon icon={up ? "fa-angle-up" : "fa-angle-down"} size="small" />
+        </button>
+      )
+    }
+  </div>
+  <div class="dropdown-menu" role="menu">
+    <div class="dropdown-content">
+      <slot />
+    </div>
+  </div>
+</div>
+
+<script>
+  document.addEventListener("astro:page-load", () => {
+    document
+      .querySelectorAll<HTMLElement>("[data-dropdown]")
+      .forEach((dropdown) => {
+        dropdown
+          .querySelector(".dropdown-trigger")
+          ?.addEventListener("click", (event) => {
+            event.stopPropagation();
+            dropdown.classList.toggle("is-active");
+          });
+      });
+  });
+
+  // Module scope, so registered once — closes any open dropdown on an
+  // outside click or Escape even after ClientRouter navigations.
+  document.addEventListener("click", (event) => {
+    document
+      .querySelectorAll<HTMLElement>("[data-dropdown].is-active")
+      .forEach((dropdown) => {
+        if (!dropdown.contains(event.target as Node)) {
+          dropdown.classList.remove("is-active");
+        }
+      });
+  });
+
+  document.addEventListener("keydown", (event) => {
+    if (event.key !== "Escape") return;
+    document
+      .querySelectorAll<HTMLElement>("[data-dropdown].is-active")
+      .forEach((dropdown) => dropdown.classList.remove("is-active"));
+  });
+</script>

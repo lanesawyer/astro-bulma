@@ -1,0 +1,38 @@
+---
+/**
+ * Container component following the Bulma container spec.
+ * https://bulma.io/documentation/layout/container/
+ */
+type Props = {
+  /**
+   * Breakpoint behavior: `widescreen`/`fullhd` only activate the container
+   * from that breakpoint up; `max-tablet`/`max-desktop`/`max-widescreen`
+   * cap the maximum width at that breakpoint.
+   */
+  breakpoint?:
+    | "widescreen"
+    | "fullhd"
+    | "max-tablet"
+    | "max-desktop"
+    | "max-widescreen";
+  /** .is-fluid — full width with a fixed 32px gap on either side */
+  fluid?: boolean;
+  class?: string;
+  [key: string]: unknown;
+};
+
+const { breakpoint, fluid, class: className, ...rest } = Astro.props;
+
+const classes = [
+  "container",
+  breakpoint && `is-${breakpoint}`,
+  fluid && "is-fluid",
+  className,
+]
+  .filter(Boolean)
+  .join(" ");
+---
+
+<div class={classes} {...rest}>
+  <slot />
+</div>

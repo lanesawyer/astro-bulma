@@ -1,0 +1,107 @@
+---
+/**
+ * Bulma pagination component.
+ * https://bulma.io/documentation/components/pagination/
+ *
+ * Page links are built from `hrefTemplate`, with "{page}" replaced by the
+ * page number:
+ *
+ *   <Pagination current={5} total={12} hrefTemplate="/posts/{page}" />
+ */
+
+interface Props {
+  /** The current page (1-based) */
+  current: number;
+  /** Total number of pages */
+  total: number;
+  /** URL template for page links; "{page}" is replaced by the page number */
+  hrefTemplate?: string;
+  size?: "small" | "medium" | "large";
+  rounded?: boolean;
+  /** Alignment of the previous/next buttons and list */
+  align?: "centered" | "right";
+  previousLabel?: string;
+  nextLabel?: string;
+  class?: string;
+  [key: string]: unknown;
+}
+
+const {
+  current,
+  total,
+  hrefTemplate = "#",
+  size,
+  rounded,
+  align,
+  previousLabel = "Previous",
+  nextLabel = "Next page",
+  class: className,
+  ...rest
+} = Astro.props;
+
+const href = (page: number) => hrefTemplate.replace("{page}", String(page));
+
+// Always show the first and last page, the current page and its direct
+// neighbors, and ellipses for any gaps in between.
+function pageList(): (number | "ellipsis")[] {
+  if (total <= 7) return Array.from({ length: total }, (_, i) => i + 1);
+
+  const pages: (number | "ellipsis")[] = [1];
+  const start = Math.max(2, current - 1);
+  const end = Math.min(total - 1, current + 1);
+  if (start > 2) pages.push("ellipsis");
+  for (let page = start; page <= end; page++) pages.push(page);
+  if (end < total - 1) pages.push("ellipsis");
+  pages.push(total);
+  return pages;
+}
+
+const classes = [
+  "pagination",
+  size && `is-${size}`,
+  rounded && "is-rounded",
+  align && `is-${align}`,
+  className,
+]
+  .filter(Boolean)
+  .join(" ");
+---
+
+<nav class={classes} role="navigation" aria-label="pagination" {...rest}>
+  <a
+    class:list={["pagination-previous", current <= 1 && "is-disabled"]}
+    href={current > 1 ? href(current - 1) : undefined}
+  >
+    {previousLabel}
+  </a>
+  <a
+    class:list={["pagination-next", current >= total && "is-disabled"]}
+    href={current < total ? href(current + 1) : undefined}
+  >
+    {nextLabel}
+  </a>
+  <ul class="pagination-list">
+    {
+      pageList().map((page) =>
+        page === "ellipsis" ? (
+          <li>
+            <span class="pagination-ellipsis">&hellip;</span>
+          </li>
+        ) : (
+          <li>
+            <a
+              class:list={["pagination-link", page === current && "is-current"]}
+              href={href(page)}
+              aria-label={
+                page === current ? `Page ${page}` : `Go to page ${page}`
+              }
+              aria-current={page === current ? "page" : undefined}
+            >
+              {page}
+            </a>
+          </li>
+        ),
+      )
+    }
+  </ul>
+</nav>

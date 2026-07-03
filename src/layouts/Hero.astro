@@ -1,0 +1,63 @@
+---
+/**
+ * Hero component following the Bulma hero spec.
+ * https://bulma.io/documentation/layout/hero/
+ *
+ * The default slot fills the hero body. Use the "head" and "foot" slots
+ * (shown in fullheight heroes) for content above and below the body.
+ */
+type Props = {
+  color?:
+    | "primary"
+    | "link"
+    | "info"
+    | "success"
+    | "warning"
+    | "danger"
+    | "light"
+    | "dark";
+  size?:
+    | "small"
+    | "medium"
+    | "large"
+    | "halfheight"
+    | "fullheight"
+    | "fullheight-with-navbar";
+  class?: string;
+  [key: string]: unknown;
+};
+
+const { color, size, class: className, ...rest } = Astro.props;
+
+const hasHead = Astro.slots.has("head");
+const hasFoot = Astro.slots.has("foot");
+
+const classes = [
+  "hero",
+  color && `is-${color}`,
+  size && `is-${size}`,
+  className,
+]
+  .filter(Boolean)
+  .join(" ");
+---
+
+<section class={classes} {...rest}>
+  {
+    hasHead && (
+      <div class="hero-head">
+        <slot name="head" />
+      </div>
+    )
+  }
+  <div class="hero-body">
+    <slot />
+  </div>
+  {
+    hasFoot && (
+      <div class="hero-foot">
+        <slot name="foot" />
+      </div>
+    )
+  }
+</section>

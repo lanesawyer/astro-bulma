@@ -1,0 +1,42 @@
+---
+title: Block
+description: Bulma's most basic spacer block.
+---
+
+import Preview from "../../../components/Preview.astro";
+import Block from "astro-bulma/elements/Block.astro";
+
+The `Block` component renders Bulma's [block element](https://bulma.io/documentation/elements/block/) — a simple `div` with a `1.5rem` bottom margin (except on the last child), for consistently spacing content vertically.
+
+## Basic example
+
+<Preview>
+  <Block>
+    This text is within a block.
+  </Block>
+  <Block>
+    This text is within a second block. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+  </Block>
+  <Block>
+    This text is within a third block. The blocks have equal spacing between them.
+  </Block>
+</Preview>
+
+```astro
+<Block>
+  This text is within a block.
+</Block>
+<Block>
+  This text is within a second block. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+</Block>
+<Block>
+  This text is within a third block. The blocks have equal spacing between them.
+</Block>
+```
+
+## Props
+
+| Prop    | Type     | Default | Description                           |
+|---------|----------|---------|---------------------------------------|
+| `class` | `string` | —       | Extra CSS classes on the `div.block`. |
+| `...`   | `*`      | —       | Any other HTML `div` attributes.      |

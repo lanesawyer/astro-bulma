@@ -1,0 +1,92 @@
+---
+title: Panel
+description: A composable panel for compact controls.
+---
+
+import Preview from "../../../components/Preview.astro";
+import Panel from "astro-bulma/components/Panel.astro";
+import Button from "astro-bulma/elements/Button.astro";
+
+The `Panel` component renders a Bulma [panel](https://bulma.io/documentation/components/panel/). Pass blocks via the default slot using Bulma's own classes (`panel-block`, `panel-icon`), and tab links via the `tabs` slot.
+
+## Basic example
+
+<Preview>
+  <Panel heading="Repositories">
+    <a href="#" class="panel-block is-active">astro-bulma</a>
+    <a href="#" class="panel-block">bulma</a>
+    <a href="#" class="panel-block">astro</a>
+  </Panel>
+</Preview>
+
+```astro
+<Panel heading="Repositories">
+  <a href="#" class="panel-block is-active">astro-bulma</a>
+  <a href="#" class="panel-block">bulma</a>
+  <a href="#" class="panel-block">astro</a>
+</Panel>
+```
+
+## With tabs and rich blocks
+
+<Preview>
+  <Panel heading="Repositories" color="primary">
+    <Fragment slot="tabs">
+      <a href="#" class="is-active">All</a>
+      <a href="#">Public</a>
+      <a href="#">Private</a>
+    </Fragment>
+    <label class="panel-block">
+      <input type="checkbox" />
+      Remember me
+    </label>
+    <a href="#" class="panel-block">
+      <span class="panel-icon">
+        <i class="fas fa-book" aria-hidden="true"></i>
+      </span>
+      astro-bulma
+    </a>
+    <div class="panel-block">
+      <Button fullwidth outlined color="link">Reset all filters</Button>
+    </div>
+  </Panel>
+</Preview>
+
+```astro
+<Panel heading="Repositories" color="primary">
+  <Fragment slot="tabs">
+    <a href="#" class="is-active">All</a>
+    <a href="#">Public</a>
+    <a href="#">Private</a>
+  </Fragment>
+  <label class="panel-block">
+    <input type="checkbox" />
+    Remember me
+  </label>
+  <a href="#" class="panel-block">
+    <span class="panel-icon">
+      <i class="fas fa-book" aria-hidden="true"></i>
+    </span>
+    astro-bulma
+  </a>
+  <div class="panel-block">
+    <Button fullwidth outlined color="link">Reset all filters</Button>
+  </div>
+</Panel>
+```
+
+## Props
+
+| Prop      | Type                                                                   | Default | Description                        |
+|-----------|------------------------------------------------------------------------|---------|------------------------------------|
+| `heading` | `string`                                                               | —       | Text for the `panel-heading`.      |
+| `color`   | `"primary" \| "link" \| "info" \| "success" \| "warning" \| "danger"` | —       | Color modifier.                    |
+| `class`   | `string`                                                               | —       | Extra classes on the `nav.panel`.  |
+| `...`     | `*`                                                                    | —       | Any other HTML `nav` attributes.   |
+
+### Slots
+
+| Slot      | Description                                    |
+|-----------|------------------------------------------------|
+| (default) | Panel blocks (`panel-block`, `panel-icon`, …). |
+| `tabs`    | Links for the `panel-tabs` row.                |

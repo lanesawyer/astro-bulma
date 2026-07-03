@@ -1,0 +1,109 @@
+---
+title: Dropdown
+description: An interactive dropdown menu for discoverable content.
+---
+
+import Preview from "../../../components/Preview.astro";
+import Dropdown from "astro-bulma/components/Dropdown.astro";
+import Button from "astro-bulma/elements/Button.astro";
+
+The `Dropdown` component renders a Bulma [dropdown](https://bulma.io/documentation/components/dropdown/). Clicking the trigger toggles the menu; clicking outside or pressing <kbd>Escape</kbd> closes it. Pass menu items via the default slot using Bulma's own classes (`dropdown-item`, `dropdown-divider`).
+
+## Basic example
+
+<Preview>
+  <Dropdown label="Dropdown menu">
+    <a href="#" class="dropdown-item">Overview</a>
+    <a href="#" class="dropdown-item is-active">Modifiers</a>
+    <a href="#" class="dropdown-item">Columns</a>
+    <hr class="dropdown-divider" />
+    <a href="#" class="dropdown-item">More</a>
+  </Dropdown>
+</Preview>
+
+```astro
+<Dropdown label="Dropdown menu">
+  <a href="#" class="dropdown-item">Overview</a>
+  <a href="#" class="dropdown-item is-active">Modifiers</a>
+  <a href="#" class="dropdown-item">Columns</a>
+  <hr class="dropdown-divider" />
+  <a href="#" class="dropdown-item">More</a>
+</Dropdown>
+```
+
+## Hoverable
+
+`hoverable` dropdowns open on hover with CSS alone — no JavaScript is attached:
+
+<Preview>
+  <Dropdown label="Hover me" hoverable>
+    <a href="#" class="dropdown-item">First item</a>
+    <a href="#" class="dropdown-item">Second item</a>
+  </Dropdown>
+</Preview>
+
+```astro
+<Dropdown label="Hover me" hoverable>
+  <a href="#" class="dropdown-item">First item</a>
+  <a href="#" class="dropdown-item">Second item</a>
+</Dropdown>
+```
+
+## Custom trigger
+
+Replace the default button with the `trigger` slot:
+
+<Preview>
+  <Dropdown>
+    <Button slot="trigger" color="primary" aria-haspopup="true">Custom trigger</Button>
+    <a href="#" class="dropdown-item">First item</a>
+    <a href="#" class="dropdown-item">Second item</a>
+  </Dropdown>
+</Preview>
+
+```astro
+<Dropdown>
+  <Button slot="trigger" color="primary" aria-haspopup="true">Custom trigger</Button>
+  <a href="#" class="dropdown-item">First item</a>
+  <a href="#" class="dropdown-item">Second item</a>
+</Dropdown>
+```
+
+## Alignment and direction
+
+<Preview>
+  <Dropdown label="Right-aligned" right>
+    <div class="dropdown-item">Aligned to the right edge of the trigger.</div>
+  </Dropdown>
+  <Dropdown label="Drop up" up>
+    <div class="dropdown-item">Opens above the trigger.</div>
+  </Dropdown>
+</Preview>
+
+```astro
+<Dropdown label="Right-aligned" right>
+  <div class="dropdown-item">Aligned to the right edge of the trigger.</div>
+</Dropdown>
+<Dropdown label="Drop up" up>
+  <div class="dropdown-item">Opens above the trigger.</div>
+</Dropdown>
+```
+
+## Props
+
+| Prop        | Type      | Default | Description                                             |
+|-------------|-----------|---------|---------------------------------------------------------|
+| `label`     | `string`  | —       | Text for the default trigger button.                    |
+| `hoverable` | `boolean` | —       | Open on hover (CSS only, no JS).                        |
+| `right`     | `boolean` | —       | Align the menu with the right edge of the trigger.      |
+| `up`        | `boolean` | —       | Open the menu above the trigger.                        |
+| `active`    | `boolean` | —       | Render initially open.                                  |
+| `class`     | `string`  | —       | Extra classes on the `div.dropdown`.                    |
+| `...`       | `*`       | —       | Any other HTML `div` attributes.                        |
+
+### Slots
+
+| Slot      | Description                                                    |
+|-----------|----------------------------------------------------------------|
+| (default) | Menu content (`dropdown-item`, `dropdown-divider`, …).         |
+| `trigger` | Replaces the default trigger button.                           |

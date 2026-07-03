@@ -1,0 +1,99 @@
+---
+title: Textarea
+description: Bulma-styled multiline text input.
+---
+
+import Preview from "../../../components/Preview.astro";
+import Textarea from "astro-bulma/forms/Textarea.astro";
+
+The `Textarea` component renders a Bulma [textarea](https://bulma.io/documentation/form/textarea/). Like `TextInput`, it wraps itself in `field`/`label`/`control` elements by default, or renders just the raw `<textarea>` with `standalone`.
+
+## Basic example
+
+<Preview>
+  <Textarea name="message" label="Message" placeholder="Your message" rows={4} />
+</Preview>
+
+```astro
+<Textarea name="message" label="Message" placeholder="Your message" rows={4} />
+```
+
+## Colors and sizes
+
+<Preview>
+  <Textarea name="success" color="success" placeholder="Success textarea" rows={2} />
+  <Textarea name="small" size="small" placeholder="Small textarea" rows={2} />
+</Preview>
+
+```astro
+<Textarea name="success" color="success" placeholder="Success textarea" rows={2} />
+<Textarea name="small" size="small" placeholder="Small textarea" rows={2} />
+```
+
+## Fixed size
+
+Disable manual resizing with `fixedSize`:
+
+<Preview>
+  <Textarea name="fixed" placeholder="You can't resize me" rows={2} fixedSize />
+</Preview>
+
+```astro
+<Textarea name="fixed" placeholder="You can't resize me" rows={2} fixedSize />
+```
+
+## With help text
+
+<Preview>
+  <Textarea
+    name="bio"
+    label="Bio"
+    rows={3}
+    help="Maximum 200 characters."
+    helpColor="info"
+  />
+</Preview>
+
+```astro
+<Textarea
+  name="bio"
+  label="Bio"
+  rows={3}
+  help="Maximum 200 characters."
+  helpColor="info"
+/>
+```
+
+## Standalone
+
+<Preview>
+  <Textarea name="raw" placeholder="No field or control wrappers" rows={2} standalone />
+</Preview>
+
+```astro
+<Textarea name="raw" placeholder="No field or control wrappers" rows={2} standalone />
+```
+
+## Props
+
+| Prop           | Type                                          | Default | Description                                            |
+|----------------|-----------------------------------------------|---------|--------------------------------------------------------|
+| `name`         | `string`                                      | —       | **Required.** `name` attribute.                        |
+| `id`           | `string`                                      | `name`  | `id` attribute; defaults to `name`.                    |
+| `label`        | `string`                                      | —       | Label text above the control.                          |
+| `placeholder`  | `string`                                      | —       | Placeholder text.                                      |
+| `value`        | `string`                                      | —       | Initial content.                                       |
+| `rows`         | `number`                                      | —       | `rows` attribute.                                      |
+| `required`     | `boolean`                                     | —       | Required field.                                        |
+| `disabled`     | `boolean`                                     | —       | Disabled state.                                        |
+| `readonly`     | `boolean`                                     | —       | Read-only state.                                       |
+| `form`         | `string`                                      | —       | Associates the textarea with a form by id.             |
+| `color`        | `"primary" \| "link" \| "info" \| "success" \| "warning" \| "danger"` | — | Color modifier.               |
+| `size`         | `"small" \| "normal" \| "medium" \| "large"`  | —       | Size modifier.                                         |
+| `fixedSize`    | `boolean`                                     | —       | Disables manual resizing (`has-fixed-size`).           |
+| `help`         | `string`                                      | —       | Help text below the control.                           |
+| `helpColor`    | same as `color`                               | —       | Color for the help text.                               |
+| `standalone`   | `boolean`                                     | —       | Render only the `<textarea>`, no wrappers.             |
+| `class`        | `string`                                      | —       | Extra classes on the `<textarea>`.                     |
+| `controlClass` | `string`                                      | —       | Extra classes on the control div (e.g. `is-loading`).  |
+| `...`          | `*`                                           | —       | Other native textarea attributes (maxlength, wrap, …). |

@@ -1,0 +1,59 @@
+---
+/**
+ * Column following the Bulma columns spec.
+ * https://bulma.io/documentation/columns/sizes/
+ *
+ * For per-breakpoint sizes, pass responsive classes directly:
+ *   <Column class="is-half-tablet is-one-third-desktop">…</Column>
+ */
+type ColumnSize =
+  | 1
+  | 2
+  | 3
+  | 4
+  | 5
+  | 6
+  | 7
+  | 8
+  | 9
+  | 10
+  | 11
+  | 12
+  | "full"
+  | "half"
+  | "one-third"
+  | "two-thirds"
+  | "one-quarter"
+  | "three-quarters"
+  | "one-fifth"
+  | "two-fifths"
+  | "three-fifths"
+  | "four-fifths";
+
+type Props = {
+  /** Width as a 12-column fraction (1–12) or a named fraction */
+  size?: ColumnSize;
+  /** Left offset as a 12-column fraction (1–12) or a named fraction */
+  offset?: ColumnSize;
+  /** .is-narrow — only take the width of the content */
+  narrow?: boolean;
+  class?: string;
+  [key: string]: unknown;
+};
+
+const { size, offset, narrow, class: className, ...rest } = Astro.props;
+
+const classes = [
+  "column",
+  size !== undefined && `is-${size}`,
+  offset !== undefined && `is-offset-${offset}`,
+  narrow && "is-narrow",
+  className,
+]
+  .filter(Boolean)
+  .join(" ");
+---
+
+<div class={classes} {...rest}>
+  <slot />
+</div>
