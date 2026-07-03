@@ -5,9 +5,11 @@ description: An interactive dropdown menu for discoverable content.
 
 import Preview from "../../../components/Preview.astro";
 import Dropdown from "astro-bulma/components/Dropdown.astro";
-import Button from "astro-bulma/elements/Button.astro";
+import Icon from "astro-bulma/elements/Icon.astro";
 
-The `Dropdown` component renders a Bulma [dropdown](https://bulma.io/documentation/components/dropdown/). Clicking the trigger toggles the menu; clicking outside or pressing <kbd>Escape</kbd> closes it. Pass menu items via the default slot using Bulma's own classes (`dropdown-item`, `dropdown-divider`).
+The `Dropdown` component renders a Bulma [dropdown](https://bulma.io/documentation/components/dropdown/) using the native `<details>`/`<summary>` elements — the browser handles the open/close toggle, so the component ships zero JavaScript. Pass menu items via the default slot using Bulma's own classes (`dropdown-item`, `dropdown-divider`).
+
+Note that unlike a scripted dropdown, clicking outside or pressing <kbd>Escape</kbd> does not close an open menu — the user closes it by clicking the trigger again.
 
 ## Basic example
 
@@ -33,7 +35,7 @@ The `Dropdown` component renders a Bulma [dropdown](https://bulma.io/documentati
 
 ## Hoverable
 
-`hoverable` dropdowns open on hover with CSS alone — no JavaScript is attached:
+`hoverable` dropdowns also open on hover:
 
 <Preview>
   <Dropdown label="Hover me" hoverable>
@@ -51,19 +53,25 @@ The `Dropdown` component renders a Bulma [dropdown](https://bulma.io/documentati
 
 ## Custom trigger
 
-Replace the default button with the `trigger` slot:
+Style the trigger button with `triggerClass`, and replace its content with the `trigger` slot. Keep slot content non-interactive (spans, icons — not buttons or links), since nested interactive elements swallow the toggle click:
 
 <Preview>
-  <Dropdown>
-    <Button slot="trigger" color="primary" aria-haspopup="true">Custom trigger</Button>
+  <Dropdown triggerClass="is-primary">
+    <Fragment slot="trigger">
+      <span>Custom trigger</span>
+      <Icon icon="fa-angle-down" size="small" />
+    </Fragment>
     <a href="#" class="dropdown-item">First item</a>
     <a href="#" class="dropdown-item">Second item</a>
   </Dropdown>
 </Preview>
 
 ```astro
-<Dropdown>
-  <Button slot="trigger" color="primary" aria-haspopup="true">Custom trigger</Button>
+<Dropdown triggerClass="is-primary">
+  <Fragment slot="trigger">
+    <span>Custom trigger</span>
+    <Icon icon="fa-angle-down" size="small" />
+  </Fragment>
   <a href="#" class="dropdown-item">First item</a>
   <a href="#" class="dropdown-item">Second item</a>
 </Dropdown>
@@ -91,19 +99,20 @@ Replace the default button with the `trigger` slot:
 
 ## Props
 
-| Prop        | Type      | Default | Description                                             |
-|-------------|-----------|---------|---------------------------------------------------------|
-| `label`     | `string`  | —       | Text for the default trigger button.                    |
-| `hoverable` | `boolean` | —       | Open on hover (CSS only, no JS).                        |
-| `right`     | `boolean` | —       | Align the menu with the right edge of the trigger.      |
-| `up`        | `boolean` | —       | Open the menu above the trigger.                        |
-| `active`    | `boolean` | —       | Render initially open.                                  |
-| `class`     | `string`  | —       | Extra classes on the `div.dropdown`.                    |
-| `...`       | `*`       | —       | Any other HTML `div` attributes.                        |
+| Prop           | Type      | Default | Description                                             |
+|----------------|-----------|---------|---------------------------------------------------------|
+| `label`        | `string`  | —       | Text for the default trigger button.                    |
+| `hoverable`    | `boolean` | —       | Also open on hover.                                     |
+| `right`        | `boolean` | —       | Align the menu with the right edge of the trigger.      |
+| `up`           | `boolean` | —       | Open the menu above the trigger.                        |
+| `active`       | `boolean` | —       | Render initially open (`open` attribute).               |
+| `triggerClass` | `string`  | —       | Extra classes on the trigger button (e.g. `is-primary`).|
+| `class`        | `string`  | —       | Extra classes on the `details.dropdown`.                |
+| `...`          | `*`       | —       | Any other HTML `details` attributes.                    |
 
 ### Slots
 
 | Slot      | Description                                                    |
 |-----------|----------------------------------------------------------------|
 | (default) | Menu content (`dropdown-item`, `dropdown-divider`, …).         |
-| `trigger` | Replaces the default trigger button.                           |
+| `trigger` | Replaces the label/caret inside the trigger button.            |
