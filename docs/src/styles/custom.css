@@ -13,6 +13,19 @@
   line-height: 1.5;
 }
 
+/* Extra room for previews with absolutely-positioned overlays (dropdowns) */
+.preview-tall {
+  min-height: 18rem;
+}
+
+/* Center content vertically so drop-up menus have room above the trigger */
+.preview-centered {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
+
 .preview + pre {
   margin-top: 0;
   border-top-left-radius: 0;

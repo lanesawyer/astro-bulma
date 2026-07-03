@@ -13,7 +13,7 @@ Note that unlike a scripted dropdown, clicking outside or pressing <kbd>Escape</
 
 ## Basic example
 
-<Preview>
+<Preview class="preview-tall">
   <Dropdown label="Dropdown menu">
     <a href="#" class="dropdown-item">Overview</a>
     <a href="#" class="dropdown-item is-active">Modifiers</a>
@@ -37,7 +37,7 @@ Note that unlike a scripted dropdown, clicking outside or pressing <kbd>Escape</
 
 `hoverable` dropdowns also open on hover:
 
-<Preview>
+<Preview class="preview-tall">
   <Dropdown label="Hover me" hoverable>
     <a href="#" class="dropdown-item">First item</a>
     <a href="#" class="dropdown-item">Second item</a>
@@ -55,7 +55,7 @@ Note that unlike a scripted dropdown, clicking outside or pressing <kbd>Escape</
 
 Style the trigger button with `triggerClass`, and replace its content with the `trigger` slot. Keep slot content non-interactive (spans, icons — not buttons or links), since nested interactive elements swallow the toggle click:
 
-<Preview>
+<Preview class="preview-tall">
   <Dropdown triggerClass="is-primary">
     <Fragment slot="trigger">
       <span>Custom trigger</span>
@@ -79,7 +79,7 @@ Style the trigger button with `triggerClass`, and replace its content with the `
 
 ## Alignment and direction
 
-<Preview>
+<Preview class="preview-tall preview-centered">
   <Dropdown label="Right-aligned" right>
     <div class="dropdown-item">Aligned to the right edge of the trigger.</div>
   </Dropdown>
