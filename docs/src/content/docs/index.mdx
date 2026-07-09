@@ -20,19 +20,49 @@ import { Card, CardGrid, LinkButton } from "@astrojs/starlight/components";
 ## What's included
 
 <CardGrid>
-  <Card title="7 Elements" icon="puzzle">
-    Box, Button, Icon, Image, Notification, Table, Tag
+  <Card title="13 Elements" icon="puzzle">
+    Block, Box, Button, Content, Delete, Icon, Image, Notification, Progress,
+    Table, Tag, Title, Subtitle
   </Card>
-  <Card title="4 Form components" icon="pencil">
-    TextInput, Select, Checkbox, FileInput
+  <Card title="7 Form components" icon="pencil">
+    TextInput, Textarea, Select, Checkbox, Radio, FileInput, Field
   </Card>
-  <Card title="5 Components" icon="bars">
-    Breadcrumb, Card, Message, Modal, Tabs
+  <Card title="11 Components" icon="bars">
+    Breadcrumb, Card, Dropdown, Menu, Message, Modal, Navbar, Pagination,
+    Panel, Tabs, ThemeToggle
+  </Card>
+  <Card title="12 Layouts" icon="open-book">
+    Columns, Grid, Container, Hero, Section, Level, Media, Footer, and more
   </Card>
   <Card title="Zero JS frameworks" icon="rocket">
     Pure Astro components. Interactive pieces use vanilla JS scoped inside `astro:page-load`.
   </Card>
+  <Card title="Bulma-native and extras" icon="add-document">
+    Most components wrap a documented Bulma element 1:1. The ones badged
+    <span class="sl-badge success" style="margin: 0 0.25rem;">Extra</span> in
+    the sidebar are net-new to astro-bulma with no Bulma equivalent.
+  </Card>
 </CardGrid>
+
+## Bulma-native vs. extras
+
+Most of the library maps directly onto [Bulma's documentation](https://bulma.io/documentation/):
+each component page links to the Bulma element it wraps, and its props mirror
+Bulma's modifier classes (`is-*`, `has-*`). If you already know Bulma, you
+already know these components.
+
+A few components are **extras** — net-new pieces with no Bulma equivalent,
+built from Bulma primitives or filling gaps Bulma leaves to you:
+
+- [ThemeToggle](/astro-bulma/components/themetoggle/) — light/dark mode switch
+  built on Bulma 1.0's `data-theme` dark mode.
+- [PageLayout](/astro-bulma/layouts/pagelayout/) — page header with title,
+  actions, and notification slots.
+- [SingleColumnLayout](/astro-bulma/layouts/singlecolumnlayout/) — centered
+  single-column content wrapper.
+
+They're marked with an <span class="sl-badge success">Extra</span> badge in
+the sidebar.
 
 ## Installation
 
