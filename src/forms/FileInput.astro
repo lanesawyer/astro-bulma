@@ -82,10 +82,12 @@ const fileClasses = [
 {help && <p class="help">{help}</p>}
 
 <script>
-  document.addEventListener("astro:page-load", () => {
+  function initFileInputs() {
     document
       .querySelectorAll<HTMLInputElement>(".file-input[data-filename-target]")
       .forEach((input) => {
+        if (input.dataset.filenameBound) return;
+        input.dataset.filenameBound = "true";
         const targetId = input.dataset.filenameTarget!;
         const nameEl = document.getElementById(targetId);
         if (!nameEl) return;
@@ -93,5 +95,10 @@ const fileClasses = [
           nameEl.textContent = input.files?.[0]?.name ?? "No file selected";
         });
       });
-  });
+  }
+
+  // Bind now for plain MPA pages — astro:page-load only fires when
+  // <ClientRouter /> is present — and rebind after every router navigation.
+  initFileInputs();
+  document.addEventListener("astro:page-load", initFileInputs);
 </script>

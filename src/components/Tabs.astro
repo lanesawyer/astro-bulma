@@ -61,8 +61,11 @@ const navClasses = ["tabs", size && `is-${size}`, boxed && "is-boxed"]
 </div>
 
 <script>
-  document.addEventListener("astro:page-load", () => {
+  function initTabs() {
     document.querySelectorAll<HTMLElement>("[data-tabs-nav]").forEach((nav) => {
+      if (nav.dataset.tabsBound) return;
+      nav.dataset.tabsBound = "true";
+
       const container =
         nav.closest<HTMLElement>("[data-tabs-nav]")?.parentElement;
       if (!container) return;
@@ -91,5 +94,10 @@ const navClasses = ["tabs", size && `is-${size}`, boxed && "is-boxed"]
         });
       });
     });
-  });
+  }
+
+  // Bind now for plain MPA pages — astro:page-load only fires when
+  // <ClientRouter /> is present — and rebind after every router navigation.
+  initTabs();
+  document.addEventListener("astro:page-load", initTabs);
 </script>
