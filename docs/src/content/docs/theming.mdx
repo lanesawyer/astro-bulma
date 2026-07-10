@@ -69,10 +69,10 @@ astrobulma({
 })
 ```
 
+## Dark mode
+
+Bulma 1.0 ships full [dark mode support](https://bulma.io/documentation/features/dark-mode/) out of the box: it follows the system `prefers-color-scheme` automatically, and setting `data-theme="light"` or `data-theme="dark"` on `<html>` forces a theme explicitly. Use the [ThemeToggle](/astro-bulma/components/themetoggle/) component to give users a persistent light/dark switch — it handles storage, first-paint restore, and `<ClientRouter />` navigations for you.
+
 ## How it works
 
-In production builds the integration's `astro:build:done` hook post-processes every generated HTML file, injecting a `<style>:root { … }</style>` block right before `</head>`. Because the style lands after all `<link rel="stylesheet">` tags, it wins the cascade at equal specificity with no tricks required.
-
-In production builds the integration post-processes every generated HTML file, injecting a `<style>:root { … }</style>` block right before `</head>` — after all linked stylesheets, so it wins the cascade.
-
-In development, Vite injects CSS at runtime rather than via `<link>` tags, so source order isn't reliable. The integration uses a small `<script>` in `<head>` that writes `html:root { … }` — a selector with higher specificity than Bulma's `:root` — ensuring your overrides win regardless of when Vite injects Bulma's styles.
+The integration injects a tiny inline `<script>` into every page's `<head>` (via Astro's `head-inline` injection) that writes a `<style>` block containing `html:root { … }`. That selector has higher specificity (0,1,1) than Bulma's `:root` (0,1,0), so your overrides win regardless of when or how Bulma's stylesheet is loaded — in dev, static builds, and SSR alike.

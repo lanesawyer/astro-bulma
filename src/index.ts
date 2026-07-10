@@ -47,3 +47,4 @@ export { default as Navbar } from './components/Navbar.astro';
 export { default as Pagination } from './components/Pagination.astro';
 export { default as Panel } from './components/Panel.astro';
 export { default as Tabs } from './components/Tabs.astro';
+export { default as ThemeToggle } from './components/ThemeToggle.astro';

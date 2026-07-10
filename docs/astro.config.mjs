@@ -145,6 +145,11 @@ export default defineConfig({
             { label: "Pagination", slug: "components/pagination" },
             { label: "Panel", slug: "components/panel" },
             { label: "Tabs", slug: "components/tabs" },
+            {
+              label: "ThemeToggle",
+              slug: "components/themetoggle",
+              badge: { text: "Extra", variant: "success" },
+            },
           ],
         },
         {
@@ -163,8 +168,16 @@ export default defineConfig({
             { label: "Level", slug: "layouts/level" },
             { label: "Media", slug: "layouts/media" },
             { label: "Footer", slug: "layouts/footer" },
-            { label: "PageLayout", slug: "layouts/pagelayout" },
-            { label: "SingleColumnLayout", slug: "layouts/singlecolumnlayout" },
+            {
+              label: "PageLayout",
+              slug: "layouts/pagelayout",
+              badge: { text: "Extra", variant: "success" },
+            },
+            {
+              label: "SingleColumnLayout",
+              slug: "layouts/singlecolumnlayout",
+              badge: { text: "Extra", variant: "success" },
+            },
           ],
         },
       ],

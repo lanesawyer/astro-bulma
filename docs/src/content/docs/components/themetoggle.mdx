@@ -1,0 +1,87 @@
+---
+title: ThemeToggle
+description: Light/dark mode toggle built on Bulma 1.0's native data-theme support.
+---
+
+import Preview from "../../../components/Preview.astro";
+import ThemeToggle from "astro-bulma/components/ThemeToggle.astro";
+
+The `ThemeToggle` component is an **astro-bulma extra** — it has no direct
+Bulma equivalent. It switches between light and dark mode using Bulma 1.0's
+native [dark mode support](https://bulma.io/documentation/features/dark-mode/):
+clicking it sets `data-theme="light"` or `data-theme="dark"` on `<html>`, and
+every Bulma component restyles itself automatically.
+
+The component handles the full lifecycle:
+
+- **Persistence** — the choice is stored in `localStorage` under the key
+  `theme` and reapplied on the next visit.
+- **No flash of the wrong theme** — an inline script applies the saved theme
+  during parse, before the page paints.
+- **System preference** — until the user picks a theme explicitly, the toggle
+  follows `prefers-color-scheme`, including live OS changes.
+- **`<ClientRouter />` support** — the theme is carried across view-transition
+  navigations via `astro:before-swap`, and the click handler re-binds on
+  `astro:page-load`. No extra setup is needed either way.
+
+:::note
+This docs site is themed by Starlight, which uses the same `data-theme`
+attribute — so the live example below switches the whole page, not just the
+preview box. In your app it does exactly the same thing: it themes the entire
+document.
+:::
+
+## Basic
+
+<Preview>
+  <ThemeToggle />
+</Preview>
+
+```astro
+---
+import { ThemeToggle } from "astro-bulma";
+---
+
+<ThemeToggle />
+```
+
+## With a label
+
+Slot content renders after the icon:
+
+<Preview>
+  <ThemeToggle>Theme</ThemeToggle>
+</Preview>
+
+```astro
+<ThemeToggle>Theme</ThemeToggle>
+```
+
+## In a navbar
+
+Pass classes to blend into other Bulma structures:
+
+```astro
+<Navbar>
+  <ThemeToggle slot="end" class="navbar-item" />
+</Navbar>
+```
+
+## Placement
+
+Put the toggle in your base layout (typically the navbar) so it renders on
+every page. Its inline theme-restore script runs wherever the component
+renders, so a toggle near the top of `<body>` applies the saved theme before
+any content paints. Pages without the toggle still get correct system-level
+dark mode from Bulma itself, but won't reflect a saved explicit choice on a
+hard load.
+
+## Props
+
+| Prop    | Type                                 | Default              | Description                          |
+| ------- | ------------------------------------ | -------------------- | ------------------------------------ |
+| `label` | `string`                             | `"Toggle dark mode"` | `aria-label` for the button.         |
+| `size`  | `"small"` \| `"medium"` \| `"large"` | —                    | Bulma size modifier.                 |
+| `class` | `string`                             | —                    | Extra classes on the `<button>`.     |
+
+Any other attributes are spread onto the `<button>` element.

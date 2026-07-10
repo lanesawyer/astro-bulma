@@ -224,6 +224,19 @@ Bulma message box with optional header slot.
 #### `Tabs`
 Bulma tabs wrapper. Pass `<li>` items via the default slot.
 
+#### `ThemeToggle`
+Light/dark mode toggle built on Bulma 1.0's native `data-theme` dark mode. Persists the choice to `localStorage`, applies it before first paint, follows the system preference until the user picks explicitly, and carries the theme across `<ClientRouter />` navigations.
+
+| Prop | Type | Default |
+|------|------|---------|
+| `label` | `string` | `"Toggle dark mode"` |
+| `size` | `"small" \| "medium" \| "large"` | — |
+| `class` | `string` | — |
+
+```astro
+<ThemeToggle class="navbar-item" />
+```
+
 ---
 
 ## Licensing
