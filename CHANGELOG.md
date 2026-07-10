@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.4.0] - 2026-07-10
+
+### Features
+- **themetoggle**: Add light/dark mode toggle component (#22) ([`d1e837e`](https://github.com/lanesawyer/astro-bulma/commit/d1e837e1dcdfdf1e58bb249523f6c99ac4018a82))
+
+
 ## [0.3.0] - 2026-07-03
 
 ### Features
