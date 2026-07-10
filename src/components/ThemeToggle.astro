@@ -32,6 +32,11 @@ const {
 const classes = ["button", size && `is-${size}`, className]
   .filter(Boolean)
   .join(" ");
+
+// Bulma only spaces a button icon away from its label when the label is a
+// sibling element — bare text nodes don't count for :first-child/:last-child,
+// so an unwrapped slot would sit flush against the icon.
+const hasLabel = Astro.slots.has("default");
 ---
 
 <button
@@ -81,7 +86,13 @@ const classes = ["button", size && `is-${size}`, className]
       <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
     </svg>
   </span>
-  <slot />
+  {
+    hasLabel && (
+      <span>
+        <slot />
+      </span>
+    )
+  }
 </button>
 
 <style>
