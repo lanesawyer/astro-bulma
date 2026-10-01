@@ -1,7 +1,7 @@
 /// <reference types="vitest/config" />
-import { defineConfig } from 'vitest/config';
+import { getViteConfig } from 'astro/config';
 
-export default defineConfig({
+export default getViteConfig({
   test: {
     globals: true,
     include: ['tests/**/*.test.ts'],
@@ -12,4 +12,7 @@ export default defineConfig({
       reporter: ['text', 'html'],
     },
   },
+}, {
+  // Keeps dev-only data-astro-source-* attributes out of rendered test HTML.
+  devToolbar: { enabled: false },
 });
