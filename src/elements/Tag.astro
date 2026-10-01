@@ -1,4 +1,6 @@
 ---
+import type { Polymorphic } from "astro/types";
+
 type Color =
   | "primary"
   | "link"
@@ -13,7 +15,11 @@ type Color =
 
 type Size = "normal" | "medium" | "large" | "small";
 
-interface Props {
+type Element = "span" | "a" | "button";
+
+type Props<Tag extends Element = "span"> = Polymorphic<{
+  as: Tag;
+}> & {
   color?: Color;
   size?: Size;
   light?: boolean;
@@ -22,10 +28,10 @@ interface Props {
   isDelete?: boolean;
   title?: string;
   class?: string;
-  [key: string]: unknown;
-}
+};
 
 const {
+  as: Tag = "span",
   color,
   size,
   light,
@@ -34,7 +40,7 @@ const {
   title,
   class: className,
   ...rest
-} = Astro.props;
+} = Astro.props as Props<Element>;
 
 const classes = [
   "tag",
@@ -49,5 +55,9 @@ const classes = [
   .join(" ");
 ---
 
-<span class={classes} title={title} {...rest}>{isDelete ? null : <slot />}</span
+<Tag
+  class={classes}
+  title={title}
+  type={Tag === "button" ? "button" : undefined}
+  {...rest}>{isDelete ? null : <slot />}</Tag
 >
