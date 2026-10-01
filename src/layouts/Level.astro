@@ -29,19 +29,15 @@ const classes = ["level", mobile && "is-mobile", className]
 ---
 
 <nav class={classes} {...rest}>
-  {
-    hasLeft && (
-      <div class="level-left">
-        <slot name="left" />
-      </div>
-    )
-  }
+  {hasLeft && (
+    <div class="level-left">
+      <slot name="left" />
+    </div>
+  )}
   <slot />
-  {
-    hasRight && (
-      <div class="level-right">
-        <slot name="right" />
-      </div>
-    )
-  }
+  {hasRight && (
+    <div class="level-right">
+      <slot name="right" />
+    </div>
+  )}
 </nav>

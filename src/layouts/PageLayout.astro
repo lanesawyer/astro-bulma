@@ -34,13 +34,11 @@ const {
   </div>
 </div>
 
-{
-  message && (
-    <Notification color={messageType} light class="mb-4">
-      {message}
-    </Notification>
-  )
-}
+{message && (
+  <Notification color={messageType} light class="mb-4">
+    {message}
+  </Notification>
+)}
 
 <slot />
 <slot name="modals" />

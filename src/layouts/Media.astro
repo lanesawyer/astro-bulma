@@ -28,21 +28,17 @@ const classes = ["media", className].filter(Boolean).join(" ");
 ---
 
 <article class={classes} {...rest}>
-  {
-    hasLeft && (
-      <figure class="media-left">
-        <slot name="left" />
-      </figure>
-    )
-  }
+  {hasLeft && (
+    <figure class="media-left">
+      <slot name="left" />
+    </figure>
+  )}
   <div class="media-content">
     <slot />
   </div>
-  {
-    hasRight && (
-      <div class="media-right">
-        <slot name="right" />
-      </div>
-    )
-  }
+  {hasRight && (
+    <div class="media-right">
+      <slot name="right" />
+    </div>
+  )}
 </article>

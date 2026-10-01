@@ -20,10 +20,8 @@ const classes = [
 ---
 
 <div class={classes} {...rest}>
-  {
-    dismissible && (
-      <button class="delete" onclick="this.parentElement.remove()" />
-    )
-  }
+  {dismissible && (
+    <button class="delete" onclick="this.parentElement.remove()" />
+  )}
   <slot />
 </div>

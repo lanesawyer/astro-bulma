@@ -43,21 +43,17 @@ const classes = [
 ---
 
 <section class={classes} {...rest}>
-  {
-    hasHead && (
-      <div class="hero-head">
-        <slot name="head" />
-      </div>
-    )
-  }
+  {hasHead && (
+    <div class="hero-head">
+      <slot name="head" />
+    </div>
+  )}
   <div class="hero-body">
     <slot />
   </div>
-  {
-    hasFoot && (
-      <div class="hero-foot">
-        <slot name="foot" />
-      </div>
-    )
-  }
+  {hasFoot && (
+    <div class="hero-foot">
+      <slot name="foot" />
+    </div>
+  )}
 </section>

@@ -81,40 +81,36 @@ const hasNavbar =
     <slot name="head" />
   </head>
   <body>
-    {
-      hasNavbar ? (
-        <Navbar color={navbarColor} shadow={navbarShadow}>
-          <slot name="brand" slot="brand" />
-          <slot name="start" slot="start" />
-          <Fragment slot="end">
-            {themeToggle && (
-              <div class="navbar-item">
-                <ThemeToggle size="small" />
-              </div>
-            )}
-            <slot name="end" />
-          </Fragment>
-        </Navbar>
-      ) : (
-        themeToggle && (
-          <header class="is-flex is-justify-content-flex-end p-3">
-            <ThemeToggle />
-          </header>
-        )
+    {hasNavbar ? (
+      <Navbar color={navbarColor} shadow={navbarShadow}>
+        <slot name="brand" slot="brand" />
+        <slot name="start" slot="start" />
+        <Fragment slot="end">
+          {themeToggle && (
+            <div class="navbar-item">
+              <ThemeToggle size="small" />
+            </div>
+          )}
+          <slot name="end" />
+        </Fragment>
+      </Navbar>
+    ) : (
+      themeToggle && (
+        <header class="is-flex is-justify-content-flex-end p-3">
+          <ThemeToggle />
+        </header>
       )
-    }
+    )}
     <main>
-      {
-        bare ? (
-          <slot />
-        ) : (
-          <Section>
-            <Container>
-              <slot />
-            </Container>
-          </Section>
-        )
-      }
+      {bare ? (
+        <slot />
+      ) : (
+        <Section>
+          <Container>
+            <slot />
+          </Container>
+        </Section>
+      )}
     </main>
     <slot name="footer" />
   </body>

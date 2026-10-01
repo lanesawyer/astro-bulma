@@ -59,5 +59,7 @@ const classes = [
   class={classes}
   title={title}
   type={Tag === "button" ? "button" : undefined}
-  {...rest}>{isDelete ? null : <slot />}</Tag
+  {...rest}
 >
+  {isDelete ? null : <slot />}
+</Tag>

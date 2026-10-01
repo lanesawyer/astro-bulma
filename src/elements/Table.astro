@@ -1,10 +1,6 @@
 ---
 type Column =
-  | string
-  | { label: string; style?: string }
-  | null
-  | undefined
-  | false;
+  string | { label: string; style?: string } | null | undefined | false;
 
 interface Props {
   title?: string;
@@ -15,8 +11,7 @@ interface Props {
 const { title, className, columns } = Astro.props;
 
 const resolvedColumns = (columns ?? []).filter(Boolean) as (
-  | string
-  | { label: string; style?: string }
+  string | { label: string; style?: string }
 )[];
 ---
 
@@ -24,21 +19,19 @@ const resolvedColumns = (columns ?? []).filter(Boolean) as (
 
 <div class="table-container">
   <table class={`table is-fullwidth is-striped ${className || ""}`}>
-    {
-      resolvedColumns.length > 0 && (
-        <thead>
-          <tr>
-            {resolvedColumns.map((col) =>
-              typeof col === "string" ? (
-                <th>{col}</th>
-              ) : (
-                <th style={col.style}>{col.label}</th>
-              ),
-            )}
-          </tr>
-        </thead>
-      )
-    }
+    {resolvedColumns.length > 0 && (
+      <thead>
+        <tr>
+          {resolvedColumns.map((col) =>
+            typeof col === "string" ? (
+              <th>{col}</th>
+            ) : (
+              <th style={col.style}>{col.label}</th>
+            ),
+          )}
+        </tr>
+      </thead>
+    )}
     <slot />
   </table>
 </div>

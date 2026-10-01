@@ -103,67 +103,65 @@ const wrapperClasses = [
 const iconSize = size === "large" ? "medium" : "small";
 ---
 
-{
-  standalone ? (
-    <div class={wrapperClasses}>
-      <select
-        id={selectId}
-        name={name}
-        required={required}
-        disabled={disabled}
-        multiple={multiple}
-        form={form}
-        {...rest}
+{standalone ? (
+  <div class={wrapperClasses}>
+    <select
+      id={selectId}
+      name={name}
+      required={required}
+      disabled={disabled}
+      multiple={multiple}
+      form={form}
+      {...rest}
+    >
+      <slot />
+    </select>
+  </div>
+) : (
+  <div class="field">
+    {label && (
+      <label
+        class={["label", size && `is-${size}`].filter(Boolean).join(" ")}
+        for={selectId}
       >
-        <slot />
-      </select>
-    </div>
-  ) : (
-    <div class="field">
-      {label && (
-        <label
-          class={["label", size && `is-${size}`].filter(Boolean).join(" ")}
-          for={selectId}
+        {label}
+      </label>
+    )}
+    <div
+      class={["control", iconLeft && "has-icons-left"]
+        .filter(Boolean)
+        .join(" ")}
+    >
+      <div class={wrapperClasses}>
+        <select
+          id={selectId}
+          name={name}
+          required={required}
+          disabled={disabled}
+          multiple={multiple}
+          form={form}
+          {...rest}
         >
-          {label}
-        </label>
+          <slot />
+        </select>
+      </div>
+      {iconLeft && (
+        <Icon
+          icon={iconLeft}
+          variant={iconLeftVariant}
+          size={iconSize}
+          position="left"
+        />
       )}
-      <div
-        class={["control", iconLeft && "has-icons-left"]
+    </div>
+    {help && (
+      <p
+        class={["help", helpColor && `is-${helpColor}`]
           .filter(Boolean)
           .join(" ")}
       >
-        <div class={wrapperClasses}>
-          <select
-            id={selectId}
-            name={name}
-            required={required}
-            disabled={disabled}
-            multiple={multiple}
-            form={form}
-            {...rest}
-          >
-            <slot />
-          </select>
-        </div>
-        {iconLeft && (
-          <Icon
-            icon={iconLeft}
-            variant={iconLeftVariant}
-            size={iconSize}
-            position="left"
-          />
-        )}
-      </div>
-      {help && (
-        <p
-          class={["help", helpColor && `is-${helpColor}`]
-            .filter(Boolean)
-            .join(" ")}
-        >
-          {help}
-        </p>
-      )}
-    </div>
-  )
-}
+        {help}
+      </p>
+    )}
+  </div>
+)}

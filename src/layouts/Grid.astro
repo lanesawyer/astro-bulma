@@ -68,16 +68,14 @@ const fixedClasses = [
   .join(" ");
 ---
 
-{
-  isFixed ? (
-    <div class={fixedClasses}>
-      <div class={gridClasses} {...rest}>
-        <slot />
-      </div>
-    </div>
-  ) : (
+{isFixed ? (
+  <div class={fixedClasses}>
     <div class={gridClasses} {...rest}>
       <slot />
     </div>
-  )
-}
+  </div>
+) : (
+  <div class={gridClasses} {...rest}>
+    <slot />
+  </div>
+)}

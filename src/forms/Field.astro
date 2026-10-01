@@ -81,29 +81,27 @@ const helpClasses = ["help", helpColor && `is-${helpColor}`]
   .join(" ");
 ---
 
-{
-  horizontal ? (
-    <div class={classes} {...rest}>
-      <div class={`field-label is-${labelSize}`}>
-        {label && (
-          <label class="label" for={htmlFor}>
-            {label}
-          </label>
-        )}
-      </div>
-      <div class="field-body">
-        <slot />
-      </div>
-    </div>
-  ) : (
-    <div class={classes} {...rest}>
+{horizontal ? (
+  <div class={classes} {...rest}>
+    <div class={`field-label is-${labelSize}`}>
       {label && (
         <label class="label" for={htmlFor}>
           {label}
         </label>
       )}
-      <slot />
-      {help && <p class={helpClasses}>{help}</p>}
     </div>
-  )
-}
+    <div class="field-body">
+      <slot />
+    </div>
+  </div>
+) : (
+  <div class={classes} {...rest}>
+    {label && (
+      <label class="label" for={htmlFor}>
+        {label}
+      </label>
+    )}
+    <slot />
+    {help && <p class={helpClasses}>{help}</p>}
+  </div>
+)}

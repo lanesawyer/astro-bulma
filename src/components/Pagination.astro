@@ -81,27 +81,25 @@ const classes = [
     {nextLabel}
   </a>
   <ul class="pagination-list">
-    {
-      pageList().map((page) =>
-        page === "ellipsis" ? (
-          <li>
-            <span class="pagination-ellipsis">&hellip;</span>
-          </li>
-        ) : (
-          <li>
-            <a
-              class:list={["pagination-link", page === current && "is-current"]}
-              href={href(page)}
-              aria-label={
-                page === current ? `Page ${page}` : `Go to page ${page}`
-              }
-              aria-current={page === current ? "page" : undefined}
-            >
-              {page}
-            </a>
-          </li>
-        ),
-      )
-    }
+    {pageList().map((page) =>
+      page === "ellipsis" ? (
+        <li>
+          <span class="pagination-ellipsis">&hellip;</span>
+        </li>
+      ) : (
+        <li>
+          <a
+            class:list={["pagination-link", page === current && "is-current"]}
+            href={href(page)}
+            aria-label={
+              page === current ? `Page ${page}` : `Go to page ${page}`
+            }
+            aria-current={page === current ? "page" : undefined}
+          >
+            {page}
+          </a>
+        </li>
+      ),
+    )}
   </ul>
 </nav>
