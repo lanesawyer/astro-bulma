@@ -178,6 +178,11 @@ export default defineConfig({
               slug: "layouts/singlecolumnlayout",
               badge: { text: "Extra", variant: "success" },
             },
+            {
+              label: "SiteLayout",
+              slug: "layouts/sitelayout",
+              badge: { text: "Extra", variant: "success" },
+            },
           ],
         },
       ],

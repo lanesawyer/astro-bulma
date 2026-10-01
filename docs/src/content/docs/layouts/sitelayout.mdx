@@ -1,0 +1,105 @@
+---
+title: SiteLayout
+description: Full HTML document shell with head tags, an optional navbar with a theme toggle, and a section/container body.
+---
+
+The `SiteLayout` component is an **astro-bulma extra** — a complete HTML document for an app's pages. It renders the `<head>` (charset, viewport, title, optional description and favicon, optional `<ClientRouter />`), a header with a [`ThemeToggle`](/astro-bulma/components/themetoggle/) or a full [`Navbar`](/astro-bulma/components/navbar/), and wraps the page content in a [`Section`](/astro-bulma/layouts/section/) and [`Container`](/astro-bulma/layouts/container/).
+
+`SiteLayout` does not import Bulma's CSS. Import it in your own layout so you can choose the prebuilt CSS or a custom Sass build. A typical app wraps it once:
+
+```astro
+---
+// src/layouts/BaseLayout.astro
+import "bulma/css/bulma.min.css";
+import { Button, SiteLayout } from "astro-bulma";
+
+interface Props {
+  title: string;
+}
+
+const { title } = Astro.props;
+const user = Astro.locals.user;
+---
+
+<SiteLayout title={title} titleSuffix="Dibs" clientRouter navbarShadow>
+  <a slot="brand" class="navbar-item has-text-weight-bold" href="/">Dibs</a>
+  {user && (
+    <div slot="end" class="navbar-item">
+      <span class="mr-3 has-text-grey">{user.email}</span>
+      <Button href="/logout" size="small" color="light">Sign out</Button>
+    </div>
+  )}
+  <slot />
+</SiteLayout>
+```
+
+## Plain header
+
+When none of the `brand`, `start`, or `end` slots are used, `SiteLayout` renders a slim header with only the theme toggle, right-aligned.
+
+```astro
+<SiteLayout title="Sign in">
+  <h1 class="title">Sign in</h1>
+</SiteLayout>
+```
+
+## Navbar
+
+Use any of the `brand`, `start`, and `end` slots to render a `Navbar` instead. The theme toggle goes first in the navbar's end section, before your `end` content.
+
+```astro
+<SiteLayout title="Lists" navbarColor="primary">
+  <a slot="brand" class="navbar-item has-text-weight-bold" href="/">52 Things</a>
+  <a slot="start" class="navbar-item" href="/">My Lists</a>
+  <a slot="end" class="navbar-item" href="/logout">Sign out</a>
+  <p>Page content</p>
+</SiteLayout>
+```
+
+## Bare content
+
+Pass `bare` to put the content directly in `<main>`, without the section and container. This is useful for pages that start with a full-width [`Hero`](/astro-bulma/layouts/hero/).
+
+```astro
+<SiteLayout title="Sawyer Suite" bare>
+  <Hero color="primary">
+    <p class="title">Sawyer Suite</p>
+  </Hero>
+</SiteLayout>
+```
+
+## Head and footer
+
+```astro
+<SiteLayout title="Docs" description="Product docs" favicon="/favicon.svg">
+  <meta slot="head" name="robots" content="noindex" />
+  <p>Page content</p>
+  <Footer slot="footer">© 2026</Footer>
+</SiteLayout>
+```
+
+## Props
+
+| Prop           | Type      | Default | Description                                                        |
+|----------------|-----------|---------|--------------------------------------------------------------------|
+| `title`        | `string`  | —       | **Required.** Page title.                                          |
+| `titleSuffix`  | `string`  | —       | Appended to the title as `title · suffix`.                         |
+| `description`  | `string`  | —       | `<meta name="description">` content.                               |
+| `favicon`      | `string`  | —       | `href` for an SVG favicon.                                         |
+| `lang`         | `string`  | `"en"`  | `lang` attribute on `<html>`.                                      |
+| `clientRouter` | `boolean` | `false` | Render Astro's `<ClientRouter />` for view transitions.            |
+| `themeToggle`  | `boolean` | `true`  | Show the light/dark `ThemeToggle` in the header or navbar.         |
+| `navbarColor`  | `string`  | —       | Bulma color modifier for the navbar, e.g. `"primary"`.             |
+| `navbarShadow` | `boolean` | `false` | Adds `has-shadow` to the navbar.                                   |
+| `bare`         | `boolean` | `false` | Render content directly in `<main>`, without section/container.    |
+
+## Slots
+
+| Slot      | Description                                                                 |
+|-----------|-----------------------------------------------------------------------------|
+| default   | Page content.                                                               |
+| `brand`   | Navbar brand items (always visible).                                        |
+| `start`   | Navbar items aligned left in the collapsible menu.                          |
+| `end`     | Navbar items aligned right in the collapsible menu, after the theme toggle. |
+| `head`    | Extra tags appended to `<head>`.                                            |
+| `footer`  | Rendered after `<main>`.                                                    |

@@ -34,6 +34,7 @@ export { default as Level } from './layouts/Level.astro';
 export { default as Media } from './layouts/Media.astro';
 export { default as PageLayout } from './layouts/PageLayout.astro';
 export { default as Section } from './layouts/Section.astro';
+export { default as SiteLayout } from './layouts/SiteLayout.astro';
 export { default as SingleColumnLayout } from './layouts/SingleColumnLayout.astro';
 
 // Components
