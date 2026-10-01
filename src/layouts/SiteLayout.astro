@@ -1,0 +1,121 @@
+---
+import { ClientRouter } from "astro:transitions";
+import Navbar from "../components/Navbar.astro";
+import ThemeToggle from "../components/ThemeToggle.astro";
+import Container from "./Container.astro";
+import Section from "./Section.astro";
+
+/**
+ * Full HTML document shell: <head>, an optional navbar with a theme toggle,
+ * and the page body inside a section + container.
+ *
+ * Does not import Bulma's CSS — import it in your own layout (or page) so you
+ * can choose the prebuilt CSS or a custom Sass build.
+ *
+ * Usage:
+ *   <SiteLayout title="Inbox" titleSuffix="Mail" clientRouter>
+ *     <a slot="brand" class="navbar-item" href="/">Mail</a>
+ *     <a slot="end" class="navbar-item" href="/logout">Sign out</a>
+ *     <p>Page content</p>
+ *   </SiteLayout>
+ *
+ * Slots:
+ *   default — page content
+ *   brand / start / end — navbar slots; when none are used, a plain header
+ *                          with only the theme toggle renders instead
+ *   head    — extra tags appended to <head>
+ *   footer  — rendered after <main>
+ */
+
+interface Props {
+  /** Page title */
+  title: string;
+  /** Appended to the title as "title · suffix" */
+  titleSuffix?: string;
+  /** <meta name="description"> content */
+  description?: string;
+  /** href for an SVG favicon */
+  favicon?: string;
+  lang?: string;
+  /** Render Astro's <ClientRouter /> for view transitions */
+  clientRouter?: boolean;
+  /** Show the light/dark ThemeToggle in the header or navbar */
+  themeToggle?: boolean;
+  /** Bulma color modifier for the navbar, e.g. "primary" */
+  navbarColor?: string;
+  /** Adds has-shadow to the navbar */
+  navbarShadow?: boolean;
+  /** Render page content directly in <main>, without section/container */
+  bare?: boolean;
+}
+
+const {
+  title,
+  titleSuffix,
+  description,
+  favicon,
+  lang = "en",
+  clientRouter = false,
+  themeToggle = true,
+  navbarColor,
+  navbarShadow = false,
+  bare = false,
+} = Astro.props;
+
+const fullTitle = titleSuffix ? `${title} · ${titleSuffix}` : title;
+const hasNavbar =
+  Astro.slots.has("brand") ||
+  Astro.slots.has("start") ||
+  Astro.slots.has("end");
+---
+
+<!doctype html>
+<html lang={lang}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{fullTitle}</title>
+    {description && <meta name="description" content={description} />}
+    {favicon && <link rel="icon" type="image/svg+xml" href={favicon} />}
+    {clientRouter && <ClientRouter />}
+    <slot name="head" />
+  </head>
+  <body>
+    {
+      hasNavbar ? (
+        <Navbar color={navbarColor} shadow={navbarShadow}>
+          <slot name="brand" slot="brand" />
+          <slot name="start" slot="start" />
+          <Fragment slot="end">
+            {themeToggle && (
+              <div class="navbar-item">
+                <ThemeToggle size="small" />
+              </div>
+            )}
+            <slot name="end" />
+          </Fragment>
+        </Navbar>
+      ) : (
+        themeToggle && (
+          <header class="is-flex is-justify-content-flex-end p-3">
+            <ThemeToggle />
+          </header>
+        )
+      )
+    }
+    <main>
+      {
+        bare ? (
+          <slot />
+        ) : (
+          <Section>
+            <Container>
+              <slot />
+            </Container>
+          </Section>
+        )
+      }
+    </main>
+    <slot name="footer" />
+  </body>
+</html>
