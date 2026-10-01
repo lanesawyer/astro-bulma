@@ -85,52 +85,50 @@ const textareaClasses = [
 const controlClasses = ["control", controlClass].filter(Boolean).join(" ");
 ---
 
-{
-  standalone ? (
-    <textarea
-      class={textareaClasses}
-      id={textareaId}
-      name={name}
-      placeholder={placeholder}
-      rows={rows}
-      required={required}
-      disabled={disabled}
-      readonly={readonly}
-      form={form}
-      set:text={value ?? ""}
-      {...rest}
-    />
-  ) : (
-    <div class="field">
-      {label && (
-        <label class="label" for={textareaId}>
-          {label}
-        </label>
-      )}
-      <div class={controlClasses}>
-        <textarea
-          class={textareaClasses}
-          id={textareaId}
-          name={name}
-          placeholder={placeholder}
-          rows={rows}
-          required={required}
-          disabled={disabled}
-          readonly={readonly}
-          form={form}
-          set:text={value ?? ""}
-          {...rest}
-        />
-      </div>
-      {help && (
-        <p
-          class={["help", helpColor && `is-${helpColor}`]
-            .filter(Boolean)
-            .join(" ")}
-        >
-          {help}
-        </p>
-      )}
+{standalone ? (
+  <textarea
+    class={textareaClasses}
+    id={textareaId}
+    name={name}
+    placeholder={placeholder}
+    rows={rows}
+    required={required}
+    disabled={disabled}
+    readonly={readonly}
+    form={form}
+    set:text={value ?? ""}
+    {...rest}
+  ></textarea>
+) : (
+  <div class="field">
+    {label && (
+      <label class="label" for={textareaId}>
+        {label}
+      </label>
+    )}
+    <div class={controlClasses}>
+      <textarea
+        class={textareaClasses}
+        id={textareaId}
+        name={name}
+        placeholder={placeholder}
+        rows={rows}
+        required={required}
+        disabled={disabled}
+        readonly={readonly}
+        form={form}
+        set:text={value ?? ""}
+        {...rest}
+      ></textarea>
     </div>
-  )
-}
+    {help && (
+      <p
+        class={["help", helpColor && `is-${helpColor}`]
+          .filter(Boolean)
+          .join(" ")}
+      >
+        {help}
+      </p>
+    )}
+  </div>
+)}

@@ -2,7 +2,7 @@
   "name": "astro-bulma",
   "type": "module",
   "version": "0.4.0",
-  "packageManager": "pnpm@11.0.3",
+  "packageManager": "pnpm@12.6.0",
   "description": "Astro component library wrapping Bulma CSS",
   "keywords": [
     "astro",
@@ -52,26 +52,26 @@
     "bulma": "1.0.4"
   },
   "devDependencies": {
-    "@astrojs/check": "0.9.9",
-    "@astrojs/starlight": "0.38.4",
-    "@fortawesome/fontawesome-free": "7.2.0",
-    "@vitest/coverage-istanbul": "4.1.5",
-    "astro": "6.2.1",
-    "git-cliff": "2.13.1",
-    "oxlint": "1.62.0",
-    "postcss": "8.5.13",
-    "postcss-selector-parser": "7.1.1",
-    "prettier": "3.8.3",
-    "prettier-plugin-astro": "0.14.1",
+    "@astrojs/check": "0.9.10",
+    "@astrojs/starlight": "0.42.3",
+    "@fortawesome/fontawesome-free": "7.3.1",
+    "@vitest/coverage-istanbul": "5.0.1",
+    "astro": "7.3.4",
+    "git-cliff": "2.14.2",
+    "oxlint": "1.85.0",
+    "postcss": "8.5.28",
+    "postcss-selector-parser": "7.1.6",
+    "prettier": "3.9.9",
+    "prettier-plugin-astro": "1.0.1",
     "typescript": "6.0.3",
-    "vitest": "4.1.5"
+    "vitest": "5.0.1"
   },
   "engines": {
-    "node": ">=22.0.0",
-    "pnpm": "11.0.3"
+    "node": ">=22.12.0",
+    "pnpm": "12.6.0"
   },
   "volta": {
-    "node": "24.13.1",
-    "pnpm": "11.0.3"
+    "node": "26.10.0",
+    "pnpm": "12.6.0"
   }
 }

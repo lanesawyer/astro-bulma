@@ -47,14 +47,12 @@ const fileClasses = [
   .join(" ");
 ---
 
-{
-  label && (
-    <label class="label" for={inputId}>
-      {label}
-      {required && " *"}
-    </label>
-  )
-}
+{label && (
+  <label class="label" for={inputId}>
+    {label}
+    {required && " *"}
+  </label>
+)}
 <div class="control">
   <div class={fileClasses}>
     <label class="file-label">

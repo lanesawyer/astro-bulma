@@ -72,30 +72,28 @@ const classes = [
   .join(" ");
 ---
 
-{
-  href ? (
-    <a
-      href={href}
-      class={classes}
-      target={target}
-      rel={rel}
-      title={title}
-      id={id}
-      {...rest}
-    >
-      <slot />
-    </a>
-  ) : (
-    <button
-      type={type}
-      class={classes}
-      form={form}
-      disabled={disabled}
-      title={title}
-      id={id}
-      {...rest}
-    >
-      <slot />
-    </button>
-  )
-}
+{href ? (
+  <a
+    href={href}
+    class={classes}
+    target={target}
+    rel={rel}
+    title={title}
+    id={id}
+    {...rest}
+  >
+    <slot />
+  </a>
+) : (
+  <button
+    type={type}
+    class={classes}
+    form={form}
+    disabled={disabled}
+    title={title}
+    id={id}
+    {...rest}
+  >
+    <slot />
+  </button>
+)}

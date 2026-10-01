@@ -69,30 +69,10 @@ const classes = [
 const triggerClasses = ["button", triggerClass].filter(Boolean).join(" ");
 ---
 
-{
-  hoverable ? (
-    <div class={classes} {...rest}>
-      <div class="dropdown-trigger">
-        <button class={triggerClasses} aria-haspopup="true">
-          {hasTrigger ? (
-            <slot name="trigger" />
-          ) : (
-            <>
-              <span>{label}</span>
-              <Icon icon={up ? "fa-angle-up" : "fa-angle-down"} size="small" />
-            </>
-          )}
-        </button>
-      </div>
-      <div class="dropdown-menu" role="menu">
-        <div class="dropdown-content">
-          <slot />
-        </div>
-      </div>
-    </div>
-  ) : (
-    <details class={classes} open={active} {...rest}>
-      <summary class={triggerClasses} aria-haspopup="true">
+{hoverable ? (
+  <div class={classes} {...rest}>
+    <div class="dropdown-trigger">
+      <button class={triggerClasses} aria-haspopup="true">
         {hasTrigger ? (
           <slot name="trigger" />
         ) : (
@@ -101,15 +81,33 @@ const triggerClasses = ["button", triggerClass].filter(Boolean).join(" ");
             <Icon icon={up ? "fa-angle-up" : "fa-angle-down"} size="small" />
           </>
         )}
-      </summary>
-      <div class="dropdown-menu" role="menu">
-        <div class="dropdown-content">
-          <slot />
-        </div>
+      </button>
+    </div>
+    <div class="dropdown-menu" role="menu">
+      <div class="dropdown-content">
+        <slot />
       </div>
-    </details>
-  )
-}
+    </div>
+  </div>
+) : (
+  <details class={classes} open={active} {...rest}>
+    <summary class={triggerClasses} aria-haspopup="true">
+      {hasTrigger ? (
+        <slot name="trigger" />
+      ) : (
+        <>
+          <span>{label}</span>
+          <Icon icon={up ? "fa-angle-up" : "fa-angle-down"} size="small" />
+        </>
+      )}
+    </summary>
+    <div class="dropdown-menu" role="menu">
+      <div class="dropdown-content">
+        <slot />
+      </div>
+    </div>
+  </details>
+)}
 
 <style>
   /* Hide the native disclosure marker; the caret icon replaces it. */

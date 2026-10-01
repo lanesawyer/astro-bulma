@@ -14,32 +14,24 @@ const hasContent = Astro.slots.has("default");
 ---
 
 <div class:list={["card", className]}>
-  {
-    hasHeader && (
-      <header class="card-header">
-        <slot name="header" />
-      </header>
-    )
-  }
-  {
-    hasImage && (
-      <div class="card-image">
-        <slot name="image" />
-      </div>
-    )
-  }
-  {
-    hasContent && (
-      <div class:list={["card-content", contentClass]}>
-        <slot />
-      </div>
-    )
-  }
-  {
-    hasFooter && (
-      <footer class="card-footer">
-        <slot name="footer" />
-      </footer>
-    )
-  }
+  {hasHeader && (
+    <header class="card-header">
+      <slot name="header" />
+    </header>
+  )}
+  {hasImage && (
+    <div class="card-image">
+      <slot name="image" />
+    </div>
+  )}
+  {hasContent && (
+    <div class:list={["card-content", contentClass]}>
+      <slot />
+    </div>
+  )}
+  {hasFooter && (
+    <footer class="card-footer">
+      <slot name="footer" />
+    </footer>
+  )}
 </div>

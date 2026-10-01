@@ -3,5 +3,6 @@ allowBuilds:
   sharp: true
 autoInstallPeers: true
 engineStrict: true
+minimumReleaseAge: 10080
 saveExact: true
 strictPeerDependencies: false

@@ -19,4 +19,6 @@ const classes = ["subtitle", size && `is-${size}`, className]
   .join(" ");
 ---
 
-<Tag class={classes} {...rest}><slot /></Tag>
+<Tag class={classes} {...rest}>
+  <slot />
+</Tag>

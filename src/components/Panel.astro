@@ -38,12 +38,10 @@ const classes = ["panel", color && `is-${color}`, className]
 
 <nav class={classes} {...rest}>
   {heading && <p class="panel-heading">{heading}</p>}
-  {
-    hasTabs && (
-      <p class="panel-tabs">
-        <slot name="tabs" />
-      </p>
-    )
-  }
+  {hasTabs && (
+    <p class="panel-tabs">
+      <slot name="tabs" />
+    </p>
+  )}
   <slot />
 </nav>

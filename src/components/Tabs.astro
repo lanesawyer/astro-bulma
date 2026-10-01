@@ -40,20 +40,18 @@ const navClasses = ["tabs", size && `is-${size}`, boxed && "is-boxed"]
 <div class={className}>
   <div class={navClasses} data-tabs-nav>
     <ul>
-      {
-        tabs.map((tab, i) => (
-          <li class={i === 0 ? "is-active" : ""} data-tab-id={tab.id}>
-            <a>
-              {tab.label}
-              {tab.count !== undefined && (
-                <Tag rounded class="ml-2">
-                  {tab.count}
-                </Tag>
-              )}
-            </a>
-          </li>
-        ))
-      }
+      {tabs.map((tab, i) => (
+        <li class={i === 0 ? "is-active" : ""} data-tab-id={tab.id}>
+          <a>
+            {tab.label}
+            {tab.count !== undefined && (
+              <Tag rounded class="ml-2">
+                {tab.count}
+              </Tag>
+            )}
+          </a>
+        </li>
+      ))}
     </ul>
   </div>
 
