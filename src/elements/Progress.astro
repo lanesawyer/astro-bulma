@@ -38,8 +38,11 @@ const classes = [
 ]
   .filter(Boolean)
   .join(" ");
+
+const percent =
+  value != null && max > 0 ? Math.round((value / max) * 100) : null;
 ---
 
 <progress class={classes} value={value} max={max} {...rest}>
-  {value != null ? `${value}%` : null}
+  {percent != null ? `${percent}%` : null}
 </progress>
