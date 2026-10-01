@@ -2,6 +2,27 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.5.0] - 2026-10-01
+
+### Bug Fixes
+- **tabs,fileinput**: Bind scripts without ClientRouter (#23) ([`30c10ed`](https://github.com/lanesawyer/astro-bulma/commit/30c10ed7a5ae394e7c105c02ae702e485bf4ee55))
+- **progress**: Label fallback text as a percent of max (#24) ([`a482db8`](https://github.com/lanesawyer/astro-bulma/commit/a482db8869f435032a36479590c6a6e2040a1d2c))
+
+
+### CI/CD
+- Switch to pnpm/setup@v3 and bump actions (#29) ([`60192b6`](https://github.com/lanesawyer/astro-bulma/commit/60192b6470fae83ba3b44166ae97b9074e781cdd))
+
+
+### Features
+- **notification,select**: Pass through extra HTML attributes (#25) ([`f72e73b`](https://github.com/lanesawyer/astro-bulma/commit/f72e73bce9a3e97085c49ae897645bfd538e075a))
+- **sitelayout**: Add full-document SiteLayout (#26) ([`e53f6d7`](https://github.com/lanesawyer/astro-bulma/commit/e53f6d71d47cf5909c14fa8e913bd4c093ed5d79))
+- **tag**: Add as prop to render a link or button (#27) ([`c953e9c`](https://github.com/lanesawyer/astro-bulma/commit/c953e9c4526f9b163028bc9afd91325116b6a8f5))
+
+
+### Miscellaneous
+- **deps**: Upgrade astro to 7.3, node 26, pnpm 12 and dev tooling (#28) ([`4648bba`](https://github.com/lanesawyer/astro-bulma/commit/4648bbac2897a6dd1b03f40ffe8f67d3d6c7af68))
+
+
 ## [0.4.0] - 2026-07-10
 
 ### Features
