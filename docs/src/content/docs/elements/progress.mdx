@@ -18,6 +18,18 @@ The `Progress` component renders Bulma's [progress bar element](https://bulma.io
 <Progress value={45} max={100} />
 ```
 
+## Custom max
+
+`value` is measured against `max`. The fallback text inside the `<progress>` is the rounded percentage, so `13` of `52` reads as `25%`.
+
+<Preview>
+  <Progress color="success" value={13} max={52} />
+</Preview>
+
+```astro
+<Progress color="success" value={13} max={52} />
+```
+
 ## Colors
 
 <Preview>
