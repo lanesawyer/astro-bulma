@@ -105,6 +105,35 @@ When `isDelete` is set, the tag renders as a delete/close button with no slot co
 </div>
 ```
 
+## As a link or button
+
+Set `as="a"` (with `href`) or `as="button"` to render a clickable tag. Buttons default to `type="button"`; pass `type="submit"` to submit a form. Props are typed per element, so `href` is only accepted with `as="a"`.
+
+<Preview>
+  <div class="tags">
+    <Tag as="a" href="#as-a-link-or-button" color="link">Filter: outdoors</Tag>
+    <Tag as="button" color="primary">Toggle</Tag>
+  </div>
+</Preview>
+
+```astro
+<Tag as="a" href="/?tag=outdoors" color="link">Filter: outdoors</Tag>
+
+<form method="POST">
+  <input type="hidden" name="tagId" value="3" />
+  <Tag as="button" type="submit" color="primary">Remove</Tag>
+</form>
+```
+
+A delete tag can be a real button, too:
+
+```astro
+<div class="tags has-addons">
+  <Tag>Outdoors</Tag>
+  <Tag as="button" type="submit" isDelete aria-label="Delete tag" />
+</div>
+```
+
 ## Props
 
 | Prop       | Type                                                                                   | Default | Description                                        |
@@ -113,7 +142,8 @@ When `isDelete` is set, the tag renders as a delete/close button with no slot co
 | `size`     | `"small"` \| `"normal"` \| `"medium"` \| `"large"`                                    | —       | Size modifier.                                     |
 | `light`    | `boolean`                                                                              | —       | Light variant.                                     |
 | `rounded`  | `boolean`                                                                              | —       | Rounded pill shape.                                |
+| `as`       | `"span"` \| `"a"` \| `"button"`                                                     | `"span"` | Element to render. `"a"` takes `href`; `"button"` takes `type` (defaults to `"button"`). |
 | `isDelete` | `boolean`                                                                              | —       | Renders as a delete/close button (no slot content).|
 | `title`    | `string`                                                                               | —       | Tooltip title attribute.                           |
 | `class`    | `string`                                                                               | —       | Extra CSS classes.                                 |
-| `...`      | `*`                                                                                    | —       | Any other HTML span attributes.                    |
+| `...`      | `*`                                                                                    | —       | Any other HTML attributes for the rendered element. |
