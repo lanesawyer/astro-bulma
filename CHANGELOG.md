@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.5.1] - 2026-10-03
+
+### Bug Fixes
+- **ci**: Publish with npm trusted publishing and resume unpublished releases (#30) ([`9df72cc`](https://github.com/lanesawyer/astro-bulma/commit/9df72cc6063a728df964fd000921b658b24e32df))
+- **image**: Render string sources as a plain img (#31) ([`f084e21`](https://github.com/lanesawyer/astro-bulma/commit/f084e215ffee4ce42f4d63e09e18a1f22976fe42))
+
+
 ## [0.5.0] - 2026-10-01
 
 ### Bug Fixes
