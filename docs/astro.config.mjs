@@ -89,7 +89,6 @@ export default defineConfig({
   base: "/astro-bulma",
   image: {
     service: passthroughImageService(),
-    domains: ["bulma.io"],
   },
   integrations: [
     starlight({

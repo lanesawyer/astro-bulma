@@ -1,12 +1,24 @@
 ---
 title: Image
-description: Bulma image figure wrapper with optional Astro image optimization.
+description: Bulma image figure wrapper, with Astro image optimization for imported images.
 ---
 
 import Preview from "../../../components/Preview.astro";
 import Image from "astro-bulma/elements/Image.astro";
 
-The `Image` component wraps Bulma's `.image` figure element. For real URLs it uses Astro's `<Image>` component for optimization; for `data:` URIs it falls back to a plain `<img>`.
+The `Image` component wraps Bulma's `.image` figure element.
+
+- A string `src` (a URL, a path, or a `data:` URI) renders a plain `<img>`, with `width` and `height` set when you pass `size`. Uploaded files served from your own routes, images behind a login, and remote URLs all work without Astro fetching them while it renders.
+- An imported image (`import photo from "../assets/photo.png"`) goes through Astro's `<Image>`, which optimizes it at build time.
+
+```astro
+---
+import photo from "../assets/photo.png";
+---
+
+<Image src={photo} alt="Optimized by Astro" ratio="4by3" />
+<Image src={user.avatarUrl} alt={user.name} size="48x48" rounded />
+```
 
 ## Fixed size
 
@@ -77,7 +89,7 @@ Available ratios: `square`, `1by1`, `5by4`, `4by3`, `3by2`, `5by3`, `16by9`, `2b
 
 | Prop         | Type      | Default | Description                                     |
 |--------------|-----------|---------|-------------------------------------------------|
-| `src`        | `string`  | —       | **Required.** Image URL or data URI.            |
+| `src`        | `string \| ImageMetadata` | — | **Required.** Image URL, path, or data URI, or an imported image (optimized by Astro). |
 | `alt`        | `string`  | —       | **Required.** Alt text.                         |
 | `size`       | `FixedSize` | —     | Fixed pixel size (e.g. `"96x96"`).              |
 | `ratio`      | `Ratio`   | —       | Aspect ratio class (e.g. `"16by9"`).            |

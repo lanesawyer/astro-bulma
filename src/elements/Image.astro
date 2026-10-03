@@ -22,7 +22,8 @@ type Ratio =
   | "1by3";
 
 interface Props {
-  src: string;
+  /** A URL, path, or data URI; or an imported image, which Astro optimizes */
+  src: string | ImageMetadata;
   alt: string;
   size?: FixedSize;
   ratio?: Ratio;
@@ -59,15 +60,23 @@ const figureClasses = [
   .filter(Boolean)
   .join(" ");
 
-// Astro's <Image> component cannot optimize data URIs (base64) or SVG data URLs.
-// Fall back to a plain <img> for those cases.
-const isDataUri = src.startsWith("data:");
+// Only imported images go through Astro's <Image>: their dimensions are known at build time.
+// A string src could be a data URI, a path behind auth, or a remote URL that Astro would have
+// to fetch on every render to infer its size, so it gets a plain <img>, sized when `size` is set.
+const px = size ? Number(size.split("x")[0]) : undefined;
 ---
 
 <figure class={figureClasses} style={style}>
-  {isDataUri ? (
-    <img src={src} alt={alt} style={imgStyle} />
+  {typeof src === "string" ? (
+    <img
+      src={src}
+      alt={alt}
+      width={px}
+      height={px}
+      loading="lazy"
+      style={imgStyle}
+    />
   ) : (
-    <AstroImage src={src} alt={alt} inferSize style={imgStyle} />
+    <AstroImage src={src} alt={alt} style={imgStyle} />
   )}
 </figure>
