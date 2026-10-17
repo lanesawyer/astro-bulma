@@ -25,6 +25,8 @@ interface Props {
   position?: "left" | "right";
   /** Extra classes on the wrapper span */
   class?: string;
+  /** Any other attributes land on the wrapper span */
+  [key: string]: unknown;
 }
 
 const {
@@ -34,6 +36,7 @@ const {
   color,
   position,
   class: extraClass,
+  ...rest
 } = Astro.props;
 
 const wrapperClasses = [
@@ -47,6 +50,7 @@ const wrapperClasses = [
   .join(" ");
 ---
 
-<span class={wrapperClasses}>
-  <i class={`${variant} ${icon}`}></i>
+<span class={wrapperClasses} {...rest}>
+  {/* Font Awesome draws a private-use glyph that screen readers may announce. */}
+  <i class={`${variant} ${icon}`} aria-hidden="true"></i>
 </span>
