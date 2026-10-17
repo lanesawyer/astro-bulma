@@ -1,20 +1,25 @@
 ---
+import MenuItem from "./MenuItem.astro";
+import MenuList from "./MenuList.astro";
+import MenuSection from "./MenuSection.astro";
+
 /**
  * Bulma menu component — a vertical navigation sidebar.
  * https://bulma.io/documentation/components/menu/
  *
- * Usage:
+ * Usage (data):
  *   <Menu
  *     sections={[
  *       {
  *         label: "General",
  *         items: [
- *           { label: "Dashboard", href: "/" },
+ *           { label: "Dashboard", href: "/", icon: "fa-gauge" },
  *           { label: "Customers", href: "/customers", active: true },
  *         ],
  *       },
  *       {
  *         label: "Administration",
+ *         collapsible: true,
  *         items: [
  *           {
  *             label: "Team Settings",
@@ -25,63 +30,71 @@
  *       },
  *     ]}
  *   />
+ *
+ * Usage (composed — for badges, section actions, or anything per item):
+ *   <Menu>
+ *     <MenuSection label="General">
+ *       <MenuList>
+ *         <MenuItem label="Inbox" href="/inbox" icon="fa-inbox">
+ *           <Tag slot="end" rounded>3</Tag>
+ *         </MenuItem>
+ *       </MenuList>
+ *     </MenuSection>
+ *   </Menu>
+ *
+ * Inside AppLayout the sidebar is already a .menu, so put MenuSections
+ * straight into its `sidebar` slot instead.
  */
 
-interface MenuItem {
+interface MenuItemData {
   label: string;
   href?: string;
   active?: boolean;
+  /** Font Awesome icon name, e.g. "fa-inbox" */
+  icon?: string;
   /** One level of nested items, rendered as a sub-list */
-  children?: MenuItem[];
+  children?: MenuItemData[];
 }
 
-interface MenuSection {
+interface MenuSectionData {
   /** Optional .menu-label heading above the list */
   label?: string;
-  items: MenuItem[];
+  /** Let the user fold the section by clicking its label */
+  collapsible?: boolean;
+  items: MenuItemData[];
 }
 
 interface Props {
-  sections: MenuSection[];
+  /** Menu structure; omit it to compose MenuSections in the default slot */
+  sections?: MenuSectionData[];
   class?: string;
   [key: string]: unknown;
 }
 
 const { sections, class: className, ...rest } = Astro.props;
+const classes = ["menu", className].filter(Boolean).join(" ");
 ---
 
-<aside class:list={["menu", className]} {...rest}>
-  {sections.map((section) => (
-    <>
-      {section.label && <p class="menu-label">{section.label}</p>}
-      <ul class="menu-list">
-        {section.items.map((item) => (
-          <li>
-            <a
-              href={item.href}
-              class={item.active ? "is-active" : undefined}
-              aria-current={item.active ? "page" : undefined}
-            >
-              {item.label}
-            </a>
-            {item.children && (
-              <ul>
-                {item.children.map((child) => (
-                  <li>
-                    <a
-                      href={child.href}
-                      class={child.active ? "is-active" : undefined}
-                      aria-current={child.active ? "page" : undefined}
-                    >
-                      {child.label}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            )}
-          </li>
-        ))}
-      </ul>
-    </>
-  ))}
+<aside class={classes} {...rest}>
+  {sections ? (
+    sections.map((section) => (
+      <MenuSection label={section.label} collapsible={section.collapsible}>
+        <MenuList>
+          {section.items.map(({ children, ...item }) => (
+            <MenuItem {...item}>
+              {children && (
+                <MenuList>
+                  {children.map(({ children: _nested, ...child }) => (
+                    <MenuItem {...child} />
+                  ))}
+                </MenuList>
+              )}
+            </MenuItem>
+          ))}
+        </MenuList>
+      </MenuSection>
+    ))
+  ) : (
+    <slot />
+  )}
 </aside>

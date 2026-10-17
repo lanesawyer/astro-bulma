@@ -1,0 +1,132 @@
+---
+import Icon from "../elements/Icon.astro";
+
+/**
+ * One link in a Bulma menu list, with an optional Font Awesome icon and an
+ * `end` slot for a badge, count, or anything else.
+ * https://bulma.io/documentation/components/menu/
+ *
+ * Usage:
+ *   <MenuList>
+ *     <MenuItem label="Inbox" href="/inbox" icon="fa-inbox" active>
+ *       <Tag slot="end" rounded>3</Tag>
+ *     </MenuItem>
+ *     <MenuItem label="Team" href="/team">
+ *       <MenuList>
+ *         <MenuItem label="Members" href="/team/members" />
+ *       </MenuList>
+ *     </MenuItem>
+ *   </MenuList>
+ *
+ * Slots:
+ *   default — nested content after the link, typically a sub-MenuList
+ *   end     — pushed to the right of the label
+ *
+ * In AppLayout's icon rail the label and `end` slot fade out; an item without
+ * an `icon` shows `abbr`, or the label's initials, so it stays clickable.
+ * Initials only render inside AppLayout's sidebar or when `abbr` is set.
+ */
+
+interface Props {
+  label: string;
+  href?: string;
+  active?: boolean;
+  /** Font Awesome icon name, e.g. "fa-inbox" */
+  icon?: string;
+  /** Font Awesome variant prefix; defaults to "fas" */
+  iconVariant?: "fas" | "far" | "fab" | "fal" | "fad";
+  /** Short badge text for items without an icon; defaults to the label's initials */
+  abbr?: string;
+  /** Extra classes on the <a> */
+  class?: string;
+  /** Any other attributes land on the <a> */
+  [key: string]: unknown;
+}
+
+const {
+  label,
+  href,
+  active = false,
+  icon,
+  iconVariant,
+  abbr,
+  class: className,
+  ...rest
+} = Astro.props;
+
+function initials(text: string): string {
+  const words = text.trim().split(/\s+/);
+  return (
+    words.length > 1 ? words[0][0] + words[1][0] : text.slice(0, 2)
+  ).toUpperCase();
+}
+
+const classes = ["menu-item-link", active && "is-active", className]
+  .filter(Boolean)
+  .join(" ");
+const hasEnd = Astro.slots.has("end");
+---
+
+<li>
+  <a
+    href={href}
+    class={classes}
+    aria-current={active ? "page" : undefined}
+    {...rest}
+  >
+    {icon ? (
+      <Icon icon={icon} variant={iconVariant} />
+    ) : (
+      <span
+        class:list={["icon", "menu-item-abbr", { "has-abbr": abbr }]}
+        aria-hidden="true"
+      >
+        {abbr ?? initials(label)}
+      </span>
+    )}
+    <span class="menu-item-label">{label}</span>
+    {hasEnd && (
+      <span class="menu-item-end">
+        <slot name="end" />
+      </span>
+    )}
+  </a>
+  <slot />
+</li>
+
+<style>
+  /* Astro's scoped selectors add no specificity, so qualify these enough to
+     beat Bulma's `.menu-list a { display: block }`. */
+  :global(.menu .menu-list) a.menu-item-link {
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
+  }
+  .menu-item-label {
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .menu-item-end {
+    display: inline-flex;
+    flex: none;
+  }
+  /* Bulma has no initials badge: a bordered square the size of an icon.
+     Hidden outside AppLayout's sidebar unless asked for with `abbr`. */
+  .menu-item-abbr {
+    border: 1px solid currentColor;
+    border-radius: var(--bulma-radius-small);
+    font-size: 0.6rem;
+    font-weight: var(--bulma-weight-bold);
+    letter-spacing: 0.02em;
+    opacity: 0.8;
+  }
+  :global(.menu) .menu-item-abbr:not(.has-abbr) {
+    display: none;
+  }
+  :global(.app-sidebar.menu) .menu-item-abbr:not(.has-abbr) {
+    display: inline-flex;
+  }
+</style>
