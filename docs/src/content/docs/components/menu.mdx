@@ -5,8 +5,16 @@ description: A simple vertical navigation menu.
 
 import Preview from "../../../components/Preview.astro";
 import Menu from "astro-bulma/components/Menu.astro";
+import MenuItem from "astro-bulma/components/MenuItem.astro";
+import MenuList from "astro-bulma/components/MenuList.astro";
+import MenuSection from "astro-bulma/components/MenuSection.astro";
+import Button from "astro-bulma/elements/Button.astro";
+import Icon from "astro-bulma/elements/Icon.astro";
+import Tag from "astro-bulma/elements/Tag.astro";
 
-The `Menu` component renders a Bulma [menu](https://bulma.io/documentation/components/menu/) — a vertical navigation sidebar built from a `sections` array. Items support one level of nesting.
+The `Menu` component renders a Bulma [menu](https://bulma.io/documentation/components/menu/) — a vertical navigation sidebar built from a `sections` array, or composed from `MenuSection`, `MenuList`, and `MenuItem` when you need badges, section actions, or anything else per item. Items support one level of nesting, Font Awesome icons, and collapsible sections.
+
+It's also the sidebar of [`AppLayout`](/astro-bulma/layouts/applayout/), which collapses it to an icon rail.
 
 ## Basic example
 
@@ -70,19 +78,163 @@ The `Menu` component renders a Bulma [menu](https://bulma.io/documentation/compo
 />
 ```
 
+## Icons and collapsible sections
+
+Give items an `icon` (a Font Awesome name, rendered with [`Icon`](/astro-bulma/elements/icon/)) and sections `collapsible: true`. A collapsible section is a native `<details>`, so folding it needs no JavaScript.
+
+<Preview>
+  <Menu
+    sections={[
+      {
+        items: [
+          { label: "Inbox", href: "#", icon: "fa-inbox", active: true },
+          { label: "Activity", href: "#", icon: "fa-wave-square" },
+        ],
+      },
+      {
+        label: "Projects",
+        collapsible: true,
+        items: [
+          { label: "Home renovation", href: "#", icon: "fa-house" },
+          { label: "Garden", href: "#", icon: "fa-seedling" },
+        ],
+      },
+    ]}
+  />
+</Preview>
+
+```astro
+<Menu
+  sections={[
+    {
+      items: [
+        { label: "Inbox", href: "/inbox", icon: "fa-inbox", active: true },
+        { label: "Activity", href: "/activity", icon: "fa-wave-square" },
+      ],
+    },
+    {
+      label: "Projects",
+      collapsible: true,
+      items: [
+        { label: "Home renovation", href: "/projects/home", icon: "fa-house" },
+        { label: "Garden", href: "/projects/garden", icon: "fa-seedling" },
+      ],
+    },
+  ]}
+/>
+```
+
+## Composing a menu
+
+Leave out `sections` and build the menu from its pieces. `MenuItem` has an `end` slot for a badge, count, or anything else, and `MenuSection` has an `actions` slot at the right of its heading. Actions sit outside the section's `<summary>`, so clicking them never folds it.
+
+<Preview>
+  <Menu>
+    <MenuSection>
+      <MenuList>
+        <MenuItem label="Inbox" href="#" icon="fa-inbox">
+          <Tag slot="end" rounded>3</Tag>
+        </MenuItem>
+        <MenuItem label="Activity" href="#" icon="fa-wave-square" />
+      </MenuList>
+    </MenuSection>
+    <MenuSection label="Projects" collapsible>
+      <Button slot="actions" href="#" size="small" class="is-ghost" aria-label="New project">
+        <Icon icon="fa-plus" size="small" />
+      </Button>
+      <MenuList>
+        <MenuItem label="Home renovation" href="#" icon="fa-house" active />
+        <MenuItem label="Team" href="#" icon="fa-users">
+          <MenuList>
+            <MenuItem label="Members" href="#" />
+          </MenuList>
+        </MenuItem>
+      </MenuList>
+    </MenuSection>
+  </Menu>
+</Preview>
+
+```astro
+<Menu>
+  <MenuSection>
+    <MenuList>
+      <MenuItem label="Inbox" href="/inbox" icon="fa-inbox">
+        <Tag slot="end" rounded>3</Tag>
+      </MenuItem>
+      <MenuItem label="Activity" href="/activity" icon="fa-wave-square" />
+    </MenuList>
+  </MenuSection>
+  <MenuSection label="Projects" collapsible data-section="projects">
+    <Button slot="actions" href="/projects/new" size="small" class="is-ghost" aria-label="New project">
+      <Icon icon="fa-plus" size="small" />
+    </Button>
+    <MenuList>
+      <MenuItem label="Home renovation" href="/projects/home" icon="fa-house" active />
+      <MenuItem label="Team" href="/team" icon="fa-users">
+        <MenuList>
+          <MenuItem label="Members" href="/team/members" />
+        </MenuList>
+      </MenuItem>
+    </MenuList>
+  </MenuSection>
+</Menu>
+```
+
+Remembering which sections are folded is up to your app: listen for the `<details>` element's `toggle` event and set `open` when you render it again. Extra attributes like `data-section` land on the `<details>`, so you can find it.
+
 ## Props
+
+### Menu
 
 | Prop       | Type            | Default | Description                          |
 |------------|-----------------|---------|--------------------------------------|
-| `sections` | `MenuSection[]` | —       | **Required.** Menu structure.        |
+| `sections` | `MenuSection[]` | —       | Menu structure. Omit it to compose the menu in the default slot. |
 | `class`    | `string`        | —       | Extra classes on the `aside.menu`.   |
 | `...`      | `*`             | —       | Any other HTML `aside` attributes.   |
+
+### MenuSection
+
+| Prop          | Type      | Default | Description                                                  |
+|---------------|-----------|---------|--------------------------------------------------------------|
+| `label`       | `string`  | —       | Heading text, rendered as a `.menu-label`.                   |
+| `collapsible` | `boolean` | `false` | Render as a `<details>` the user can fold by its label.       |
+| `open`        | `boolean` | `true`  | Whether a collapsible section starts open.                   |
+| `class`       | `string`  | —       | Extra classes on the wrapper.                                |
+| `...`         | `*`       | —       | Any other attributes, on the `<details>` (or `<section>`).    |
+
+| Slot      | Description                                   |
+|-----------|-----------------------------------------------|
+| default   | The section body, typically a `MenuList`.     |
+| `actions` | Buttons or links at the right of the heading. |
+
+### MenuList
+
+Renders `ul.menu-list`. Takes `class` and any other `ul` attributes.
+
+### MenuItem
+
+| Prop          | Type      | Default | Description                                                         |
+|---------------|-----------|---------|---------------------------------------------------------------------|
+| `label`       | `string`  | —       | **Required.** Link text.                                            |
+| `href`        | `string`  | —       | Link target.                                                        |
+| `active`      | `boolean` | `false` | Adds `is-active` and `aria-current="page"`.                          |
+| `icon`        | `string`  | —       | Font Awesome icon name, e.g. `"fa-inbox"`.                          |
+| `iconVariant` | `string`  | `"fas"` | Font Awesome variant prefix.                                        |
+| `abbr`        | `string`  | —       | Badge text shown instead of an icon. In `AppLayout`'s sidebar, items without an icon show the label's initials by default. |
+| `class`       | `string`  | —       | Extra classes on the `<a>`.                                         |
+| `...`         | `*`       | —       | Any other attributes, on the `<a>`.                                 |
+
+| Slot    | Description                                             |
+|---------|---------------------------------------------------------|
+| default | Nested content after the link, typically a `MenuList`.  |
+| `end`   | Pushed to the right of the label: a badge, count, etc.  |
 
 ### Types
 
 ```ts
 interface MenuSection {
   label?: string; // optional .menu-label heading
+  collapsible?: boolean;
   items: MenuItem[];
 }
 
@@ -90,6 +242,7 @@ interface MenuItem {
   label: string;
   href?: string;
   active?: boolean;
+  icon?: string; // Font Awesome name, e.g. "fa-inbox"
   children?: MenuItem[]; // one level of nesting
 }
 ```

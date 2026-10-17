@@ -1,0 +1,146 @@
+---
+import Icon from "../elements/Icon.astro";
+
+/**
+ * A block of a Bulma menu headed by a menu label, optionally collapsible,
+ * with an `actions` slot at the right of the heading.
+ * https://bulma.io/documentation/components/menu/
+ *
+ * Usage:
+ *   <MenuSection label="Projects" collapsible>
+ *     <Button slot="actions" href="/projects/new" size="small" aria-label="New project">
+ *       <Icon icon="fa-plus" size="small" />
+ *     </Button>
+ *     <MenuList>...</MenuList>
+ *   </MenuSection>
+ *
+ * Slots:
+ *   default — the section body, typically a MenuList
+ *   actions — buttons or links at the right of the heading
+ *
+ * A collapsible section is a native <details>, so folding needs no JS and
+ * fires the browser's "toggle" event; remembering the state is up to the app.
+ * Extra attributes land on the <details> (or <section>), e.g.
+ * data-section="projects" to find it again. Actions sit outside the
+ * <summary>, so clicking them never folds the section.
+ */
+
+interface Props {
+  /** Heading text, rendered as a .menu-label */
+  label?: string;
+  /** Let the user fold the section by clicking its label */
+  collapsible?: boolean;
+  /** Whether a collapsible section starts open */
+  open?: boolean;
+  /** Extra classes on the wrapper */
+  class?: string;
+  [key: string]: unknown;
+}
+
+const {
+  label,
+  collapsible = false,
+  open = true,
+  class: className,
+  ...rest
+} = Astro.props;
+
+const classes = ["menu-section", collapsible && "is-collapsible", className]
+  .filter(Boolean)
+  .join(" ");
+const hasActions = Astro.slots.has("actions");
+---
+
+<div class={classes}>
+  {collapsible ? (
+    <details open={open} {...rest}>
+      <summary class="menu-label">
+        <span>{label}</span>
+        <Icon
+          icon="fa-chevron-right"
+          size="small"
+          class="menu-section-chevron"
+        />
+      </summary>
+      <slot />
+    </details>
+  ) : (
+    <section {...rest}>
+      {label && (
+        <p class="menu-label">
+          <span>{label}</span>
+        </p>
+      )}
+      <slot />
+    </section>
+  )}
+  {hasActions && (
+    <div class="menu-section-actions">
+      <slot name="actions" />
+    </div>
+  )}
+</div>
+
+<style>
+  .menu-section {
+    position: relative;
+  }
+  /* Bulma spaces labels by sibling position; each label now opens its own
+     wrapper, so space the sections instead (1em of the 0.75em label). */
+  .menu-section:not(:last-child) {
+    margin-bottom: 0.75em;
+  }
+  .menu-label {
+    position: relative;
+    display: flex;
+    align-items: center;
+    min-height: 1.25rem;
+    white-space: nowrap;
+  }
+  /* Divider that AppLayout's icon rail fades in as the label text fades out. */
+  .menu-label::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 50%;
+    border-top: 1px solid var(--bulma-border);
+    opacity: 0;
+    transition: opacity 0.2s ease;
+  }
+  summary.menu-label {
+    justify-content: space-between;
+    cursor: pointer;
+    list-style: none;
+    user-select: none;
+  }
+  summary.menu-label::-webkit-details-marker {
+    display: none;
+  }
+  /* A <details> body sits in a UA shadow slot that Bulma's
+     `* { box-sizing: inherit }` can't reach, so it falls back to content-box
+     and full-width menu links overflow. */
+  .menu-section details > :global(*) {
+    box-sizing: border-box;
+  }
+  summary :global(.menu-section-chevron) {
+    transition: transform 0.15s ease;
+  }
+  details[open] > summary :global(.menu-section-chevron) {
+    transform: rotate(90deg);
+  }
+  /* Overlays the heading row, centred on it and clear of the chevron. */
+  .menu-section-actions {
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 1.25rem;
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    transition: opacity 0.2s ease;
+  }
+  .is-collapsible > .menu-section-actions {
+    right: 1.25rem;
+  }
+</style>

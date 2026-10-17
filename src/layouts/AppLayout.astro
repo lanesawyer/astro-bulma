@@ -1,0 +1,397 @@
+---
+import { ClientRouter } from "astro:transitions";
+import ThemeToggle from "../components/ThemeToggle.astro";
+import Icon from "../elements/Icon.astro";
+import Container from "./Container.astro";
+import Section from "./Section.astro";
+
+/**
+ * Full HTML document shell for app-style tools: a sidebar instead of a top
+ * navbar, with the page in a scrolling main area.
+ *
+ * Does not import Bulma's CSS, or Font Awesome for the icons — import them in
+ * your own layout.
+ *
+ * Usage:
+ *   <AppLayout title="Inbox" titleSuffix="Mail" clientRouter>
+ *     <a slot="brand" href="/">Mail</a>
+ *     <Fragment slot="sidebar">
+ *       <MenuSection><MenuList><MenuItem label="Inbox" href="/inbox" icon="fa-inbox" /></MenuList></MenuSection>
+ *       <MenuSection label="Folders" collapsible>...</MenuSection>
+ *     </Fragment>
+ *     <p>Page content</p>
+ *   </AppLayout>
+ *
+ * Slots:
+ *   default        — page content
+ *   brand          — top of the sidebar, next to the collapse button
+ *   sidebar        — sidebar body (already a .menu); stack MenuSections here
+ *   sidebar-footer — pinned to the bottom of the sidebar, after the theme toggle
+ *   head           — extra tags appended to <head>
+ *
+ * On tablet and up the sidebar sits beside the page and collapses to an icon
+ * rail, shown as data-sidebar="collapsed" on <html>. Nothing is swapped
+ * between the two: the sidebar animates its width, icons keep a fixed 1rem
+ * inset so they don't move, labels and MenuItem `end` slots fade, section
+ * labels turn into dividers, and folded sections show their items. Focusing an element marked
+ * data-sidebar-expand-on-focus (like SidebarSearch's input) expands the rail.
+ * On mobile the sidebar is a full-width overlay, closed by default.
+ *
+ * The layout doesn't remember the rail. Toggling fires "app-sidebar-toggle"
+ * on document with detail { collapsed }; to persist it, save that and set
+ * data-sidebar="collapsed" on <html> before paint (an inline script in the
+ * `head` slot), or render with `collapsed`. With ClientRouter, carry the
+ * attribute across swaps in astro:before-swap.
+ */
+
+interface Props {
+  /** Page title */
+  title: string;
+  /** Appended to the title as "title · suffix" */
+  titleSuffix?: string;
+  /** <meta name="description"> content */
+  description?: string;
+  /** href for an SVG favicon */
+  favicon?: string;
+  lang?: string;
+  /** Render Astro's <ClientRouter /> for view transitions */
+  clientRouter?: boolean;
+  /** Show the light/dark ThemeToggle at the bottom of the sidebar */
+  themeToggle?: boolean;
+  /** Render with the sidebar collapsed to its icon rail */
+  collapsed?: boolean;
+  /** Accessible name for the sidebar landmark */
+  sidebarLabel?: string;
+  /** Render page content directly in <main>, without section/container */
+  bare?: boolean;
+}
+
+const {
+  title,
+  titleSuffix,
+  description,
+  favicon,
+  lang = "en",
+  clientRouter = false,
+  themeToggle = true,
+  collapsed = false,
+  sidebarLabel = "Sidebar",
+  bare = false,
+} = Astro.props;
+
+const fullTitle = titleSuffix ? `${title} · ${titleSuffix}` : title;
+const hasFooter = themeToggle || Astro.slots.has("sidebar-footer");
+---
+
+<!doctype html>
+<html lang={lang} data-sidebar={collapsed ? "collapsed" : undefined}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{fullTitle}</title>
+    {description && <meta name="description" content={description} />}
+    {favicon && <link rel="icon" type="image/svg+xml" href={favicon} />}
+    {clientRouter && <ClientRouter />}
+    <slot name="head" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside
+        id="app-sidebar"
+        class="app-sidebar menu"
+        aria-label={sidebarLabel}
+      >
+        <div class="app-sidebar-header">
+          <button
+            type="button"
+            class="button app-sidebar-button"
+            data-sidebar-toggle
+            data-sidebar-rail-toggle
+            aria-controls="app-sidebar"
+            aria-label="Collapse sidebar"
+          >
+            <Icon icon="fa-bars" />
+          </button>
+          <div class="app-sidebar-brand">
+            <slot name="brand" />
+          </div>
+        </div>
+        <div class="app-sidebar-body">
+          <slot name="sidebar" />
+        </div>
+        {hasFooter && (
+          <div class="app-sidebar-footer">
+            {themeToggle && <ThemeToggle class="app-sidebar-button" />}
+            <slot name="sidebar-footer" />
+          </div>
+        )}
+      </aside>
+      <div class="app-backdrop" data-sidebar-close></div>
+      <main class="app-main">
+        <button
+          type="button"
+          class="button is-small app-sidebar-open"
+          data-sidebar-toggle
+          aria-controls="app-sidebar"
+          aria-label="Open sidebar"
+        >
+          <Icon icon="fa-bars" />
+        </button>
+        {bare ? (
+          <slot />
+        ) : (
+          <Section>
+            <Container>
+              <slot />
+            </Container>
+          </Section>
+        )}
+      </main>
+    </div>
+  </body>
+</html>
+
+<script>
+  const mobile = window.matchMedia("(max-width: 768px)");
+
+  function shell() {
+    return document.querySelector<HTMLElement>(".app-shell");
+  }
+
+  function setMobileOpen(open: boolean) {
+    shell()?.classList.toggle("is-sidebar-open", open);
+  }
+
+  function labelRailToggle() {
+    const collapsed =
+      document.documentElement.getAttribute("data-sidebar") === "collapsed";
+    document.querySelectorAll("[data-sidebar-rail-toggle]").forEach((btn) => {
+      btn.setAttribute(
+        "aria-label",
+        collapsed ? "Expand sidebar" : "Collapse sidebar",
+      );
+      btn.setAttribute("aria-expanded", String(!collapsed));
+    });
+  }
+  labelRailToggle();
+  document.addEventListener("astro:page-load", labelRailToggle);
+
+  function toggle() {
+    if (mobile.matches) {
+      setMobileOpen(!shell()?.classList.contains("is-sidebar-open"));
+      return;
+    }
+    const root = document.documentElement;
+    const collapsed = root.getAttribute("data-sidebar") !== "collapsed";
+    if (collapsed) root.setAttribute("data-sidebar", "collapsed");
+    else root.removeAttribute("data-sidebar");
+    labelRailToggle();
+    document.dispatchEvent(
+      new CustomEvent("app-sidebar-toggle", { detail: { collapsed } }),
+    );
+  }
+
+  // Delegated so it survives ClientRouter body swaps without rebinding.
+  document.addEventListener("click", (event) => {
+    const target = event.target as Element;
+    if (target.closest("[data-sidebar-toggle]")) toggle();
+    else if (target.closest("[data-sidebar-close]")) setMobileOpen(false);
+  });
+  document.addEventListener("focusin", (event) => {
+    const collapsed =
+      document.documentElement.getAttribute("data-sidebar") === "collapsed";
+    if (
+      collapsed &&
+      !mobile.matches &&
+      (event.target as Element).closest("[data-sidebar-expand-on-focus]")
+    )
+      toggle();
+  });
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape") setMobileOpen(false);
+  });
+  mobile.addEventListener("change", () => setMobileOpen(false));
+</script>
+
+<style>
+  /* Bulma has no app shell or sidebar layout, so the shell itself is custom
+     CSS; colors come from Bulma's variables. */
+  .app-shell {
+    --app-sidebar-width: 16rem;
+    /* Rail width is twice the icon inset plus a 1.5rem icon, so icons stay put while the width animates. */
+    --app-sidebar-rail-width: 3.5rem;
+    display: flex;
+    min-height: 100vh;
+  }
+  .app-sidebar {
+    position: sticky;
+    top: 0;
+    flex: 0 0 var(--app-sidebar-width);
+    width: var(--app-sidebar-width);
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    background: var(--bulma-scheme-main-bis);
+    border-right: 1px solid var(--bulma-border-weak);
+    transition:
+      flex-basis 0.2s ease,
+      width 0.2s ease;
+  }
+  /* Bulma's menu items are painted in scheme-main; match them to the tinted sidebar. */
+  .app-sidebar,
+  .app-sidebar :global(.menu) {
+    --bulma-menu-item-background-l: var(--bulma-scheme-main-bis-l);
+  }
+  .app-sidebar-header,
+  .app-sidebar-footer {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    padding: 0.75rem 0.5rem;
+  }
+  .app-sidebar-footer {
+    border-top: 1px solid var(--bulma-border-weak);
+  }
+  /* Header/footer buttons are icon-row sized so their icons line up with the menu's. */
+  .app-sidebar :global(.app-sidebar-button) {
+    flex: none;
+    width: 2.5rem;
+    height: 2.5rem;
+    padding: 0;
+    border-color: transparent;
+    background: none;
+    box-shadow: none;
+    color: inherit;
+  }
+  .app-sidebar :global(.app-sidebar-button:hover) {
+    background: var(--bulma-background);
+  }
+  .app-sidebar-brand {
+    min-width: 0;
+    overflow: hidden;
+    white-space: nowrap;
+    font-weight: var(--bulma-weight-bold);
+  }
+  .app-sidebar-brand :global(a) {
+    color: var(--bulma-text-strong);
+  }
+  .app-sidebar-body {
+    flex: 1;
+    overflow-x: hidden;
+    overflow-y: auto;
+    padding: 0.25rem 0.5rem 1rem;
+  }
+  /* Menu pieces get a fixed 0.5rem inset (plus the body's 0.5rem gutter) so
+     icons sit 1rem in, centred in the rail. */
+  .app-sidebar :global(.menu-item-link) {
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+    overflow: hidden;
+  }
+  .app-sidebar :global(.menu-label) {
+    padding: 0 0.5rem;
+  }
+  .app-sidebar :global(.menu-label::after) {
+    left: 0.5rem;
+    right: 0.5rem;
+  }
+  .app-sidebar :global(.menu-section:not(:last-child)) {
+    margin-bottom: 1.5rem;
+  }
+  .app-sidebar :global(.menu-section-actions) {
+    right: 0.5rem;
+  }
+  .app-sidebar :global(.menu-section.is-collapsible > .menu-section-actions) {
+    right: 1.75rem;
+  }
+  .app-sidebar-brand,
+  .app-sidebar :global(.menu-item-label),
+  .app-sidebar :global(.menu-item-end),
+  .app-sidebar :global(.menu-label > *) {
+    transition: opacity 0.2s ease;
+  }
+  .app-main {
+    position: relative;
+    flex: 1;
+    min-width: 0;
+  }
+  .app-main > .app-sidebar-open {
+    position: absolute;
+    top: 0.75rem;
+    left: 0.75rem;
+    z-index: 1;
+    display: none;
+  }
+  .app-backdrop {
+    display: none;
+  }
+
+  /* The icon rail. Reaches into MenuSection/MenuItem/SidebarSearch markup, since the rail is the layout's state. */
+  @media (min-width: 769px) {
+    :global(html[data-sidebar="collapsed"]) .app-shell {
+      --app-sidebar-width: var(--app-sidebar-rail-width);
+    }
+    :global(html[data-sidebar="collapsed"]) .app-sidebar .app-sidebar-brand,
+    :global(html[data-sidebar="collapsed"])
+      .app-sidebar
+      :global(.menu-item-label),
+    :global(html[data-sidebar="collapsed"])
+      .app-sidebar
+      :global(.menu-item-end),
+    :global(html[data-sidebar="collapsed"])
+      .app-sidebar
+      :global(.menu-label > *),
+    :global(html[data-sidebar="collapsed"])
+      .app-sidebar
+      :global(.menu-section-actions) {
+      opacity: 0;
+    }
+    /* The rail can't fold or unfold a section, so show folded ones too; their saved state still applies when expanded. */
+    :global(html[data-sidebar="collapsed"])
+      .app-sidebar
+      :global(details::details-content) {
+      content-visibility: visible;
+    }
+    :global(html[data-sidebar="collapsed"]) .app-sidebar :global(.menu-label),
+    :global(html[data-sidebar="collapsed"])
+      .app-sidebar
+      :global(.menu-section-actions) {
+      pointer-events: none;
+    }
+    /* Section labels keep their height and show a divider instead. */
+    :global(html[data-sidebar="collapsed"])
+      .app-sidebar
+      :global(.menu-label::after) {
+      opacity: 1;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .app-sidebar {
+      position: fixed;
+      left: 0;
+      z-index: 40;
+      transform: translateX(-100%);
+      transition: transform 0.2s ease;
+    }
+    .app-shell.is-sidebar-open .app-sidebar {
+      transform: none;
+    }
+    .app-shell.is-sidebar-open .app-backdrop {
+      display: block;
+      position: fixed;
+      inset: 0;
+      z-index: 39;
+      background: hsla(
+        var(--bulma-scheme-h),
+        var(--bulma-scheme-s),
+        var(--bulma-scheme-invert-l),
+        0.4
+      );
+    }
+    .app-main > .app-sidebar-open {
+      display: inline-flex;
+    }
+  }
+</style>
