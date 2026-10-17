@@ -182,6 +182,11 @@ export default defineConfig({
               slug: "layouts/sitelayout",
               badge: { text: "Extra", variant: "success" },
             },
+            {
+              label: "AppLayout",
+              slug: "layouts/applayout",
+              badge: { text: "Extra", variant: "success" },
+            },
           ],
         },
       ],

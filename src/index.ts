@@ -23,6 +23,7 @@ export { default as Textarea } from './forms/Textarea.astro';
 export { default as TextInput } from './forms/TextInput.astro';
 
 // Layouts
+export { default as AppLayout } from './layouts/AppLayout.astro';
 export { default as Cell } from './layouts/Cell.astro';
 export { default as Column } from './layouts/Column.astro';
 export { default as Columns } from './layouts/Columns.astro';
@@ -50,5 +51,6 @@ export { default as Modal } from './components/Modal.astro';
 export { default as Navbar } from './components/Navbar.astro';
 export { default as Pagination } from './components/Pagination.astro';
 export { default as Panel } from './components/Panel.astro';
+export { default as SidebarSearch } from './components/SidebarSearch.astro';
 export { default as Tabs } from './components/Tabs.astro';
 export { default as ThemeToggle } from './components/ThemeToggle.astro';

@@ -1,0 +1,140 @@
+---
+title: AppLayout
+description: Full HTML document shell for app-style tools, with a collapsible sidebar instead of a top navbar.
+---
+
+The `AppLayout` component is an **astro-bulma extra** — a complete HTML document for tools and dashboards, where navigation lives in a sidebar rather than a top [`Navbar`](/astro-bulma/components/navbar/). Like [`SiteLayout`](/astro-bulma/layouts/sitelayout/), it renders the `<head>` (charset, viewport, title, optional description and favicon, optional `<ClientRouter />`) and wraps the page content in a [`Section`](/astro-bulma/layouts/section/) and [`Container`](/astro-bulma/layouts/container/).
+
+The sidebar is a Bulma `.menu`: stack [`MenuSection`s](/astro-bulma/components/menu/#composing-a-menu) in it. A button next to the brand collapses it to an **icon rail**, and on mobile it becomes an overlay.
+
+`AppLayout` does not import Bulma's CSS or Font Awesome. Import them in your own layout:
+
+```astro
+---
+// src/layouts/BaseLayout.astro
+import "bulma/css/bulma.min.css";
+import "@fortawesome/fontawesome-free/css/fontawesome.min.css";
+import "@fortawesome/fontawesome-free/css/solid.min.css";
+import { AppLayout, Button, Icon, MenuItem, MenuList, MenuSection, SidebarSearch, Tag } from "astro-bulma";
+
+interface Props {
+  title: string;
+}
+
+const { title } = Astro.props;
+const path = Astro.url.pathname;
+const projects = await getProjects();
+---
+
+<AppLayout title={title} titleSuffix="Tasks" clientRouter sidebarLabel="Main navigation">
+  <a slot="brand" href="/">Tasks</a>
+  <Fragment slot="sidebar">
+    <MenuSection>
+      <SidebarSearch action="/search" placeholder="Search tasks" />
+    </MenuSection>
+    <MenuSection>
+      <MenuList>
+        <MenuItem label="Inbox" href="/inbox" icon="fa-inbox" active={path === "/inbox"}>
+          <Tag slot="end" rounded>3</Tag>
+        </MenuItem>
+        <MenuItem label="Activity" href="/activity" icon="fa-wave-square" active={path === "/activity"} />
+      </MenuList>
+    </MenuSection>
+    <MenuSection label="Projects" collapsible>
+      <Button slot="actions" href="/projects/new" size="small" class="is-ghost" aria-label="New project">
+        <Icon icon="fa-plus" size="small" />
+      </Button>
+      <MenuList>
+        {projects.map((p) => (
+          <MenuItem label={p.name} href={`/projects/${p.key}`} active={path.startsWith(`/projects/${p.key}`)} />
+        ))}
+      </MenuList>
+    </MenuSection>
+  </Fragment>
+  <slot />
+</AppLayout>
+```
+
+## The icon rail
+
+On tablet and up, collapsing the sidebar narrows it to an icon rail and sets `data-sidebar="collapsed"` on `<html>`. Nothing is swapped between the two states, so nothing jumps:
+
+- The width animates, and every icon keeps the same position, centred in the rail.
+- Item labels, the brand, and `MenuItem` `end` slots fade out. Labels stay the links' accessible names.
+- Section labels fade into dividers, and their `actions` hide.
+- Items without an `icon` show their label's initials (or `abbr`) so they stay clickable.
+- Folded sections show their items, since the rail can't unfold them; they're folded again when the sidebar expands.
+
+On mobile the sidebar is a full-width overlay, closed by default. A button at the top left of the page opens it; the backdrop or <kbd>Esc</kbd> closes it.
+
+## Remembering the rail
+
+`AppLayout` doesn't store anything. Toggling the rail fires an `app-sidebar-toggle` event on `document` with `detail: { collapsed }`, and the `collapsed` prop renders it collapsed. To remember the choice, save it from the event and restore it before paint:
+
+```astro
+<AppLayout title={title} clientRouter>
+  <script is:inline slot="head">
+    if (localStorage.getItem("sidebar") === "collapsed")
+      document.documentElement.setAttribute("data-sidebar", "collapsed");
+  </script>
+  <!-- ... -->
+</AppLayout>
+
+<script>
+  document.addEventListener("app-sidebar-toggle", (event) => {
+    const { collapsed } = (event as CustomEvent<{ collapsed: boolean }>).detail;
+    if (collapsed) localStorage.setItem("sidebar", "collapsed");
+    else localStorage.removeItem("sidebar");
+  });
+
+  // With ClientRouter: the incoming page's <html> doesn't carry data-sidebar.
+  document.addEventListener("astro:before-swap", (event) => {
+    const state = document.documentElement.getAttribute("data-sidebar");
+    if (state) event.newDocument.documentElement.setAttribute("data-sidebar", state);
+  });
+</script>
+```
+
+Or keep it server-side, in a cookie or user setting, and pass `collapsed`.
+
+## SidebarSearch
+
+`SidebarSearch` is a GET search form sized like a menu row. In the rail it shrinks to a square around its icon, and clicking it expands the sidebar with the input focused. Any element with `data-sidebar-expand-on-focus` does the same.
+
+```astro
+<SidebarSearch action="/search" name="q" placeholder="Search tasks" value={query} />
+```
+
+| Prop          | Type     | Default    | Description                                      |
+|---------------|----------|------------|--------------------------------------------------|
+| `action`      | `string` | —          | **Required.** Form action; submits with GET.     |
+| `name`        | `string` | `"q"`      | Query parameter name.                            |
+| `placeholder` | `string` | `"Search"` | Input placeholder.                               |
+| `value`       | `string` | —          | Current query.                                   |
+| `label`       | `string` | —          | Accessible name; defaults to the placeholder.    |
+| `class`       | `string` | —          | Extra classes on the `<form>`.                   |
+
+## Props
+
+| Prop           | Type      | Default     | Description                                                     |
+|----------------|-----------|-------------|-----------------------------------------------------------------|
+| `title`        | `string`  | —           | **Required.** Page title.                                       |
+| `titleSuffix`  | `string`  | —           | Appended to the title as `title · suffix`.                      |
+| `description`  | `string`  | —           | `<meta name="description">` content.                            |
+| `favicon`      | `string`  | —           | `href` for an SVG favicon.                                      |
+| `lang`         | `string`  | `"en"`      | `lang` attribute on `<html>`.                                   |
+| `clientRouter` | `boolean` | `false`     | Render Astro's `<ClientRouter />` for view transitions.         |
+| `themeToggle`  | `boolean` | `true`      | Show the light/dark `ThemeToggle` at the bottom of the sidebar. |
+| `collapsed`    | `boolean` | `false`     | Render with the sidebar collapsed to its icon rail.             |
+| `sidebarLabel` | `string`  | `"Sidebar"` | Accessible name for the sidebar landmark.                       |
+| `bare`         | `boolean` | `false`     | Render content directly in `<main>`, without section/container. |
+
+## Slots
+
+| Slot             | Description                                                    |
+|------------------|----------------------------------------------------------------|
+| default          | Page content.                                                  |
+| `brand`          | Top of the sidebar, next to the collapse button.               |
+| `sidebar`        | Sidebar body (already a `.menu`); stack `MenuSection`s here.   |
+| `sidebar-footer` | Pinned to the bottom of the sidebar, after the theme toggle.   |
+| `head`           | Extra tags appended to `<head>`.                               |

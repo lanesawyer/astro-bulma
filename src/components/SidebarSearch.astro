@@ -1,0 +1,83 @@
+---
+import Icon from "../elements/Icon.astro";
+
+/**
+ * A search box for AppLayout's sidebar, the same height and icon inset as a
+ * MenuItem row. In the icon rail it shrinks to a square around its icon;
+ * clicking it expands the sidebar with the input focused.
+ *
+ * Usage:
+ *   <SidebarSearch action="/search" name="q" placeholder="Search tasks" value={q} />
+ */
+
+interface Props {
+  /** Form action; the form submits with GET */
+  action: string;
+  /** Query parameter name */
+  name?: string;
+  placeholder?: string;
+  value?: string;
+  /** Accessible name for the input; defaults to the placeholder */
+  label?: string;
+  class?: string;
+}
+
+const {
+  action,
+  name = "q",
+  placeholder = "Search",
+  value,
+  label,
+  class: className,
+} = Astro.props;
+---
+
+<form
+  class:list={["sidebar-search", className]}
+  method="GET"
+  action={action}
+  role="search"
+>
+  {/* Bulma's .input on the wrapper gives the border, height and colors; the real input inside is bare. */}
+  <label class="input">
+    <Icon icon="fa-magnifying-glass" />
+    <input
+      class="menu-item-label"
+      type="search"
+      name={name}
+      value={value}
+      placeholder={placeholder}
+      aria-label={label ?? placeholder}
+      data-sidebar-expand-on-focus
+    />
+  </label>
+</form>
+
+<style>
+  /* Scoped selectors add no specificity; the form class outranks Bulma's .input. */
+  .sidebar-search .input {
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
+    padding-left: calc(0.5rem - 1px);
+    padding-right: calc(0.5rem - 1px);
+    overflow: hidden;
+    cursor: text;
+  }
+  .sidebar-search .input:focus-within {
+    border-color: var(--bulma-link);
+  }
+  .sidebar-search .input :global(.icon) {
+    color: var(--bulma-text-weak);
+  }
+  input {
+    flex: 1;
+    min-width: 0;
+    padding: 0;
+    border: none;
+    outline: none;
+    background: none;
+    color: inherit;
+    font: inherit;
+  }
+</style>
