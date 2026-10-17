@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.6.0] - 2026-10-17
+
+### Features
+- Add AppLayout with an icon-rail sidebar, and composable Menu pieces (#32) ([`20feb22`](https://github.com/lanesawyer/astro-bulma/commit/20feb22805395060c9da628f31839c62ea655381))
+
+
 ## [0.5.1] - 2026-10-03
 
 ### Bug Fixes
